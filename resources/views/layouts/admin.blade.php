@@ -97,7 +97,7 @@
 
     <footer class="footer">
         <div class="mx-auto">
-           © Super Xtra. All Rights Reserved
+           © New Wave Technologies. All Rights Reserved
         </div>
         
     </footer>

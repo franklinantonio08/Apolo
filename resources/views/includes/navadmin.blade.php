@@ -24,8 +24,8 @@
                         <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-industry') }}"></use>
                 </svg> Organizacion</a>
                 <ul class="nav-group-items">
-                        <li class="nav-item"><a class="nav-link" href="/dist/storecebececo"><span class="nav-icon"></span> Departamento</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/dist/storecebececo/importar"><span class="nav-icon"></span> Posiciones</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/dist/departamento"><span class="nav-icon"></span> Departamento</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/dist/organizacion/importar"><span class="nav-icon"></span> Posiciones</a></li>
                 </ul>
         </li>
 
