@@ -31,8 +31,6 @@ class DepartamentoController extends Controller
 
     public function PostIndex(){
 
-        
-
         $request = $this->request->all();
 		$columnsOrder = isset($request['order'][0]['column']) ? $request['order'][0]['column'] : '0';
 		$orderBy=isset($request['columns'][$columnsOrder]['data']) ? $request['columns'][$columnsOrder]['data'] : 'id';
@@ -161,6 +159,109 @@ class DepartamentoController extends Controller
 		DB::commit();
 
 		return redirect('dist/departamento')->with('alertSuccess', 'STORE CEBECECO HA SIDO INGRESADA');
+    }
+
+	public function Editar($departamentoId){
+		/*if(!$this->common->usuariopermiso('004')){
+    		return redirect('dist/dashboard')->withErrors($this->common->message);
+    	}*/
+
+    	$departamento = DB::table('departamento')
+		 ->where('departamento.id', '=', $departamentoId)
+		 //->where('rubro.distribuidorId', Auth::user()->distribuidorId)
+		 ->select('departamento.*')->first();
+
+    	if(empty($departamento)){
+    		return redirect('dist/departamento')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0004");
+    	}
+
+    	view()->share('departamento', $departamento);
+    	return \View::make('dist/departamento/editar');
+    }
+
+    public function PostEditar(){
+    	/*if(!$this->common->usuariopermiso('004')){
+    		return redirect('dist/dashboard')->withErrors($this->common->message);
+    	}*/
+
+    	$request = $this->request->all();
+
+        //return $request;
+
+    	$departamentoId = isset($this->request->departamentoId) ? $this->request->departamentoId: '';
+
+        //return $departamentoId;
+
+    	$departamento = departamento::where('id', $departamentoId)
+        //->where('distribuidorId',Auth::user()->distribuidorId)
+        ->first();
+
+    	if(empty($departamento)){
+    		return redirect('dist/departamento')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0005");
+    	}
+
+		DB::beginTransaction();
+	    	$departamentoUpdate = Departamento::find($departamentoId);
+			$departamentoUpdate->nombre          = $this->request->nombre;
+            $departamentoUpdate->infoextra        = $this->request->comentario;
+			
+            $result = $departamentoUpdate->save();
+
+		if($result != 1){
+			DB::rollBack();
+
+			return redirect('dist/departamento/editar/'.$departamentoId)->withErrors("ERROR AL EDITAR ELEMENTOS DE STORE CEBECECO CODE-0006");
+		}
+
+		DB::commit();
+
+		return redirect('dist/departamento/')->with('alertSuccess', 'STORE CEBECECO HA SIDO EDITADO');
+    }
+
+    public function Mostrar($departamentoId){
+    	/*if(!$this->common->usuariopermiso('004')){
+    		return redirect('dist/dashboard')->withErrors($this->common->message);
+    	}*/
+
+    	$departamento = DB::table('departamento')
+    	 ->where('departamento.id', '=', $departamentoId)
+		 ->select('departamento.*')->first();
+
+    	if(empty($departamento)){
+    		return redirect('dist/departamento')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0007");
+    	}
+
+        //return $compania;
+
+    	 view()->share('departamento', $departamento);
+
+    	return \View::make('dist/departamento/mostrar');
+    }
+    public function Desactivar(){
+    	/*if(!$this->common->usuariopermiso('004')){
+    		return response()
+              ->json(['response' => false]);
+    	}*/
+    	
+    	$departamentoExiste = Departamento::where('id', $this->request->departamentoId)
+    					//->where('distribuidorId', Auth::user()->distribuidorId)
+    					->first();
+		if(!empty($departamentoExiste)){
+
+			$estatus = 'Inactivo';
+			if($departamentoExiste->estatus == 'Inactivo'){
+				$estatus = 'Activo';	
+			}
+
+			$affectedRows = Departamento::where('id', '=', $this->request->departamentoId)
+							->update(['estatus' => $estatus]);
+			
+			return response()
+              ->json(['response' => TRUE]);
+		}
+
+		return response()
+              ->json(['response' => false]);
     }
 
 }

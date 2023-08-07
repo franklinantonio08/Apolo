@@ -4,7 +4,7 @@
 	var token = '{{ csrf_token() }}';
 </script>
 	
-<script type="text/javascript" src="{{ asset('../js/dist/departamento/departamento.js') }}"></script>
+<script type="text/javascript" src="{{ asset('../js/dist/posiciones/posiciones.js') }}"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -43,17 +43,17 @@
                         <div class="col-lg-6 m-b-10">
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" readonly value="{{$departamento->nombre}}"/>
+                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" readonly value="{{$posiciones->nombre}}"/>
                                     <label for="nombre">Nombre</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="codigo" name="codigo" type="text" placeholder="Codigo" readonly value="{{$departamento->codigo}}"/>
+                                    <input class="form-control" id="codigo" name="codigo" type="text" placeholder="Codigo" readonly value="{{$posiciones->codigo}}"/>
                                     <label for="codigo">Codigo</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="estatus" name="estatus" type="text" placeholder="Estatus" readonly value="{{$departamento->estatus}}"/>
+                                    <input class="form-control" id="estatus" name="estatus" type="text" placeholder="Estatus" readonly value="{{$posiciones->estatus}}"/>
                                     <label for="estatus">Estatus</label>
                                 </div>
                                 

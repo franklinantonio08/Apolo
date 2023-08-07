@@ -6,7 +6,7 @@
 
 	</script>
 	
-<script type="text/javascript" src="{{ asset('../js/dist/departamento/departamento.js') }}"></script>
+<script type="text/javascript" src="{{ asset('../js/dist/posiciones/posiciones.js') }}"></script>
 <script type="text/javascript" src="{{ asset('../js/comun/confirmacionModal.js') }}"></script>
 <script type="text/javascript" src="{{ asset('../js/comun/messagebasicModal.js') }}"></script>
 
@@ -23,7 +23,7 @@
 			<div class="card-body p-4">
 			<div class="row">
 				<div class="col">
-				<div class="card-title fs-4 fw-semibold">Lista de Departamentos</div>
+				<div class="card-title fs-4 fw-semibold">Lista de Posiciones</div>
 				<!--<div class="card-subtitle text-disabled mb-4">1.232.150 registered users</div> -->
 				</div>
 				
@@ -72,7 +72,7 @@
 				
 	<div class="table-responsive">
 					
-						<table class="table table-bordered data-table" id="departamento">
+						<table class="table table-bordered data-table" id="posiciones">
 							<thead>
 								<tr>
 									<th class="bg-primary fs-8 fw-semibold text-white">#</th>

@@ -45,8 +45,8 @@
                         <div class="col-lg-6 m-b-10">
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="regional" name="regional" type="text" placeholder="Regional" />
-                                    <label for="regional">Nombre</label>
+                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" />
+                                    <label for="nombre">Nombre</label>
                                 </div>
                                 
                                 <div class="form-floating mb-3">

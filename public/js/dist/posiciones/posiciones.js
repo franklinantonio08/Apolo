@@ -1,15 +1,15 @@
-class Distdepartamento {
+class Distposiciones {
     constructor() {
     }
 
     init(){
         
-        if($('#departamento').length) {
-          this.departamento();
+        if($('#posiciones').length) {
+          this.posiciones();
       }
 
       if($('#nuevoregistro').length) {
-          this.validatedepartamento();
+          this.validateposiciones();
       }
 
       if($('#nuevoimportar').length) {
@@ -46,13 +46,13 @@ class Distdepartamento {
                 
         $( "#searchButton" ).off('click');
         $( "#searchButton" ).click(function() {
-          _this.departamento( $( "#search" ).val() );
+          _this.posiciones( $( "#search" ).val() );
       });
 
       $('#search').keypress(function(event){
           var keycode = (event.keyCode ? event.keyCode : event.which);
           if(keycode == '13'){
-              _this.departamento( $( "#search" ).val());
+              _this.posiciones( $( "#search" ).val());
               event.preventDefault();
               return false;
           }
@@ -62,7 +62,7 @@ class Distdepartamento {
     }
 
         /*BEGIN TABLA USUARIO*/
-        departamento(search){
+        posiciones(search){
 
             //var BASEURL = window.location.origin; 
 
@@ -70,7 +70,7 @@ class Distdepartamento {
 
           const _this = this
 
-              const table = $('#departamento').DataTable( {
+              const table = $('#posiciones').DataTable( {
                   "destroy": true,
                   "searching": false,
                   "serverSide": true,
@@ -88,7 +88,7 @@ class Distdepartamento {
                       "type": "POST",
                       "error": this.handleAjaxError, 
                       "data": function ( d ) {
-                          var info = $('#departamento').DataTable().page.info();
+                          var info = $('#posiciones').DataTable().page.info();
                           
                           var orderColumnNumber = d.order[0].column;
                           
@@ -114,7 +114,7 @@ class Distdepartamento {
                   },
                   "infoCallback": function( settings, start, end, max, total, pre ) {
 
-                      _this.desactivardepartamento();
+                      _this.desactivarposiciones();
 
                       var api = this.api();
                       var pageInfo = api.page.info();
@@ -131,7 +131,7 @@ class Distdepartamento {
           /*END TABLA USUARIO*/
 
           /*BEGIN VALIDAR NUEVO USUARIO*/
-          validatedepartamento(){
+          validateposiciones(){
 
             $('#nuevoregistro').submit(function(){
                 $(this).find(':submit').attr('disabled','disabled');
@@ -221,24 +221,24 @@ class Distdepartamento {
 
 
           /*BEGIN DESACTIVAR UN USUARIO*/
-          desactivardepartamento(){
+          desactivarposiciones(){
 
               const _this = this
 
               $( ".desactivar" ).off('click');
                 $( ".desactivar" ).click(function() {
                     
-                    const departamentoId = $( this ).attr( "attr-id" );
-                    var opciones = {departamentoId:departamentoId};
-                    const message = 'Seguro que desea cambiar de estatus el departamento?'
-                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivardepartamento);
+                    const posicionesId = $( this ).attr( "attr-id" );
+                    var opciones = {posicionesId:posicionesId};
+                    const message = 'Seguro que desea cambiar de estatus el posiciones?'
+                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarposiciones);
                   objConfirmacionmodal.init();
                   
               });
           }
           
 
-          callbackDesactivardepartamento(response, opciones){
+          callbackDesactivarposiciones(response, opciones){
 
    
               if(response == true){
@@ -247,7 +247,7 @@ class Distdepartamento {
 
                   $.post( BASEURL+'/desactivar', 
                   {
-                      departamentoId: opciones.departamentoId,
+                      posicionesId: opciones.posicionesId,
                       _token:token 
                       }
                   )
@@ -257,35 +257,35 @@ class Distdepartamento {
 
 
                       if(data.response == true){
-                          const modalTitle = 'Departamento';
-                          const modalMessage = 'El departamento ha sido cambiado de estatus';
+                          const modalTitle = 'Posiciones';
+                          const modalMessage = 'El posiciones ha sido cambiado de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          const objDistdepartamentos = new Distdepartamento();							
-                          objDistdepartamentos.init();	
-                          //objDistdepartamentos.departamentos($( "#search" ).val());
+                          const objDistposicioness = new Distposiciones();							
+                          objDistposicioness.init();	
+                          //objDistposicioness.posicioness($( "#search" ).val());
 
                       }else{
                           
-                          const modalTitle = 'Departamento';
-                          const modalMessage = 'El departamento no se ha podido cambiar de estatus';
+                          const modalTitle = 'Posiciones';
+                          const modalMessage = 'El posiciones no se ha podido cambiar de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          //const objDistdepartamentos = new Distdepartamento();							
-                          //objDistdepartamentos.departamentos($( "#search" ).val());
+                          //const objDistposicioness = new Distposiciones();							
+                          //objDistposicioness.posicioness($( "#search" ).val());
                       }
                   })
                   .fail(function() {
                       
-                      const modalTitle = 'Departamento';
-                      const modalMessage = 'El departamento no se ha podido cambiar de estatus';
+                      const modalTitle = 'Posiciones';
+                      const modalMessage = 'El posiciones no se ha podido cambiar de estatus';
                       const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                       objMessagebasicModal.init();
 
-                      //const objDistdepartamentos = new Distdepartamento();							
-                      //objDistdepartamentos.departamentos($( "#search" ).val());
+                      //const objDistposicioness = new Distposiciones();							
+                      //objDistposicioness.posicioness($( "#search" ).val());
                       
                   })
                   .always(function() {
@@ -305,7 +305,7 @@ class Distdepartamento {
 
 $(document).ready(function(){
 
-  const objDistdepartamento = new Distdepartamento();
-  objDistdepartamento.init();
+  const objDistposiciones = new Distposiciones();
+  objDistposiciones.init();
 
 });
