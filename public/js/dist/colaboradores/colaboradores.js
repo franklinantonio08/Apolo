@@ -1,15 +1,15 @@
-class Distposiciones {
+class Distcolaboradores {
     constructor() {
     }
 
     init(){
         
-        if($('#posiciones').length) {
-          this.posiciones();
+        if($('#colaboradores').length) {
+          this.colaboradores();
       }
 
       if($('#nuevoregistro').length) {
-          this.validateposiciones();
+          this.validatecolaboradores();
       }
 
       if($('#nuevoimportar').length) {
@@ -46,13 +46,13 @@ class Distposiciones {
                 
         $( "#searchButton" ).off('click');
         $( "#searchButton" ).click(function() {
-          _this.posiciones( $( "#search" ).val() );
+          _this.colaboradores( $( "#search" ).val() );
       });
 
       $('#search').keypress(function(event){
           var keycode = (event.keyCode ? event.keyCode : event.which);
           if(keycode == '13'){
-              _this.posiciones( $( "#search" ).val());
+              _this.colaboradores( $( "#search" ).val());
               event.preventDefault();
               return false;
           }
@@ -62,7 +62,7 @@ class Distposiciones {
     }
 
         /*BEGIN TABLA USUARIO*/
-        posiciones(search){
+        colaboradores(search){
 
             //var BASEURL = window.location.origin; 
 
@@ -70,7 +70,7 @@ class Distposiciones {
 
           const _this = this
 
-              const table = $('#posiciones').DataTable( {
+              const table = $('#colaboradores').DataTable( {
                   "destroy": true,
                   "searching": false,
                   "serverSide": true,
@@ -88,7 +88,7 @@ class Distposiciones {
                       "type": "POST",
                       "error": this.handleAjaxError, 
                       "data": function ( d ) {
-                          var info = $('#posiciones').DataTable().page.info();
+                          var info = $('#colaboradores').DataTable().page.info();
                           
                           var orderColumnNumber = d.order[0].column;
                           
@@ -105,8 +105,10 @@ class Distposiciones {
                   "columns": [
                       { "data": "id"},
                       { "data": "nombre" },
-                      { "data": "departamento" },
                       { "data": "codigo" },
+                      { "data": "correo" },
+                      { "data": "telefono" },
+                      { "data": "tipousuario" },
                       { "data": "estatus" },
                       { "data": "detalle" , "orderable": false, className: "actions text-right"},
                   ],
@@ -115,7 +117,7 @@ class Distposiciones {
                   },
                   "infoCallback": function( settings, start, end, max, total, pre ) {
 
-                      _this.desactivarposiciones();
+                      _this.desactivarcolaboradores();
 
                       var api = this.api();
                       var pageInfo = api.page.info();
@@ -132,7 +134,7 @@ class Distposiciones {
           /*END TABLA USUARIO*/
 
           /*BEGIN VALIDAR NUEVO USUARIO*/
-          validateposiciones(){
+          validatecolaboradores(){
 
             $('#nuevoregistro').submit(function(){
                 $(this).find(':submit').attr('disabled','disabled');
@@ -222,24 +224,24 @@ class Distposiciones {
 
 
           /*BEGIN DESACTIVAR UN USUARIO*/
-          desactivarposiciones(){
+          desactivarcolaboradores(){
 
               const _this = this
 
               $( ".desactivar" ).off('click');
                 $( ".desactivar" ).click(function() {
                     
-                    const posicionesId = $( this ).attr( "attr-id" );
-                    var opciones = {posicionesId:posicionesId};
-                    const message = 'Seguro que desea cambiar de estatus el posiciones?'
-                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarposiciones);
+                    const colaboradoresId = $( this ).attr( "attr-id" );
+                    var opciones = {colaboradoresId:colaboradoresId};
+                    const message = 'Seguro que desea cambiar de estatus el colaboradores?'
+                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarcolaboradores);
                   objConfirmacionmodal.init();
                   
               });
           }
           
 
-          callbackDesactivarposiciones(response, opciones){
+          callbackDesactivarcolaboradores(response, opciones){
 
    
               if(response == true){
@@ -248,7 +250,7 @@ class Distposiciones {
 
                   $.post( BASEURL+'/desactivar', 
                   {
-                      posicionesId: opciones.posicionesId,
+                      colaboradoresId: opciones.colaboradoresId,
                       _token:token 
                       }
                   )
@@ -259,34 +261,34 @@ class Distposiciones {
 
                       if(data.response == true){
                           const modalTitle = 'Posiciones';
-                          const modalMessage = 'El posiciones ha sido cambiado de estatus';
+                          const modalMessage = 'El colaboradores ha sido cambiado de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          const objDistposicioness = new Distposiciones();							
-                          objDistposicioness.init();	
-                          //objDistposicioness.posicioness($( "#search" ).val());
+                          const objDistcolaboradoress = new Distcolaboradores();							
+                          objDistcolaboradoress.init();	
+                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
 
                       }else{
                           
                           const modalTitle = 'Posiciones';
-                          const modalMessage = 'El posiciones no se ha podido cambiar de estatus';
+                          const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          //const objDistposicioness = new Distposiciones();							
-                          //objDistposicioness.posicioness($( "#search" ).val());
+                          //const objDistcolaboradoress = new Distcolaboradores();							
+                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
                       }
                   })
                   .fail(function() {
                       
                       const modalTitle = 'Posiciones';
-                      const modalMessage = 'El posiciones no se ha podido cambiar de estatus';
+                      const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
                       const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                       objMessagebasicModal.init();
 
-                      //const objDistposicioness = new Distposiciones();							
-                      //objDistposicioness.posicioness($( "#search" ).val());
+                      //const objDistcolaboradoress = new Distcolaboradores();							
+                      //objDistcolaboradoress.colaboradoress($( "#search" ).val());
                       
                   })
                   .always(function() {
@@ -306,7 +308,7 @@ class Distposiciones {
 
 $(document).ready(function(){
 
-  const objDistposiciones = new Distposiciones();
-  objDistposiciones.init();
+  const objDistcolaboradores = new Distcolaboradores();
+  objDistcolaboradores.init();
 
 });

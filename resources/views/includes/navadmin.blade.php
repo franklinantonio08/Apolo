@@ -34,9 +34,9 @@
                         <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-comment-bubble') }}"></use>
                 </svg> Colaboradores</a>
                 <ul class="nav-group-items">
-                        <li class="nav-item"><a class="nav-link" href="/dist/comentario"> Colaboradores</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/dist/comentario"> Accion Disciplinaria</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/dist/comentario"> Colaboradores Inactivos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/dist/colaboradores"> Colaboradores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/dist/colaboradores"> Accion Disciplinaria</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/dist/colaboradores"> Colaboradores Inactivos</a></li>
                 </ul>
         </li>
 

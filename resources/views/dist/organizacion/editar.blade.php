@@ -40,7 +40,7 @@
                 <!-- Formulario -->
 
                 <div class="container px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/storecebececo/nuevo') }}" enctype="multipart/form-data">
+                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/storecebececo/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
                             {{ csrf_field() }}
                             
                             <input type="hidden" id="storecebececoId" name="storecebececoId" value="{{$storecebececo->id}}" class="form-control text-right" placeholder="">

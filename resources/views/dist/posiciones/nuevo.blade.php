@@ -22,7 +22,7 @@
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Departamento</div>
+                        <div class="card-title fs-4 fw-semibold">Posición</div>
                     </div>
                 </div>
 			</div>
@@ -40,14 +40,26 @@
                 <!-- Formulario -->
 
                 <div class="container px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/posiciones/nuevo') }}" enctype="multipart/form-data">
+                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/posiciones/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
                             {{ csrf_field() }}
                         <div class="col-lg-6 m-b-10">
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Regional" />
+                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Posicion" />
                                     <label for="nombre">Nombre</label>
                                 </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="departamento" name="departamento">
+                                        <option value="" selected disabled>Selecciona un departamento</option>
+                                        @foreach ($departamento as $key => $value) 										
+                                        <option value="{{ $value->id }}">{{ $value->nombre }}</option>										
+                                        @endForeach
+                                    </select>
+                                    <!--label for="nombre">departamento</label-->
+                                </div>
+
+                               
                                 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>

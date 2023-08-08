@@ -22,7 +22,7 @@
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Departamento</div>
+                        <div class="card-title fs-4 fw-semibold">Posición</div>
                     </div>
                 </div>
 			</div>
@@ -40,7 +40,7 @@
                 <!-- Formulario -->
 
                 <div class="container px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/posiciones/nuevo') }}" enctype="multipart/form-data">
+                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/posiciones/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
                             {{ csrf_field() }}
                             
                             <input type="hidden" id="posicionesId" name="posicionesId" value="{{$posiciones->id}}" class="form-control text-right" placeholder="">
@@ -50,6 +50,23 @@
                                 <div class="form-floating mb-3">
                                     <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" value="{{$posiciones->nombre}}"/>
                                     <label for="nombre">Nombre</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="departamento" name="departamento">
+                                        <option value="" selected disabled>Selecciona un departamento</option>
+                                        @foreach ($departamento as $key => $value) 										
+                                      
+
+                                        @if($posiciones->departamento == $value->nombre)
+										<option value="{{  $value->id }}" selected>{{$value->nombre }}</option>
+										@else
+										<option value="{{ $value->id }}">{{ $value->nombre }}</option>
+										@endif
+                                        @endForeach
+
+                                    </select>
+                                    <!--label for="nombre">departamento</label-->
                                 </div>
 
                                 <div class="form-floating mb-3">

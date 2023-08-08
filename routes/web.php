@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\Dist\DepartamentoController;
 use App\Http\Controllers\Dist\PosicionesController;
+use App\Http\Controllers\Dist\ColaboradoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,16 @@ Route::middleware('guest')->group(function () {
          Route::post('dist/posiciones/editar/{Id}', [PosicionesController::class, 'PostEditar']) ->name('PostEditar'); 
          Route::get('dist/posiciones/mostrar/{Id}', [PosicionesController::class, 'Mostrar']) ->name('Mostrar');
          Route::post('dist/posiciones/desactivar', [PosicionesController::class, 'Desactivar']) ->name('Desactivar');
+
+        //Colaboradores
+        Route::get('dist/colaboradores', [ColaboradoresController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/colaboradores', [ColaboradoresController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('dist/colaboradores/nuevo', [ColaboradoresController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('dist/colaboradores/nuevo', [ColaboradoresController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('dist/colaboradores/editar/{Id}', [ColaboradoresController::class, 'Editar']) ->name('Editar');
+        Route::post('dist/colaboradores/editar/{Id}', [ColaboradoresController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('dist/colaboradores/mostrar/{Id}', [ColaboradoresController::class, 'Mostrar']) ->name('Mostrar');
+        Route::post('dist/colaboradores/desactivar', [ColaboradoresController::class, 'Desactivar']) ->name('Desactivar');
 
 
 
