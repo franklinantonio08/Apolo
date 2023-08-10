@@ -3,9 +3,12 @@ class Distcolaboradores {
     }
 
     init(){
+
         
-        if($('#colaboradores').length) {
+        if($('#nuevoregistro').length) {
           this.colaboradores();
+          this.cambia_distrito();
+          this.cambia_posiciones();
       }
 
       if($('#nuevoregistro').length) {
@@ -59,6 +62,141 @@ class Distcolaboradores {
           event.stopPropagation();
       });
     
+//console.log('por aqui vamos');
+
+    }
+
+   // $('#provincia').on('change', function() { }
+
+    cambia_distrito() {
+
+        console.log(BASEURL);
+
+        const _this = this;
+    $('#provincia').on('change', function() { 
+        var provincia = $( "#provincia" ).val();  
+        var obj_div = document.getElementById('DivResultado_distrito'); 
+        var selec1 = '<div class="form-floating mb-3">';
+        selec1 += '<select id="distrito" name="distrito"  class="form-select" > ';
+        selec1 += '<option value="" selected disabled>Selecciona un departamento</option>';
+        var selec2 = '</select> </div>';
+        var valor = selec1;
+             
+        if(provincia != ''){
+
+            console.log('por aqui entra al post');
+
+            $.post( BASEURL+'/buscadistrito', 
+                {
+                _token:token, provincia:provincia
+                }
+                ).done(function( data ) {
+                    if(data.response == true){ 
+                    $.each(data.data, function (id, value) {
+                        $.each(value, function (id, valur) {
+                            const distri = valur;
+                            valor +=distri;
+                        });
+                    });
+                    
+                    valor +=selec2;
+                    obj_div.innerHTML =valor;
+                    //_this.cambia_corregimiento();
+                }
+                })
+                .fail(function() {
+                })
+                .always(function() {
+                }, "json");
+            //console.log(provincia, distrito, corregimiento);
+        }else{
+
+            console.log('no entra al post');
+
+            const distri = '<option value="" seleted >S/A</option>';            
+            valor +=distri;            
+            valor +=selec2;
+            obj_div.innerHTML =valor;
+           // _this.cambia_corregimiento();
+        }
+
+      });
+
+    
+
+            $('#DivResultado_distrito').on('change', function() { 
+                
+                  //  _this.cambia_corregimiento();
+                
+            });
+    }
+
+
+    cambia_posiciones() {
+
+        console.log(BASEURL);
+
+        const _this = this;
+    $('#departamento').on('change', function() { 
+
+        console.log('post');
+
+        var departamento = $( "#departamento" ).val();  
+        var obj_div = document.getElementById('DivResultado_posiciones'); 
+        var selec1 = '<div class="input-group mb-3">';
+        selec1 += '<label class="input-group-text" for="posiciones">Posicion</label>';
+        selec1 += '<select class="form-select" id="posiciones" name="posiciones">';
+        selec1 += '<option value="" selected disabled>Selecciona...</option>';
+        var selec2 = '</select> </div>';
+        var valor = selec1;
+             
+        if(departamento != ''){
+            $.post( BASEURL+'/buscaposiciones', 
+                {
+                _token:token, departamento:departamento
+                }
+                ).done(function( data ) {
+                    if(data.response == true){ 
+                    $.each(data.data, function (id, value) {
+                        $.each(value, function (id, valur) {
+                            const posiciones = valur;
+                            valor +=posiciones;
+                        });
+                    });
+                    
+                    valor +=selec2;
+                    obj_div.innerHTML =valor;
+
+                    console.log(valor);
+                    //_this.cambia_corregimiento();
+                }
+                })
+                .fail(function() {
+                })
+                .always(function() {
+                }, "json");
+            //console.log(provincia, distrito, corregimiento);
+        }else{
+
+            console.log('no post');
+
+
+            const posiciones = '<option value="" seleted >S/A</option>';            
+            valor +=posiciones;            
+            valor +=selec2;
+            obj_div.innerHTML =valor;
+           // _this.cambia_corregimiento();
+        }
+
+      });
+
+    
+
+            $('#DivResultado_posiciones').on('change', function() { 
+                
+                  //  _this.cambia_corregimiento();
+                
+            });
     }
 
         /*BEGIN TABLA USUARIO*/
@@ -66,7 +204,7 @@ class Distcolaboradores {
 
             //var BASEURL = window.location.origin; 
 
-            console.log(BASEURL);
+            //console.log(BASEURL);
 
           const _this = this
 

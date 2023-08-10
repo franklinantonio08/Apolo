@@ -82,7 +82,7 @@
             <div class="content-page">
               <!-- Start content -->
               <div class="content" style="overflow: auto !important;">
-                  <div class="container">
+                  <div class="container-fluid">
 
                       
 

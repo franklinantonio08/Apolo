@@ -113,8 +113,83 @@ public function Nuevo(){
     	}	
 		view()->share('departamento', $departamento);	
 
+        
+
+        $provincia = DB::table('provincia')
+    	->where('estatus', '=', 'Activo')
+    	//->where('paisId', '=', '124')
+		->select('id', 'nombre', 'codigo')
+		->get();
+
+		if(empty($provincia)){
+    		return redirect('dist/dashboard')->withErrors("ERROR LA PROVINCIA ESTA VACIA CODE-0226");
+    	}	
+		view()->share('provincia', $provincia);	
+
 
     return \View::make('dist/colaboradores/nuevo');
+}
+
+public function postBuscadistrito(){
+
+    $provincia = $this->request->provincia;
+    
+    $distrito = DB::table('distrito')
+    ->where('estatus', '=', 'Activo')
+    ->where('provinciaId', '=', $provincia)
+    ->select('id', 'nombre', 'codigo')
+    ->get();
+
+    foreach ($distrito as $key => $value) {
+        
+        $distritoid = $value->id;
+        $distritonombre = $value->nombre;
+        $distritocodigo = $value->codigo;
+
+        $data[] = array(
+            "detalle"=> "<option value='".$distritoid."' >".$distritonombre."</option>"
+        );		  		 
+            
+    }		
+        $response = array(
+            'response' => TRUE,
+            'data' => $data,
+        );
+
+        return response()
+        ->json($response);				
+            
+}
+
+public function postBuscaposiciones(){
+
+    $departamento = $this->request->departamento;
+    
+    $posiciones = DB::table('posiciones')
+    ->where('estatus', '=', 'Activo')
+    ->where('departamentoId', '=', $departamento)
+    ->select('id', 'nombre', 'codigo')
+    ->get();
+
+    foreach ($posiciones as $key => $value) {
+        
+        $posicionesid = $value->id;
+        $posicionesnombre = $value->nombre;
+        $posicionescodigo = $value->codigo;
+
+        $data[] = array(
+            "detalle"=> "<option value='".$posicionesid."' >".$posicionesnombre."</option>"
+        );		  		 
+            
+    }		
+        $response = array(
+            'response' => TRUE,
+            'data' => $data,
+        );
+
+        return response()
+        ->json($response);				
+            
 }
 
 }

@@ -66,6 +66,8 @@ Route::middleware('guest')->group(function () {
         Route::get('dist/colaboradores/mostrar/{Id}', [ColaboradoresController::class, 'Mostrar']) ->name('Mostrar');
         Route::post('dist/colaboradores/desactivar', [ColaboradoresController::class, 'Desactivar']) ->name('Desactivar');
 
+        Route::post('dist/colaboradores/nuevo/buscadistrito', [ColaboradoresController::class, 'postBuscadistrito']) ->name('postBuscadistrito');
+        Route::post('dist/colaboradores/nuevo/buscaposiciones', [ColaboradoresController::class, 'postBuscaposiciones']) ->name('postBuscaposiciones');
 
 
         /*Route::get('dist/organizacion/importar', [OrganizacionController::class, 'Importar']) ->name('Importar'); 
