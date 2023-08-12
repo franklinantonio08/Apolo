@@ -41,35 +41,35 @@ public function PostIndex(){
         return $currentPage;
     });
 
-    $query = DB::table('posiciones')
-    ->leftjoin('departamento', 'departamento.id', '=', 'posiciones.departamentoId')
-     ->select('posiciones.*', 'departamento.nombre as departamento')
+    $query = DB::table('colaboradores')
+    ->leftjoin('departamento', 'departamento.id', '=', 'colaboradores.departamentoId')
+     ->select('colaboradores.*', 'departamento.nombre as departamento')
      ->orderBy($orderBy,$order);
 
 
     if(isset($request['searchInput']) && trim($request['searchInput']) != ""){
         $query->where(
             function ($query) use ($request) {
-                $query->orWhere('posiciones.nombre', 'like', '%'.trim($request['searchInput']).'%');
-                $query->orWhere('posiciones.codigo', 'like', '%'.trim($request['searchInput']).'%');
+                $query->orWhere('colaboradores.nombre', 'like', '%'.trim($request['searchInput']).'%');
+                $query->orWhere('colaboradores.codigo', 'like', '%'.trim($request['searchInput']).'%');
                 $query->orWhere('departamento.nombre', 'like', '%'.trim($request['searchInput']).'%');
             }
          );		
     }
        
-    $posiciones = $query->paginate($length); 
+    $colaboradores = $query->paginate($length); 
 
-    $result = $posiciones->toArray();
+    $result = $colaboradores->toArray();
     $data = array();
     foreach($result['data'] as $value){
 
         if($value->estatus == 'Activo'){
-            $detalle = '<a href="/dist/posiciones/mostrar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-warning text-white m-b-5"> <i class="bi bi-eye"></i> </a>
-                            <a href="/dist/posiciones/editar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-secondary text-white m-b-5"> <i class="bi bi-pencil"></i> </a>
+            $detalle = '<a href="/dist/colaboradores/mostrar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-warning text-white m-b-5"> <i class="bi bi-eye"></i> </a>
+                            <a href="/dist/colaboradores/editar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-secondary text-white m-b-5"> <i class="bi bi-pencil"></i> </a>
                             <a href="#" attr-id="'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-danger text-white m-b-5 desactivar"> <i class="bi bi-trash"></i> </a>';
         }else{
-            $detalle = '<a href="/dist/posiciones/mostrar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-warning text-white m-b-5"> <i class="bi bi-eye"></i> </a>
-                            <a href="/dist/posiciones/editar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-secondary text-white m-b-5"> <i class="bi bi-pencil"></i> </a>
+            $detalle = '<a href="/dist/colaboradores/mostrar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-warning text-white m-b-5"> <i class="bi bi-eye"></i> </a>
+                            <a href="/dist/colaboradores/editar/'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-secondary text-white m-b-5"> <i class="bi bi-pencil"></i> </a>
                             <a href="#" attr-id="'.$value->id.'" class="btn btn-icon waves-effect waves-light bg-primary text-white m-b-5 desactivar"> <i class="bi bi-check2-square"></i> </a>';
         }
 
@@ -128,6 +128,193 @@ public function Nuevo(){
 
 
     return \View::make('dist/colaboradores/nuevo');
+}
+
+public function postNuevo(){
+
+    //return $this->request->all();
+
+    $posicionesExiste = Colaboradores::where('cedula', $this->request->cedula)
+    //->where('distribuidorId', Auth::user()->distribuidorId)
+    ->first();
+    if(!empty($posicionesExiste)){
+        return redirect('dist/colaboradores/nuevo')->withErrors("ERROR AL GUARDAR STORE CEBECECO CODE-0001");
+    }
+
+    DB::beginTransaction();
+    try { 	
+        $posiciones = new Colaboradores;
+
+        $posiciones->cedula         = trim($this->request->cedula);
+        $posiciones->nombre         = trim($this->request->nombre);
+        $posiciones->apellido       = trim($this->request->apellido);
+        $posiciones->correo         = trim($this->request->correo);
+        $posiciones->tipoSangre     = trim($this->request->tipoSangre);
+        $posiciones->genero         = trim($this->request->genero);
+        $posiciones->tipoUsuario    = trim($this->request->tipoUsuario);
+        $posiciones->telefono       = trim($this->request->telefono);
+        $posiciones->departamentoId         = trim($this->request->departamento);
+        $posiciones->posicionId     = trim($this->request->posiciones);
+
+        $posiciones->estatus          = 'Activo';
+        $posiciones->created_at       = date('Y-m-d H:i:s');
+        $posiciones->usuarioId        = Auth::user()->id;
+
+        if(isset($this->request->comentario)){
+            $posiciones->infoextra       = trim($this->request->comentario); 
+        }
+
+        $result = $posiciones->save();
+
+        $posicionesId = $posiciones->id;
+
+        if(empty($posicionesId)){
+            DB::rollBack();
+            return redirect('dist/colaboradores/nuevo')->withErrors("ERROR AL GUARDAR EL CONTRATO NO SE GENERO UN # DE CONTRATO CORRECTO CODE-0196");
+        }
+        
+        $posicionesCode = str_pad($posicionesId,5, "0",STR_PAD_LEFT);
+
+        //return $posicionesCode;
+
+        $posicionesUpdate = Colaboradores::find($posicionesId);
+        $posicionesUpdate->codigo = $posicionesCode;
+        $result = $posicionesUpdate->save();	
+
+    } catch(\Illuminate\Database\QueryException $ex){ 
+        DB::rollBack();
+        return redirect('dist/colaboradores/nuevo')->withErrors('ERROR AL GUARDAR STORE CEBECECO CODE-0002'.$ex);
+    }
+    
+    if($result != 1){
+        DB::rollBack();
+        return redirect('dist/colaboradores/nuevo')->withErrors("ERROR AL GUARDAR STORE CEBECECO CODE-0003");
+    }
+    DB::commit();
+
+    return redirect('dist/colaboradores')->with('alertSuccess', 'STORE CEBECECO HA SIDO INGRESADA');
+
+}
+
+public function Editar($colaboradoresId){
+    /*if(!$this->common->usuariopermiso('004')){
+        return redirect('dist/dashboard')->withErrors($this->common->message);
+    }*/
+
+    $colaboradores = DB::table('colaboradores')
+     ->where('colaboradores.id', '=', $colaboradoresId)
+     //->where('rubro.distribuidorId', Auth::user()->distribuidorId)
+     ->leftjoin('departamento', 'departamento.id', '=', 'colaboradores.departamentoId')
+     ->select('colaboradores.*', 'departamento.nombre as departamento')
+     ->first();
+
+    if(empty($colaboradores)){
+        return redirect('dist/colaboradores')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0004");
+    }
+
+    /*$departamento = DB::table('departamento')
+    ->where('estatus', '=', 'Activo')
+    ->where('organizacionId', '=', '1')
+    ->select('id', 'nombre', 'codigo')
+    ->get();
+
+    if(empty($departamento)){
+        return redirect('dist/dashboard')->withErrors("ERROR LA PROVINCIA ESTA VACIA CODE-0226");
+    }	
+
+    view()->share('departamento', $departamento);	*/
+
+    view()->share('colaboradores', $colaboradores);
+
+    //return \View::make('dist/colaboradores/editar');
+    return \View::make('dist/colaboradores/editar');
+}
+
+public function PostEditar(){
+    /*if(!$this->common->usuariopermiso('004')){
+        return redirect('dist/dashboard')->withErrors($this->common->message);
+    }*/
+
+    $request = $this->request->all();
+
+    //return $request;
+
+    $posicionesId = isset($this->request->posicionesId) ? $this->request->posicionesId: '';
+
+    //return $posicionesId;
+
+    $posiciones = Colaboradores::where('id', $posicionesId)
+    //->where('distribuidorId',Auth::user()->distribuidorId)
+    ->first();
+
+    if(empty($posiciones)){
+        return redirect('dist/posiciones')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0005");
+    }
+
+    DB::beginTransaction();
+        $posicionesUpdate = Colaboradores::find($posicionesId);
+        $posicionesUpdate->nombre           = $this->request->nombre;
+        $posicionesUpdate->departamentoId   = $this->request->departamento;
+        $posicionesUpdate->infoextra        = $this->request->comentario;
+        
+        $result = $posicionesUpdate->save();
+
+    if($result != 1){
+        DB::rollBack();
+
+        return redirect('dist/colaboradores/editar/'.$posicionesId)->withErrors("ERROR AL EDITAR ELEMENTOS DE STORE CEBECECO CODE-0006");
+    }
+
+    DB::commit();
+
+    return redirect('dist/colaboradores/')->with('alertSuccess', 'STORE CEBECECO HA SIDO EDITADO');
+}
+
+public function Mostrar($colaboradoresId){
+    /*if(!$this->common->usuariopermiso('004')){
+        return redirect('dist/dashboard')->withErrors($this->common->message);
+    }*/
+
+    $colaboradores = DB::table('colaboradores')
+     ->where('colaboradores.id', '=', $colaboradoresId)
+     ->leftjoin('departamento', 'departamento.id', '=', 'colaboradores.departamentoId')
+     ->leftjoin('posiciones', 'posiciones.id', '=', 'colaboradores.posicionId')
+     ->select('colaboradores.*', 'departamento.nombre as departamento', 'posiciones.nombre as posicion')
+     ->first();
+
+    if(empty($colaboradores)){
+        return redirect('dist/colaboradores')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0007");
+    }
+
+     view()->share('colaboradores', $colaboradores);
+
+    return \View::make('dist/colaboradores/mostrar');
+}
+public function Desactivar(){
+    /*if(!$this->common->usuariopermiso('004')){
+        return response()
+          ->json(['response' => false]);
+    }*/
+    
+    $colaboradoresExiste = Colaboradores::where('id', $this->request->colaboradoresId)
+                    //->where('distribuidorId', Auth::user()->distribuidorId)
+                    ->first();
+    if(!empty($colaboradoresExiste)){
+
+        $estatus = 'Inactivo';
+        if($colaboradoresExiste->estatus == 'Inactivo'){
+            $estatus = 'Activo';	
+        }
+
+        $affectedRows = Colaboradores::where('id', '=', $this->request->colaboradoresId)
+                        ->update(['estatus' => $estatus]);
+        
+        return response()
+          ->json(['response' => TRUE]);
+    }
+
+    return response()
+          ->json(['response' => false]);
 }
 
 public function postBuscadistrito(){

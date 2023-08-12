@@ -4,13 +4,17 @@ class Distdepartamento {
 
     init(){
         
-        if($('#departamento').length) {
+        if($('#nuevoregistro').length) {
           this.departamento();
       }
 
       if($('#nuevoregistro').length) {
           this.validatedepartamento();
       }
+
+      if($('#departamento').length) {
+        this.departamento();
+    }
 
       if($('#nuevoimportar').length) {
         this.validateimportacion();
@@ -66,7 +70,7 @@ class Distdepartamento {
 
             //var BASEURL = window.location.origin; 
 
-            console.log(BASEURL);
+        console.log(BASEURL);
 
           const _this = this
 
@@ -159,7 +163,7 @@ class Distdepartamento {
                     },
                   rules: {
                     nombre: {
-                        required: true,
+                        required: false,
                     },
                    
                   },

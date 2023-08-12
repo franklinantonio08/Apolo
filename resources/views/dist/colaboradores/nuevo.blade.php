@@ -6,7 +6,6 @@
 </script>
 
 <script src="{{ asset('../js/comun/messagebasicModal.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('../js/dist/colaboradores/colaboradores.js') }}"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
@@ -26,7 +25,6 @@
 
 </div>
 
-
 	<div class="col-lg-12">
         <div class="card mb-4">
 			
@@ -39,7 +37,6 @@
 			</div>
 
             <div class="table-responsive">
-
                    
                 <!-- Formulario -->
 
@@ -49,67 +46,41 @@
                         <div class="col-lg-5 m-b-6">
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Cedula</span>
-                                    <input type="text" class="form-control" id="cedula" name="cedula" placeholder="Cedula" aria-label="Cedula" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" style="width: 130px;" >Cedula</span>
+                                    <input type="text" class="form-control" id="cedula" name="cedula" placeholder="">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Nombre</span>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" style="width: 130px;">Nombre</span>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Apellido</span>
-                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" aria-label="Apellido" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" style="width: 130px;">Apellido</span>
+                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon2">
-                                    <span class="input-group-text" id="basic-addon2">@example.com</span>
+                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo" >
+                                    <span class="input-group-text" style="width: 130px;">@example.com</span>
                                   </div>
 
                                   <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Teléfono</span>
-                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" aria-label="Teléfono" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" style="width: 130px;">Teléfono</span>
+                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Tipo de Sangre</label>
-                                    <select class="form-select" id="tipoSangre" name="tipoSangre">
-                                        <option value="" selected disabled>Seleccionar...</option>	
-                                      <option value="O+">O+</option>										
-                                        <option value="O-">O-</option>										
-                                        <option value="A+">A+</option>										
-                                        <option value="A-">A-</option>										
-                                        <option value="B+">B+</option>										
-                                        <option value="B-">B-</option>										
-                                        <option value="AB+">AB+</option>	
-                                    </select>
-                                  </div>
-
-                                  <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Genero</label>
+                                    <label class="input-group-text" style="width: 130px;" for="inputGroupSelect01">Genero</label>
                                     <select class="form-select" id="genero" name="genero">
                                         <option value="" selected disabled>Seleccionar...</option>	
-                                        <option value="Masculino">Masculino</option>										
-                                        <option value="Femenino">Femenino</option>	
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Femenino">Femenino</option>										
                                     </select>
                                   </div>
 
-                                  <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Tipo de Usuario</label>
-                                    <select class="form-select" id="tipoUsuario" name="tipoUsuario">
-                                        <option value="" selected disabled>Seleccionar...</option>	
-                                        <option value="Admin">Admin</option>										
-                                        <option value="SuperAdmin">SuperAdmin</option>										
-                                        <option value="Colaborador">Colaborador</option>										
-                                        <option value="Recursos Humanos">Recursos Humanos</option>	
-                                    </select>
-                                  </div>
-
-
-                                  <div class="input-group mb-3">
-                                    <label class="input-group-text" for="departamento">Departamento</label>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 130px;" for="departamento">Departamento</label>
                                     <select class="form-select" id="departamento" name="departamento">
                                         <option value="" selected disabled>Selecciona...</option>
                                         @foreach ($departamento as $key => $value) 										
@@ -121,24 +92,43 @@
                                 
                                     <div class="input-group mb-3" id='DivResultado_posiciones'>
                                         <div class="input-group mb-3">
-                                        <label class="input-group-text" for="posiciones">Posicion</label>
+                                        <label class="input-group-text" style="width: 130px;" for="posiciones">Posicion</label>
                                         <select class="form-select" id="posiciones" name="posiciones">
                                             <option value="" selected disabled>Selecciona...</option>
                                         </select>
                                         </div>
                                     </div> 
-                              
 
-                               <!--
-
-                                <div class="form-floating mb-3">
-                                    <div id='DivResultado_posiciones'>
-                                        <div class="form-floating mb-3">
-                                    <select class="form-select" id="posiciones" name="posiciones">
-                                        <option value="" selected disabled>Selecciona un posicion</option>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 150px;" for="inputGroupSelect01">Tipo de Sangre</label>
+                                    <select class="form-select" id="tipoSangre" name="tipoSangre">
+                                        <option value="" selected disabled>Seleccionar...</option>	
+                                        <option value="O+">O+</option>										
+                                        <option value="O-">O-</option>										
+                                        <option value="A+">A+</option>										
+                                        <option value="A-">A-</option>										
+                                        <option value="B+">B+</option>										
+                                        <option value="B-">B-</option>										
+                                        <option value="AB+">AB+</option>	
                                     </select>
-                                </div>
-                            </div> -->
+                                  </div>
+
+                                  <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 150px;" for="inputGroupSelect01">Tipo de Usuario</label>
+                                    <select class="form-select" id="tipoUsuario" name="tipoUsuario">
+                                        <option value="" selected disabled>Seleccionar...</option>	
+                                        <option value="Admin">Admin</option>										
+                                        <option value="SuperAdmin">SuperAdmin</option>										
+                                        <option value="Colaborador">Colaborador</option>										
+                                        <option value="Recursos Humanos">Recursos Humanos</option>	
+                                    </select>
+                                  </div>
+
+                                 
+
+
+                                  
+                              
 
                             <!-- 
                                 <div class="form-floating mb-3">
@@ -165,18 +155,17 @@
                                     <select class="form-select" id="distrito" name="distrito">
                                         <option value="" selected disabled>Selecciona un distrito</option>
                                     </select>
-                                </div> -->
-
+                                </div> 
                                
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text"  >Inicio de Contrato</span>
+                                    <span class="input-group-text" style="width: 150px;">Inicio de Contrato</span>
                                     <input type="text" class="form-control"id="fechaInicio" name="fechaInicio" aria-label="Cedula" aria-describedby="basic-addon1">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" >Fin de Contrato</span>
+                                    <span class="input-group-text" style="width: 150px;">Fin de Contrato</span>
                                     <input type="text" class="form-control" id="fechaFin" name="fechaFin" aria-label="Cedula" aria-describedby="basic-addon1">
-                                </div>
+                                </div> -->
                                 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>

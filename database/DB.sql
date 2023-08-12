@@ -1,4 +1,6 @@
 
+
+
 DROP TABLE IF EXISTS `experienciasLaborales`;
 DROP TABLE IF EXISTS `beneficiosDeduciones`;
 DROP TABLE IF EXISTS `salarios`;
@@ -63,9 +65,8 @@ CREATE TABLE IF NOT EXISTS `colaboradores` (
     `telefono` varchar(15) DEFAULT NULL,
     `departamentoId` int(11) NOT NULL,
     `posicionId` int(11) NOT NULL,
-    `fechaInicio` DATETIME NULL DEFAULT NULL,
-    `fechafinalizacion` DATETIME NULL DEFAULT NULL,
     `estatus` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo',
+    `infoextra` text,
     `usuarioId` int(11) NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -154,6 +155,9 @@ CREATE TABLE IF NOT EXISTS `informacionBancaria` (
 
 CREATE TABLE IF NOT EXISTS `salarios` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `tipoContrato` enum('Contrato por Tiempo Indefinido', 'Contrato por Tiempo Determinado', 'Contrato por Obra o Servicio Determinado', 'Contrato por Prueba', 'Contrato de Reemplazo', 'Contrato de Aprendizaje', 'Contrato a Tiempo Parcial', 'Contrato de Teletrabajo', 'Contrato por Temporada', 'Contrato de Extranjeros', 'Contrato a Domicilio') COLLATE utf8_general_ci NOT NULL DEFAULT 'Contrato por Tiempo Indefinido',
+    `fechaInicio` DATETIME NULL DEFAULT NULL,
+    `fechafinalizacion` DATETIME NULL DEFAULT NULL,
     `tipoSalario` enum('Hora', 'Semanal', 'Quincenal', 'Mensual') COLLATE utf8_general_ci NOT NULL DEFAULT 'Quincenal',
     `monto` decimal(13,4) DEFAULT '0.0000',
     `tipoPago`  enum('Ahorro', 'Corriente', 'Otro') COLLATE utf8_general_ci NOT NULL DEFAULT 'Ahorro',
@@ -1005,4 +1009,6 @@ INSERT INTO `corregimiento` (`nombre`, `codigo`, `distritoId`) VALUES
 	('LAS UVAS', '7', '159'),
 	('LOS LLANITOS', '8', '159'),
 	('SAN JOSE', '9', '159');
+
+
 

@@ -43,12 +43,12 @@
                     <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             
-                            <input type="hidden" id="departamentoId" name="departamentoId" value="{{$departamento->id}}" class="form-control text-right" placeholder="">
+                            <input type="hidden" id="departamentoId" name="departamentoId" value="{{$colaboradores->id}}" class="form-control text-right" placeholder="">
 
                         <div class="col-lg-6 m-b-10">
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" value="{{$departamento->nombre}}"/>
+                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" value="{{$colaboradores->nombre}}"/>
                                     <label for="nombre">Nombre</label>
                                 </div>
 

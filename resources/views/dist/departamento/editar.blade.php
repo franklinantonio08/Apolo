@@ -47,9 +47,9 @@
 
                         <div class="col-lg-6 m-b-10">
 
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" value="{{$departamento->nombre}}"/>
-                                    <label for="nombre">Nombre</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 130px;" >Nombre</span>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="{{$departamento->nombre}}">
                                 </div>
 
                                 <div class="form-floating mb-3">

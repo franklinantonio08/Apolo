@@ -14,6 +14,9 @@ class Distcolaboradores {
       if($('#nuevoregistro').length) {
           this.validatecolaboradores();
       }
+      if($('#colaboradores').length) {
+        this.colaboradores();
+    }
 
       if($('#nuevoimportar').length) {
         this.validateimportacion();
@@ -144,7 +147,7 @@ class Distcolaboradores {
         var departamento = $( "#departamento" ).val();  
         var obj_div = document.getElementById('DivResultado_posiciones'); 
         var selec1 = '<div class="input-group mb-3">';
-        selec1 += '<label class="input-group-text" for="posiciones">Posicion</label>';
+        selec1 += '<label style="width: 130px;" class="input-group-text" for="posiciones">Posicion</label>';
         selec1 += '<select class="form-select" id="posiciones" name="posiciones">';
         selec1 += '<option value="" selected disabled>Selecciona...</option>';
         var selec2 = '</select> </div>';
@@ -298,9 +301,10 @@ class Distcolaboradores {
                        $("button[data-id*='"+titleElemnt+"']").addClass( "successValidate" );
                        $(element).addClass( "successValidate" ); 
                     },
+                    
                   rules: {
                     nombre: {
-                        required: true,
+                        required: false,
                     },
                    
                   },

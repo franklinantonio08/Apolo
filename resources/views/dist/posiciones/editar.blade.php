@@ -47,27 +47,26 @@
 
                         <div class="col-lg-6 m-b-10">
 
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" value="{{$posiciones->nombre}}"/>
-                                    <label for="nombre">Nombre</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 130px;">Nombre</span>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder=""value="{{$posiciones->nombre}}">
                                 </div>
 
-                                <div class="form-floating mb-3">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 130px;" for="departamento">Departamento</label>
                                     <select class="form-select" id="departamento" name="departamento">
-                                        <option value="" selected disabled>Selecciona un departamento</option>
+                                        <option value="" selected disabled>Selecciona...</option>
                                         @foreach ($departamento as $key => $value) 										
-                                      
-
+                                        
                                         @if($posiciones->departamento == $value->nombre)
 										<option value="{{  $value->id }}" selected>{{$value->nombre }}</option>
 										@else
 										<option value="{{ $value->id }}">{{ $value->nombre }}</option>
 										@endif
+                                        
                                         @endForeach
-
                                     </select>
-                                    <!--label for="nombre">departamento</label-->
-                                </div>
+                                  </div>
 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>
