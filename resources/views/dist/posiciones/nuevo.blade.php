@@ -1,11 +1,12 @@
 @section('scripts')
 
 <script>
+    var BASEURL = '{{ url()->current() }}';
 	var token = '{{ csrf_token() }}';
 </script>
-	
-<script type="text/javascript" src="{{ asset('../js/dist/posiciones/posiciones.js') }}"></script>
+
 <script src="{{ asset('../js/comun/messagebasicModal.js') }}"></script>
+<script type="text/javascript" src="{{ asset('../js/dist/posiciones/posiciones.js') }}"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,6 +16,15 @@
 @extends('layouts.admin')
 
 @section('content')
+
+    <!-- ACTION BUTTONS -->
+    <div class="row">
+
+        @include('includes/errors')
+        @include('includes/success')
+
+    </div>
+   
    
 	<div class="col-lg-12">
         <div class="card mb-4">
@@ -29,14 +39,7 @@
 
             <div class="table-responsive">
 
-                    <!-- ACTION BUTTONS -->
-                    <div class="row">
-
-                        @include('includes/errors')
-                        @include('includes/success')
-
-                    </div>
-                   
+                
                 <!-- Formulario -->
 
                 <div class="container px-2 my-2">
@@ -44,20 +47,20 @@
                             {{ csrf_field() }}
                         <div class="col-lg-6 m-b-10">
 
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Posicion" />
-                                    <label for="nombre">Nombre</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 130px;">Nombre</span>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="">
                                 </div>
 
-                                <div class="form-floating mb-3">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 130px;" for="departamento">Departamento</label>
                                     <select class="form-select" id="departamento" name="departamento">
-                                        <option value="" selected disabled>Selecciona un departamento</option>
+                                        <option value="" selected disabled>Selecciona...</option>
                                         @foreach ($departamento as $key => $value) 										
                                         <option value="{{ $value->id }}">{{ $value->nombre }}</option>										
                                         @endForeach
                                     </select>
-                                    <!--label for="nombre">departamento</label-->
-                                </div>
+                                  </div>
 
                                
                                 

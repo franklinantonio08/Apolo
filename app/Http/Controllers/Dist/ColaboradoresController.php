@@ -221,10 +221,34 @@ public function Editar($colaboradoresId){
     if(empty($departamento)){
         return redirect('dist/dashboard')->withErrors("ERROR LA PROVINCIA ESTA VACIA CODE-0226");
     }	
-
-    view()->share('departamento', $departamento);	*/
+*/
+    view()->share('usuario', $colaboradores);	
 
     view()->share('colaboradores', $colaboradores);
+
+    $departamento = DB::table('departamento')
+    ->where('estatus', '=', 'Activo')
+    ->where('organizacionId', '=', '1')
+    ->select('id', 'nombre', 'codigo')
+    ->get();
+
+    if(empty($departamento)){
+        return redirect('dist/dashboard')->withErrors("ERROR LA PROVINCIA ESTA VACIA CODE-0226");
+    }	
+    view()->share('departamento', $departamento);	
+
+    
+
+    $provincia = DB::table('provincia')
+    ->where('estatus', '=', 'Activo')
+    //->where('paisId', '=', '124')
+    ->select('id', 'nombre', 'codigo')
+    ->get();
+
+    if(empty($provincia)){
+        return redirect('dist/dashboard')->withErrors("ERROR LA PROVINCIA ESTA VACIA CODE-0226");
+    }	
+    view()->share('provincia', $provincia);
 
     //return \View::make('dist/colaboradores/editar');
     return \View::make('dist/colaboradores/editar');

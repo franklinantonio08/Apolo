@@ -9,6 +9,7 @@ class Distcolaboradores {
           this.colaboradores();
           this.cambia_distrito();
           this.cambia_posiciones();
+          this.openCity();
       }
 
       if($('#nuevoregistro').length) {
@@ -44,6 +45,10 @@ class Distcolaboradores {
      
       this.acciones();
 
+      //document.addEventListener("DOMContentLoaded", function () {
+      
+   // });
+
     }
 
     acciones(){
@@ -67,9 +72,58 @@ class Distcolaboradores {
     
 //console.log('por aqui vamos');
 
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+
     }
 
    // $('#provincia').on('change', function() { }
+
+
+
+   test(){
+    //document.addEventListener("DOMContentLoaded", function () {
+        const navActive = document.getElementById('navActive');
+        const navLink = document.getElementById('navLink');
+        const navDisabled = document.getElementById('navDisabled');
+        const formContainer = document.getElementById('formContainer');
+
+        navActive.addEventListener('click', function (event) {
+            event.preventDefault();
+            formContainer.innerHTML = `
+                <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data">
+                    <!-- Your form content here -->
+                </form>
+            `;
+            formContainer.style.display = 'block';
+        });
+
+        navLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            formContainer.style.display = 'none';
+        });
+
+        navDisabled.addEventListener('click', function (event) {
+            event.preventDefault();
+            formContainer.style.display = 'none';
+        });
+   // });
+   }
+
+
+
 
     cambia_distrito() {
 
@@ -134,6 +188,7 @@ class Distcolaboradores {
             });
     }
 
+    
 
     cambia_posiciones() {
 
