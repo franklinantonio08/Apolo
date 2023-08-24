@@ -103,16 +103,18 @@ class DepartamentoController extends Controller
     }
 
     public function postNuevo(){
+
     	
         /*if(!$this->common->usuariopermiso('004')){
     		return redirect('dist/dashboard')->withErrors($this->common->message);
     	}*/
 
-        //return $this->request->all();
+        return $this->request->all();
 
     	$departamentoExiste = Departamento::where('nombre', $this->request->nombre)
         //->where('distribuidorId', Auth::user()->distribuidorId)
         ->first();
+
     	if(!empty($departamentoExiste)){
     		return redirect('dist/departamento/nuevo')->withErrors("ERROR AL GUARDAR STORE CEBECECO CODE-0001");
     	}
@@ -140,9 +142,7 @@ class DepartamentoController extends Controller
 			}
 			
 			$departamentoCode = str_pad($departamentoId,5, "0",STR_PAD_LEFT);
-
             //return $departamentoCode;
-
 			$departamentoUpdate = Departamento::find($departamentoId);
 			$departamentoUpdate->codigo = $departamentoCode;
 			$result = $departamentoUpdate->save();	
