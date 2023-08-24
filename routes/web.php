@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\Dist\DepartamentoController;
+use App\Http\Controllers\Dist\DepartamentosController;
 use App\Http\Controllers\Dist\PosicionesController;
 use App\Http\Controllers\Dist\ColaboradoresController;
 
@@ -36,7 +37,10 @@ Route::middleware('guest')->group(function () {
     
 
         //departamento
-        Route::get('dist/departamento', [DepartamentoController::class, 'Index']) ->name('Index'); 
+        Route::get('dist/test', [DepartamentosController::class, 'Index']) ->name('Index');  
+
+        
+        Route::get('dist/departamento', [DepartamentoController::class, 'Index']) ->name('Index');  
         Route::post('dist/departamento', [DepartamentoController::class, 'PostIndex']) ->name('PostIndex'); 
         Route::get('dist/departamento/nuevo', [DepartamentoController::class, 'Nuevo']) ->name('Nuevo'); 
         Route::post('dist/departamento/nuevo', [DepartamentoController::class, 'PostNuevo']) ->name('PostNuevo'); 
