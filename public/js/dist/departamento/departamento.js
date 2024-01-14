@@ -312,4 +312,12 @@ $(document).ready(function(){
   const objDistdepartamento = new Distdepartamento();
   objDistdepartamento.init();
 
+  let valfon = "";
+
+
+   var maelissa =  "sebastian"; 
+
+   console.log(maelissa);
+
+
 });

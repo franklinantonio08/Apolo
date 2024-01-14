@@ -4,8 +4,7 @@
 	var token = '{{ csrf_token() }}';
 </script>
 	
-<script type="text/javascript" src="{{ asset('../js/dist/departamento/departamento.js') }}"></script>
-<script src="{{ asset('../js/comun/messagebasicModal.js') }}"></script>
+<script type="text/javascript" src="{{ asset('../js/dist/solicitud/solicitud.js') }}"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,61 +15,65 @@
 
 @section('content')
 
-  <!-- ACTION BUTTONS -->
-  <div class="row">
+   
+<!-- ACTION BUTTONS -->
+<div class="row">
 
     @include('includes/errors')
     @include('includes/success')
 
 </div>
-   
+
 	<div class="col-lg-12">
         <div class="card mb-4">
 			
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Departamento</div>
+                        <div class="card-title fs-4 fw-semibold">Solicitud</div>
                     </div>
                 </div>
 			</div>
 
             <div class="table-responsive">
 
-                  
                    
                 <!-- Formulario -->
 
                 <div class="container-fluid px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            
-                            <input type="hidden" id="departamentoId" name="departamentoId" value="{{$departamento->id}}" class="form-control text-right" placeholder="">
+                        <div class="col-lg-5 m-b-6">
 
-                        <div class="col-lg-6 m-b-10">
-
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;" >Nombre</span>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="{{$departamento->nombre}}">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" readonly value="{{$solicitud->nombre}}"/>
+                                    <label for="nombre">Nombre</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
+                                    <input class="form-control" id="codigo" name="codigo" type="text" placeholder="Codigo" readonly value="{{$solicitud->codigo}}"/>
+                                    <label for="codigo">Codigo</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="estatus" name="estatus" type="text" placeholder="Estatus" readonly value="{{$solicitud->estatus}}"/>
+                                    <label for="estatus">Estatus</label>
+                                </div>
+                                
+                               <!-- <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>
                                     <label for="comentario">Comentario</label>
-                                </div>
+                                </div> -->
 
                                 <!-- ACTION BUTTONS -->
                                     <div class="form-group row">
                                         <div class="offset-12 col-12">
-                                            <button id="submitForm" name="submitForm" type="submit" class="btn btn-primary text-white"><i class="fa fa-check m-r-5"></i> Guardar</button>
-                                            <a href="{{ url()->previous() }}"  class="btn btn-danger text-white"><i class="fa fa-remove m-r-5"></i> Cancelar</a>
+                                            <a href="{{ url()->previous() }}"  class="btn btn-secondary text-white"><i class="fa fa-remove m-r-5"></i> Volver</a>
                                         </div>
                                     </div>
                                 <!-- end ACTION BUTTONS -->
 
                                
                         </div>
-                    </form>
                 </div>
             
                 <!-- Fin Formulario-->
@@ -83,7 +86,6 @@
 
 </div>
 
-@include('includes/messagebasicmodal')
 @endsection
 
 

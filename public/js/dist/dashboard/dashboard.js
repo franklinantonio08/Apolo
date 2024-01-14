@@ -6,11 +6,13 @@ class Distcolaboradores {
 
         
         if($('#nuevoregistro').length) {
-           // console.log('test')
+            console.log('test')
           this.colaboradores();
           this.cambia_distrito();
           this.cambia_posiciones();
           //this.openCity();
+
+          this.llamada();
       }
 
       if($('#nuevoregistro').length) {
@@ -93,6 +95,90 @@ function openCity(evt, cityName) {
    // $('#provincia').on('change', function() { }
 
 
+   llamada(){
+
+    //$.post( BASEURL+'/buscadistrito', 
+
+        //var BASEURL = '{{ url()->current() }}';
+    //var token = '{{ csrf_token() }}';
+
+    $(document).ready(function() {
+        // Función para cargar el contenido del div listado
+        function cargarListado() {
+            console.log('cargarListado')
+            $.ajax({
+                url: BASEURL + '/listado', // Cambia esta URL según tu ruta Laravel
+                type: 'GET',
+                dataType: 'html',
+                success: function(response) {
+                    $('.cubiculo').html(response);
+
+                    actualizarLlamados();
+                },
+                error: function(error) {
+                    console.error('Error al cargar el listado:', error);
+                }
+            });
+        }
+
+        // Llama a la función al cargar la página
+        cargarListado();
+
+        // Programa la recarga cada 3 minutos
+        setInterval(cargarListado, 5000); // 180000 milisegundos = 3 minutos
+    });
+
+    function actualizarLlamados() {
+        console.log('actualizarLlamados')
+        $('[data-llamado]').each(function() {
+            var llamado = parseInt($(this).data('llamado'));
+            if (llamado < 3) {
+                convertirTexto();
+                // Actualiza el atributo data-llamado para evitar ejecutar convertirTexto en futuras llamadas.
+                $(this).data('llamado', llamado + 1);
+            }
+        });
+    }
+
+    function convertirTexto() {
+
+        console.log('convertirTexto');
+        var turno1 = document.getElementById('turno1').value;
+
+        console.log(turno1);
+
+        var mensaje = 'Favor pasar al cubiculo 1, el turno ' + turno1; 
+
+
+        //console.log(turno1);
+    
+        // Crea un nuevo objeto SpeechSynthesisUtterance
+        var utterance = new SpeechSynthesisUtterance(mensaje);
+    
+        // Establece el idioma como español
+        utterance.lang = 'es-ES';
+    
+        // Establece la velocidad de la voz (ajusta según preferencias)
+        utterance.rate = 1.0; // Puedes ajustar este valor para hacer la voz más fluida
+    
+        // Obtiene la lista de voces disponibles
+        var voices = window.speechSynthesis.getVoices();
+    
+        // Encuentra una voz femenina (si está disponible)
+        var feminineVoice = voices.find(voice => voice.lang === 'es-ES' && voice.name.includes('femenina'));
+    
+        // Establece la voz (opcional)
+        utterance.voice = feminineVoice || voices.find(voice => voice.lang === 'es-ES');
+    
+        // Pronuncia el texto
+        window.speechSynthesis.speak(utterance);
+    
+        // Muestra el texto hablado
+        //document.getElementById('output').innerText = 'Hablando: ' + turno1;
+    }
+   }
+
+ 
 
    test(){
     //document.addEventListener("DOMContentLoaded", function () {
@@ -303,7 +389,7 @@ function openCity(evt, cityName) {
                       { "data": "id"},
                       { "data": "nombre" },
                       { "data": "codigo" },
-                      { "data": "departamento" },
+                      { "data": "correo" },
                       { "data": "telefono" },
                       { "data": "tipousuario" },
                       { "data": "estatus" },

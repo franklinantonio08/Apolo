@@ -32,7 +32,7 @@
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Posición</div>
+                        <div class="card-title fs-4 fw-semibold">Tipo de Atención</div>
                     </div>
                 </div>
 			</div>
@@ -42,16 +42,16 @@
             
 
                 <div class="container-fluid px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/posiciones/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
+                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/tipoatencion/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
                             {{ csrf_field() }}
                             
-                            <input type="hidden" id="posicionesId" name="posicionesId" value="{{$posiciones->id}}" class="form-control text-right" placeholder="">
+                            <input type="hidden" id="tipoatencionId" name="tipoatencionId" value="{{$tipoatencion->id}}" class="form-control text-right" placeholder="">
 
                         <div class="col-lg-5 m-b-6">
 
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" style="width: 130px;">Nombre</span>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder=""value="{{$posiciones->nombre}}">
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder=""value="{{$tipoatencion->descripcion}}">
                                 </div>
 
                                 <div class="input-group mb-3">
@@ -60,7 +60,7 @@
                                         <option value="" selected disabled>Selecciona...</option>
                                         @foreach ($departamento as $key => $value) 										
                                         
-                                        @if($posiciones->departamento == $value->nombre)
+                                        @if($tipoatencion->departamento == $value->nombre)
 										<option value="{{  $value->id }}" selected>{{$value->nombre }}</option>
 										@else
 										<option value="{{ $value->id }}">{{ $value->nombre }}</option>
@@ -69,6 +69,17 @@
                                         @endForeach
                                     </select>
                                   </div>
+
+                                  <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 150px;" for="inputGroupSelect01">Estatus</label>
+                                    <select class="form-select" id="prioridad" name="prioridad">
+                                        @foreach(['Alta', 'Media', 'Baja'] as $opcion)
+                                            <option value="{{ $opcion }}" {{ $tipoatencion->prioridad == $opcion ? 'selected' : '' }}>
+                                                {{ ucfirst($opcion) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>

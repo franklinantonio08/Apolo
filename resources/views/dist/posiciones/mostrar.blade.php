@@ -14,6 +14,14 @@
 @extends('layouts.admin')
 
 @section('content')
+
+    <!-- ACTION BUTTONS -->
+    <div class="row">
+
+        @include('includes/errors')
+        @include('includes/success')
+
+    </div>
    
 	<div class="col-lg-12">
         <div class="card mb-4">
@@ -28,17 +36,11 @@
 
             <div class="table-responsive">
 
-                    <!-- ACTION BUTTONS -->
-                    <div class="row">
-
-                        @include('includes/errors')
-                        @include('includes/success')
-
-                    </div>
+                
                    
                 <!-- Formulario -->
 
-                <div class="container px-2 my-2">
+                <div class="container-fluid px-2 my-2">
                             {{ csrf_field() }}
                         <div class="col-lg-6 m-b-10">
 

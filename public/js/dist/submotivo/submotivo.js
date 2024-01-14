@@ -1,4 +1,4 @@
-class Distcolaboradores {
+class Distsubmotivo {
     constructor() {
     }
 
@@ -7,17 +7,17 @@ class Distcolaboradores {
         
         if($('#nuevoregistro').length) {
            // console.log('test')
-          this.colaboradores();
+          this.submotivo();
           this.cambia_distrito();
           this.cambia_posiciones();
           //this.openCity();
       }
 
       if($('#nuevoregistro').length) {
-          this.validatecolaboradores();
+          this.validatesubmotivo();
       }
-      if($('#colaboradores').length) {
-        this.colaboradores();
+      if($('#submotivo').length) {
+        this.submotivo();
     }
 
       if($('#nuevoimportar').length) {
@@ -58,13 +58,13 @@ class Distcolaboradores {
                 
         $( "#searchButton" ).off('click');
         $( "#searchButton" ).click(function() {
-          _this.colaboradores( $( "#search" ).val() );
+          _this.submotivo( $( "#search" ).val() );
       });
 
       $('#search').keypress(function(event){
           var keycode = (event.keyCode ? event.keyCode : event.which);
           if(keycode == '13'){
-              _this.colaboradores( $( "#search" ).val());
+              _this.submotivo( $( "#search" ).val());
               event.preventDefault();
               return false;
           }
@@ -259,7 +259,7 @@ function openCity(evt, cityName) {
     }
 
         /*BEGIN TABLA USUARIO*/
-        colaboradores(search){
+        submotivo(search){
 
             //var BASEURL = window.location.origin; 
 
@@ -267,7 +267,7 @@ function openCity(evt, cityName) {
 
           const _this = this
 
-              const table = $('#colaboradores').DataTable( {
+              const table = $('#submotivo').DataTable( {
                   "destroy": true,
                   "searching": false,
                   "serverSide": true,
@@ -285,7 +285,7 @@ function openCity(evt, cityName) {
                       "type": "POST",
                       "error": this.handleAjaxError, 
                       "data": function ( d ) {
-                          var info = $('#colaboradores').DataTable().page.info();
+                          var info = $('#submotivo').DataTable().page.info();
                           
                           var orderColumnNumber = d.order[0].column;
                           
@@ -304,8 +304,8 @@ function openCity(evt, cityName) {
                       { "data": "nombre" },
                       { "data": "codigo" },
                       { "data": "departamento" },
-                      { "data": "telefono" },
-                      { "data": "tipousuario" },
+                      { "data": "motivo" },
+                      //{ "data": "tipousuario" },
                       { "data": "estatus" },
                       { "data": "detalle" , "orderable": false, className: "actions text-right"},
                   ],
@@ -314,7 +314,7 @@ function openCity(evt, cityName) {
                   },
                   "infoCallback": function( settings, start, end, max, total, pre ) {
 
-                      _this.desactivarcolaboradores();
+                      _this.desactivarsubmotivo();
 
                       var api = this.api();
                       var pageInfo = api.page.info();
@@ -331,7 +331,7 @@ function openCity(evt, cityName) {
           /*END TABLA USUARIO*/
 
           /*BEGIN VALIDAR NUEVO USUARIO*/
-          validatecolaboradores(){
+          validatesubmotivo(){
 
             $('#nuevoregistro').submit(function(){
                 $(this).find(':submit').attr('disabled','disabled');
@@ -422,24 +422,24 @@ function openCity(evt, cityName) {
 
 
           /*BEGIN DESACTIVAR UN USUARIO*/
-          desactivarcolaboradores(){
+          desactivarsubmotivo(){
 
               const _this = this
 
               $( ".desactivar" ).off('click');
                 $( ".desactivar" ).click(function() {
                     
-                    const colaboradoresId = $( this ).attr( "attr-id" );
-                    var opciones = {colaboradoresId:colaboradoresId};
-                    const message = 'Seguro que desea cambiar de estatus el colaboradores?'
-                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarcolaboradores);
+                    const submotivoId = $( this ).attr( "attr-id" );
+                    var opciones = {submotivoId:submotivoId};
+                    const message = 'Seguro que desea cambiar de estatus el submotivo?'
+                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarsubmotivo);
                   objConfirmacionmodal.init();
                   
               });
           }
           
 
-          callbackDesactivarcolaboradores(response, opciones){
+          callbackDesactivarsubmotivo(response, opciones){
 
    
               if(response == true){
@@ -448,7 +448,7 @@ function openCity(evt, cityName) {
 
                   $.post( BASEURL+'/desactivar', 
                   {
-                      colaboradoresId: opciones.colaboradoresId,
+                      submotivoId: opciones.submotivoId,
                       _token:token 
                       }
                   )
@@ -459,34 +459,34 @@ function openCity(evt, cityName) {
 
                       if(data.response == true){
                           const modalTitle = 'Posiciones';
-                          const modalMessage = 'El colaboradores ha sido cambiado de estatus';
+                          const modalMessage = 'El submotivo ha sido cambiado de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          const objDistcolaboradoress = new Distcolaboradores();							
-                          objDistcolaboradoress.init();	
-                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                          const objDistsubmotivos = new Distsubmotivo();							
+                          objDistsubmotivos.init();	
+                          //objDistsubmotivos.submotivos($( "#search" ).val());
 
                       }else{
                           
                           const modalTitle = 'Posiciones';
-                          const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
+                          const modalMessage = 'El submotivo no se ha podido cambiar de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          //const objDistcolaboradoress = new Distcolaboradores();							
-                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                          //const objDistsubmotivos = new Distsubmotivo();							
+                          //objDistsubmotivos.submotivos($( "#search" ).val());
                       }
                   })
                   .fail(function() {
                       
                       const modalTitle = 'Posiciones';
-                      const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
+                      const modalMessage = 'El submotivo no se ha podido cambiar de estatus';
                       const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                       objMessagebasicModal.init();
 
-                      //const objDistcolaboradoress = new Distcolaboradores();							
-                      //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                      //const objDistsubmotivos = new Distsubmotivo();							
+                      //objDistsubmotivos.submotivos($( "#search" ).val());
                       
                   })
                   .always(function() {
@@ -506,7 +506,7 @@ function openCity(evt, cityName) {
 
 $(document).ready(function(){
 
-  const objDistcolaboradores = new Distcolaboradores();
-  objDistcolaboradores.init();
+  const objDistsubmotivo = new Distsubmotivo();
+  objDistsubmotivo.init();
 
 });

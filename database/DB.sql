@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `posiciones` (
     `usuarioId` int(11) NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (departamentoId) REFERENCES departamento(id)
+    FOREIGN KEY (departamento›Id) REFERENCES departamento(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `colaboradores` (

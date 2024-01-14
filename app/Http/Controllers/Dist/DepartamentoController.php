@@ -31,7 +31,11 @@ class DepartamentoController extends Controller
 
     public function PostIndex(){
 
+//return 
+
         $request = $this->request->all();
+
+		//eturn $request;
 		$columnsOrder = isset($request['order'][0]['column']) ? $request['order'][0]['column'] : '0';
 		$orderBy=isset($request['columns'][$columnsOrder]['data']) ? $request['columns'][$columnsOrder]['data'] : 'id';
 		$order = isset($request['order'][0]['dir']) ? $request['order'][0]['dir'] : 'ASC';
@@ -109,7 +113,7 @@ class DepartamentoController extends Controller
     		return redirect('dist/dashboard')->withErrors($this->common->message);
     	}*/
 
-        return $this->request->all();
+        //return $this->request->all();
 
     	$departamentoExiste = Departamento::where('nombre', $this->request->nombre)
         //->where('distribuidorId', Auth::user()->distribuidorId)
