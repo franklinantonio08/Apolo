@@ -40,7 +40,7 @@
 
                 <!-- Formulario -->
 
-                <div class="container px-2 my-2">
+                <div class="container-fluid px-2 my-2">
                     <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
                             {{ csrf_field() }}
                         <div class="col-lg-6 m-b-10">

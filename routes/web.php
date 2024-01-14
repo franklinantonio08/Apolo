@@ -3,10 +3,28 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-use App\Http\Controllers\Dist\DepartamentoController;
-use App\Http\Controllers\Dist\DepartamentosController;
+/*use App\Http\Controllers\Dist\DepartamentoController;
+use App\Http\Controllers\Dist\TipoatencionController;
 use App\Http\Controllers\Dist\PosicionesController;
 use App\Http\Controllers\Dist\ColaboradoresController;
+<<<<<<< HEAD
+use App\Http\Controllers\Dist\DashboardController;
+use App\Http\Controllers\Dist\SolicitudController; */
+
+use App\Http\Controllers\Dist\{
+    DashboardController,
+    SolicitudController,
+    DepartamentoController,
+    TipoatencionController,
+    PosicionesController,
+    ColaboradoresController,
+    MotivoController,
+    SubmotivoController
+};
+
+
+=======
+>>>>>>> parent of 1bc29d7 (acodeco)
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +57,28 @@ Route::middleware('guest')->group(function () {
         //departamento
         Route::get('dist/test', [DepartamentosController::class, 'Index']) ->name('Index');  
 
+<<<<<<< HEAD
+        // solicitud
+
+        Route::get('dist/solicitud', [SolicitudController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/solicitud', [SolicitudController::class, 'PostIndex']) ->name('PostIndex');
+        Route::get('dist/missolicitudes/{Id}', [SolicitudController::class, 'Missolicitudes']) ->name('Missolicitudes'); 
+        Route::post('dist/missolicitudes/{Id}', [SolicitudController::class, 'PostMissolicitudes']) ->name('PostMissolicitudes'); 
+
+        Route::get('dist/solicitud/nuevo', [SolicitudController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('dist/solicitud/nuevo', [SolicitudController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('dist/solicitud/editar/{Id}', [SolicitudController::class, 'Editar']) ->name('Editar');
+        Route::post('dist/solicitud/editar/{Id}', [SolicitudController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('dist/solicitud/mostrar/{Id}', [SolicitudController::class, 'Mostrar']) ->name('Mostrar');
+        Route::post('dist/solicitud/desactivar', [SolicitudController::class, 'Desactivar']) ->name('Desactivar'); 
         
+        Route::post('dist/solicitud/nuevo/buscatipoatencion', [SolicitudController::class, 'postBuscatipoatencion']) ->name('postBuscatipoatencion');
+        Route::post('dist/solicitud/nuevo/buscamotivo', [SolicitudController::class, 'postBuscamotivo']) ->name('postBuscamotivo');
+=======
+>>>>>>> parent of 1bc29d7 (acodeco)
+        
+
+        // Departamento
         Route::get('dist/departamento', [DepartamentoController::class, 'Index']) ->name('Index');  
         Route::post('dist/departamento', [DepartamentoController::class, 'PostIndex']) ->name('PostIndex'); 
         Route::get('dist/departamento/nuevo', [DepartamentoController::class, 'Nuevo']) ->name('Nuevo'); 
@@ -49,6 +88,35 @@ Route::middleware('guest')->group(function () {
         Route::get('dist/departamento/mostrar/{Id}', [DepartamentoController::class, 'Mostrar']) ->name('Mostrar');
         Route::post('dist/departamento/desactivar', [DepartamentoController::class, 'Desactivar']) ->name('Desactivar');
     
+        // Tipo de Atencion
+        Route::get('dist/tipoatencion', [TipoatencionController::class, 'Index']) ->name('Index');  
+        Route::post('dist/tipoatencion', [TipoatencionController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('dist/tipoatencion/nuevo', [TipoatencionController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('dist/tipoatencion/nuevo', [TipoatencionController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('dist/tipoatencion/editar/{Id}', [TipoatencionController::class, 'Editar']) ->name('Editar');
+        Route::post('dist/tipoatencion/editar/{Id}', [TipoatencionController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('dist/tipoatencion/mostrar/{Id}', [TipoatencionController::class, 'Mostrar']) ->name('Mostrar');
+        Route::post('dist/tipoatencion/desactivar', [TipoatencionController::class, 'Desactivar']) ->name('Desactivar');
+
+        // Motivo
+        Route::get('dist/motivo', [MotivoController::class, 'Index']) ->name('Index');  
+        Route::post('dist/motivo', [MotivoController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('dist/motivo/nuevo', [MotivoController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('dist/motivo/nuevo', [MotivoController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('dist/motivo/editar/{Id}', [MotivoController::class, 'Editar']) ->name('Editar');
+        Route::post('dist/motivo/editar/{Id}', [MotivoController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('dist/motivo/mostrar/{Id}', [MotivoController::class, 'Mostrar']) ->name('Mostrar');
+        Route::post('dist/motivo/desactivar', [MotivoController::class, 'Desactivar']) ->name('Desactivar');
+
+        // SubMotivo
+        Route::get('dist/submotivo', [SubmotivoController::class, 'Index']) ->name('Index');  
+        Route::post('dist/submotivo', [SubmotivoController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('dist/submotivo/nuevo', [SubmotivoController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('dist/submotivo/nuevo', [SubmotivoController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('dist/submotivo/editar/{Id}', [SubmotivoController::class, 'Editar']) ->name('Editar');
+        Route::post('dist/submotivo/editar/{Id}', [SubmotivoController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('dist/submotivo/mostrar/{Id}', [SubmotivoController::class, 'Mostrar']) ->name('Mostrar');
+        Route::post('dist/submotivo/desactivar', [SubmotivoController::class, 'Desactivar']) ->name('Desactivar');
 
          //posiciones
          Route::get('dist/posiciones', [PosicionesController::class, 'Index']) ->name('Index'); 

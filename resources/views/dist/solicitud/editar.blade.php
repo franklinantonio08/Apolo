@@ -16,8 +16,8 @@
 
 @section('content')
 
-  <!-- ACTION BUTTONS -->
-  <div class="row">
+    <!-- ACTION BUTTONS -->
+<div class="row">
 
     @include('includes/errors')
     @include('includes/success')
@@ -30,28 +30,42 @@
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Departamento</div>
+                        <div class="card-title fs-4 fw-semibold">Solicitud</div>
                     </div>
                 </div>
 			</div>
 
             <div class="table-responsive">
 
-                  
-                   
+                
                 <!-- Formulario -->
 
                 <div class="container-fluid px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data">
+                    <form id="nuevoregistro" name="editarregistro" method="POST" action="{{ url()->current('/dist/solicitud/nuevo') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             
-                            <input type="hidden" id="departamentoId" name="departamentoId" value="{{$departamento->id}}" class="form-control text-right" placeholder="">
+                            <input type="hidden" id="solicitudId" name="solicitudId" value="{{$solicitud->id}}" class="form-control text-right" >
 
-                        <div class="col-lg-6 m-b-10">
+                        <div class="col-lg-5 m-b-6">
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;" >Nombre</span>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="{{$departamento->nombre}}">
+                                    <span class="input-group-text" style="width: 130px;" >Tipo de Atencion</span>
+                                    <input type="text" class="form-control" id="tipoAtencion" name="tipoAtencion" placeholder="" value="{{$solicitud->descripcion}}">
+                                    <input type="hidden" id="IdTipoAtencion" name="IdTipoAtencion" value="{{$solicitud->IdTipoAtencion}}" class="form-control text-right" >
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 130px;" >Departamento</span>
+                                    <input type="text" class="form-control" id="departamento" name="departamento" placeholder="" value="{{$solicitud->nombre}}">
+                                    <input type="hidden" id="departamentoId" name="departamentoId" value="{{$solicitud->departamentoId}}" class="form-control text-right" >
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" style="width: 150px;" for="inputGroupSelect01">Estatus</label>
+                                    <select class="form-select" id="estatus" name="estatus">
+                                        <option value="Activo" {{ $solicitud->estatus === 'Activo' ? 'selected' : '' }}>Activo</option>
+                                        <option value="Resuelto" {{ $solicitud->estatus === 'Resuelto' ? 'selected' : '' }}>Resuelto</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-floating mb-3">

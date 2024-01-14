@@ -1,22 +1,20 @@
-class Distcolaboradores {
+class Distsolicitud {
     constructor() {
     }
 
     init(){
-
         
         if($('#nuevoregistro').length) {
-          this.colaboradores();
-          this.cambia_distrito();
-          this.cambia_posiciones();
-          this.openCity();
+            this.cambia_motivo();
+            this.cambia_tipoAtencion();
       }
 
       if($('#nuevoregistro').length) {
-          this.validatecolaboradores();
+          this.validatesolicitud();
       }
-      if($('#colaboradores').length) {
-        this.colaboradores();
+
+      if($('#solicitud').length) {
+        this.solicitud();
     }
 
       if($('#nuevoimportar').length) {
@@ -45,10 +43,6 @@ class Distcolaboradores {
      
       this.acciones();
 
-      //document.addEventListener("DOMContentLoaded", function () {
-      
-   // });
-
     }
 
     acciones(){
@@ -57,159 +51,41 @@ class Distcolaboradores {
                 
         $( "#searchButton" ).off('click');
         $( "#searchButton" ).click(function() {
-          _this.colaboradores( $( "#search" ).val() );
+          _this.solicitud( $( "#search" ).val() );
       });
 
       $('#search').keypress(function(event){
           var keycode = (event.keyCode ? event.keyCode : event.which);
           if(keycode == '13'){
-              _this.colaboradores( $( "#search" ).val());
+              _this.solicitud( $( "#search" ).val());
               event.preventDefault();
               return false;
           }
           event.stopPropagation();
       });
     
-//console.log('por aqui vamos');
-
-function openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
-
-
     }
 
-   // $('#provincia').on('change', function() { }
+    cambia_tipoAtencion() {
 
-
-
-   test(){
-    //document.addEventListener("DOMContentLoaded", function () {
-        const navActive = document.getElementById('navActive');
-        const navLink = document.getElementById('navLink');
-        const navDisabled = document.getElementById('navDisabled');
-        const formContainer = document.getElementById('formContainer');
-
-        navActive.addEventListener('click', function (event) {
-            event.preventDefault();
-            formContainer.innerHTML = `
-                <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data">
-                    <!-- Your form content here -->
-                </form>
-            `;
-            formContainer.style.display = 'block';
-        });
-
-        navLink.addEventListener('click', function (event) {
-            event.preventDefault();
-            formContainer.style.display = 'none';
-        });
-
-        navDisabled.addEventListener('click', function (event) {
-            event.preventDefault();
-            formContainer.style.display = 'none';
-        });
-   // });
-   }
-
-
-
-
-    cambia_distrito() {
-
-        console.log(BASEURL);
-
-        const _this = this;
-    $('#provincia').on('change', function() { 
-        var provincia = $( "#provincia" ).val();  
-        var obj_div = document.getElementById('DivResultado_distrito'); 
-        var selec1 = '<div class="form-floating mb-3">';
-        selec1 += '<select id="distrito" name="distrito"  class="form-select" > ';
-        selec1 += '<option value="" selected disabled>Selecciona un departamento</option>';
-        var selec2 = '</select> </div>';
-        var valor = selec1;
-             
-        if(provincia != ''){
-
-            console.log('por aqui entra al post');
-
-            $.post( BASEURL+'/buscadistrito', 
-                {
-                _token:token, provincia:provincia
-                }
-                ).done(function( data ) {
-                    if(data.response == true){ 
-                    $.each(data.data, function (id, value) {
-                        $.each(value, function (id, valur) {
-                            const distri = valur;
-                            valor +=distri;
-                        });
-                    });
-                    
-                    valor +=selec2;
-                    obj_div.innerHTML =valor;
-                    //_this.cambia_corregimiento();
-                }
-                })
-                .fail(function() {
-                })
-                .always(function() {
-                }, "json");
-            //console.log(provincia, distrito, corregimiento);
-        }else{
-
-            console.log('no entra al post');
-
-            const distri = '<option value="" seleted >S/A</option>';            
-            valor +=distri;            
-            valor +=selec2;
-            obj_div.innerHTML =valor;
-           // _this.cambia_corregimiento();
-        }
-
-      });
-
-    
-
-            $('#DivResultado_distrito').on('change', function() { 
-                
-                  //  _this.cambia_corregimiento();
-                
-            });
-    }
-
-    
-
-    cambia_posiciones() {
-
-        console.log(BASEURL);
+        //console.log(BASEURL);
 
         const _this = this;
     $('#departamento').on('change', function() { 
 
-        console.log('post');
+        //console.log('post');
 
         var departamento = $( "#departamento" ).val();  
-        var obj_div = document.getElementById('DivResultado_posiciones'); 
+        var obj_div = document.getElementById('DivResultado_tipoAtencion'); 
         var selec1 = '<div class="input-group mb-3">';
-        selec1 += '<label style="width: 130px;" class="input-group-text" for="posiciones">Posicion</label>';
-        selec1 += '<select class="form-select" id="posiciones" name="posiciones">';
+        selec1 += '<label style="width: 130px;" class="input-group-text" for="tipoAtencion">Tipo Atencion</label>';
+        selec1 += '<select class="form-select" id="tipoAtencion" name="tipoAtencion">';
         selec1 += '<option value="" selected disabled>Selecciona...</option>';
         var selec2 = '</select> </div>';
         var valor = selec1;
              
         if(departamento != ''){
-            $.post( BASEURL+'/buscaposiciones', 
+            $.post( BASEURL+'/buscatipoatencion', 
                 {
                 _token:token, departamento:departamento
                 }
@@ -217,8 +93,8 @@ function openCity(evt, cityName) {
                     if(data.response == true){ 
                     $.each(data.data, function (id, value) {
                         $.each(value, function (id, valur) {
-                            const posiciones = valur;
-                            valor +=posiciones;
+                            const tipoAtencion = valur;
+                            valor +=tipoAtencion;
                         });
                     });
                     
@@ -236,11 +112,78 @@ function openCity(evt, cityName) {
             //console.log(provincia, distrito, corregimiento);
         }else{
 
-            console.log('no post');
+            //console.log('no post');
 
 
-            const posiciones = '<option value="" seleted >S/A</option>';            
-            valor +=posiciones;            
+            const tipoAtencion = '<option value="" seleted >S/A</option>';            
+            valor +=tipoAtencion;            
+            valor +=selec2;
+            obj_div.innerHTML =valor;
+           // _this.cambia_corregimiento();
+        }
+
+      });
+
+    
+
+            $('#DivResultado_posiciones').on('change', function() { 
+                
+                  //  _this.cambia_corregimiento();
+                
+            });
+    }
+
+    cambia_motivo() {
+
+        //console.log(BASEURL);
+
+        const _this = this;
+    $('#departamento').on('change', function() { 
+
+        //console.log('post');
+
+        var departamento = $( "#departamento" ).val();  
+        var obj_div = document.getElementById('DivResultado_motivo'); 
+        var selec1 = '<div class="input-group mb-3">';
+        selec1 += '<label style="width: 130px;" class="input-group-text" for="motivo">Motivo</label>';
+        selec1 += '<select class="form-select" id="motivo" name="motivo">';
+        selec1 += '<option value="" selected disabled>Selecciona...</option>';
+        var selec2 = '</select> </div>';
+        var valor = selec1;
+             
+        if(departamento != ''){
+            $.post( BASEURL+'/buscamotivo', 
+                {
+                _token:token, departamento:departamento
+                }
+                ).done(function( data ) {
+                    if(data.response == true){ 
+                    $.each(data.data, function (id, value) {
+                        $.each(value, function (id, valur) {
+                            const motivo = valur;
+                            valor +=motivo;
+                        });
+                    });
+                    
+                    valor +=selec2;
+                    obj_div.innerHTML =valor;
+
+                    console.log(valor);
+                    //_this.cambia_corregimiento();
+                }
+                })
+                .fail(function() {
+                })
+                .always(function() {
+                }, "json");
+            //console.log(provincia, distrito, corregimiento);
+        }else{
+
+            //console.log('no post');
+
+
+            const motivo = '<option value="" seleted >S/A</option>';            
+            valor +=motivo;            
             valor +=selec2;
             obj_div.innerHTML =valor;
            // _this.cambia_corregimiento();
@@ -258,15 +201,15 @@ function openCity(evt, cityName) {
     }
 
         /*BEGIN TABLA USUARIO*/
-        colaboradores(search){
+        solicitud(search){
 
             //var BASEURL = window.location.origin; 
 
-            //console.log(BASEURL);
+        console.log(BASEURL);
 
           const _this = this
 
-              const table = $('#colaboradores').DataTable( {
+              const table = $('#solicitud').DataTable( {
                   "destroy": true,
                   "searching": false,
                   "serverSide": true,
@@ -284,7 +227,7 @@ function openCity(evt, cityName) {
                       "type": "POST",
                       "error": this.handleAjaxError, 
                       "data": function ( d ) {
-                          var info = $('#colaboradores').DataTable().page.info();
+                          var info = $('#solicitud').DataTable().page.info();
                           
                           var orderColumnNumber = d.order[0].column;
                           
@@ -300,11 +243,9 @@ function openCity(evt, cityName) {
                   },
                   "columns": [
                       { "data": "id"},
-                      { "data": "nombre" },
-                      { "data": "codigo" },
                       { "data": "departamento" },
-                      { "data": "telefono" },
-                      { "data": "tipousuario" },
+                      { "data": "TipoAtencion"},
+                      { "data": "codigo" },
                       { "data": "estatus" },
                       { "data": "detalle" , "orderable": false, className: "actions text-right"},
                   ],
@@ -313,7 +254,7 @@ function openCity(evt, cityName) {
                   },
                   "infoCallback": function( settings, start, end, max, total, pre ) {
 
-                      _this.desactivarcolaboradores();
+                      _this.desactivarsolicitud();
 
                       var api = this.api();
                       var pageInfo = api.page.info();
@@ -330,7 +271,7 @@ function openCity(evt, cityName) {
           /*END TABLA USUARIO*/
 
           /*BEGIN VALIDAR NUEVO USUARIO*/
-          validatecolaboradores(){
+          validatesolicitud(){
 
             $('#nuevoregistro').submit(function(){
                 $(this).find(':submit').attr('disabled','disabled');
@@ -356,7 +297,6 @@ function openCity(evt, cityName) {
                        $("button[data-id*='"+titleElemnt+"']").addClass( "successValidate" );
                        $(element).addClass( "successValidate" ); 
                     },
-                    
                   rules: {
                     nombre: {
                         required: false,
@@ -421,24 +361,24 @@ function openCity(evt, cityName) {
 
 
           /*BEGIN DESACTIVAR UN USUARIO*/
-          desactivarcolaboradores(){
+          desactivarsolicitud(){
 
               const _this = this
 
               $( ".desactivar" ).off('click');
                 $( ".desactivar" ).click(function() {
                     
-                    const colaboradoresId = $( this ).attr( "attr-id" );
-                    var opciones = {colaboradoresId:colaboradoresId};
-                    const message = 'Seguro que desea cambiar de estatus el colaboradores?'
-                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarcolaboradores);
+                    const solicitudId = $( this ).attr( "attr-id" );
+                    var opciones = {solicitudId:solicitudId};
+                    const message = 'Seguro que desea cambiar de estatus el solicitud?'
+                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarsolicitud);
                   objConfirmacionmodal.init();
                   
               });
           }
           
 
-          callbackDesactivarcolaboradores(response, opciones){
+          callbackDesactivarsolicitud(response, opciones){
 
    
               if(response == true){
@@ -447,7 +387,7 @@ function openCity(evt, cityName) {
 
                   $.post( BASEURL+'/desactivar', 
                   {
-                      colaboradoresId: opciones.colaboradoresId,
+                      solicitudId: opciones.solicitudId,
                       _token:token 
                       }
                   )
@@ -457,35 +397,35 @@ function openCity(evt, cityName) {
 
 
                       if(data.response == true){
-                          const modalTitle = 'Posiciones';
-                          const modalMessage = 'El colaboradores ha sido cambiado de estatus';
+                          const modalTitle = 'Solicitud';
+                          const modalMessage = 'El solicitud ha sido cambiado de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          const objDistcolaboradoress = new Distcolaboradores();							
-                          objDistcolaboradoress.init();	
-                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                          const objDistsolicituds = new Distsolicitud();							
+                          objDistsolicituds.init();	
+                          //objDistsolicituds.solicituds($( "#search" ).val());
 
                       }else{
                           
-                          const modalTitle = 'Posiciones';
-                          const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
+                          const modalTitle = 'Solicitud';
+                          const modalMessage = 'El solicitud no se ha podido cambiar de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          //const objDistcolaboradoress = new Distcolaboradores();							
-                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                          //const objDistsolicituds = new Distsolicitud();							
+                          //objDistsolicituds.solicituds($( "#search" ).val());
                       }
                   })
                   .fail(function() {
                       
-                      const modalTitle = 'Posiciones';
-                      const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
+                      const modalTitle = 'Solicitud';
+                      const modalMessage = 'El solicitud no se ha podido cambiar de estatus';
                       const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                       objMessagebasicModal.init();
 
-                      //const objDistcolaboradoress = new Distcolaboradores();							
-                      //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                      //const objDistsolicituds = new Distsolicitud();							
+                      //objDistsolicituds.solicituds($( "#search" ).val());
                       
                   })
                   .always(function() {
@@ -505,7 +445,15 @@ function openCity(evt, cityName) {
 
 $(document).ready(function(){
 
-  const objDistcolaboradores = new Distcolaboradores();
-  objDistcolaboradores.init();
+  const objDistsolicitud = new Distsolicitud();
+  objDistsolicitud.init();
+
+  let valfon = "";
+
+
+   var maelissa =  "sebastian"; 
+
+   console.log(maelissa);
+
 
 });

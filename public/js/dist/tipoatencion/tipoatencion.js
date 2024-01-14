@@ -1,4 +1,4 @@
-class Distcolaboradores {
+class Disttipoatencion {
     constructor() {
     }
 
@@ -6,17 +6,18 @@ class Distcolaboradores {
 
         
         if($('#nuevoregistro').length) {
-          this.colaboradores();
+           // console.log('test')
+          this.tipoatencion();
           this.cambia_distrito();
           this.cambia_posiciones();
-          this.openCity();
+          //this.openCity();
       }
 
       if($('#nuevoregistro').length) {
-          this.validatecolaboradores();
+          this.validatetipoatencion();
       }
-      if($('#colaboradores').length) {
-        this.colaboradores();
+      if($('#tipoatencion').length) {
+        this.tipoatencion();
     }
 
       if($('#nuevoimportar').length) {
@@ -57,13 +58,13 @@ class Distcolaboradores {
                 
         $( "#searchButton" ).off('click');
         $( "#searchButton" ).click(function() {
-          _this.colaboradores( $( "#search" ).val() );
+          _this.tipoatencion( $( "#search" ).val() );
       });
 
       $('#search').keypress(function(event){
           var keycode = (event.keyCode ? event.keyCode : event.which);
           if(keycode == '13'){
-              _this.colaboradores( $( "#search" ).val());
+              _this.tipoatencion( $( "#search" ).val());
               event.preventDefault();
               return false;
           }
@@ -258,7 +259,7 @@ function openCity(evt, cityName) {
     }
 
         /*BEGIN TABLA USUARIO*/
-        colaboradores(search){
+        tipoatencion(search){
 
             //var BASEURL = window.location.origin; 
 
@@ -266,7 +267,7 @@ function openCity(evt, cityName) {
 
           const _this = this
 
-              const table = $('#colaboradores').DataTable( {
+              const table = $('#tipoatencion').DataTable( {
                   "destroy": true,
                   "searching": false,
                   "serverSide": true,
@@ -284,7 +285,7 @@ function openCity(evt, cityName) {
                       "type": "POST",
                       "error": this.handleAjaxError, 
                       "data": function ( d ) {
-                          var info = $('#colaboradores').DataTable().page.info();
+                          var info = $('#tipoatencion').DataTable().page.info();
                           
                           var orderColumnNumber = d.order[0].column;
                           
@@ -303,8 +304,8 @@ function openCity(evt, cityName) {
                       { "data": "nombre" },
                       { "data": "codigo" },
                       { "data": "departamento" },
-                      { "data": "telefono" },
-                      { "data": "tipousuario" },
+                      //{ "data": "telefono" },
+                      //{ "data": "tipousuario" },
                       { "data": "estatus" },
                       { "data": "detalle" , "orderable": false, className: "actions text-right"},
                   ],
@@ -313,7 +314,7 @@ function openCity(evt, cityName) {
                   },
                   "infoCallback": function( settings, start, end, max, total, pre ) {
 
-                      _this.desactivarcolaboradores();
+                      _this.desactivartipoatencion();
 
                       var api = this.api();
                       var pageInfo = api.page.info();
@@ -330,7 +331,7 @@ function openCity(evt, cityName) {
           /*END TABLA USUARIO*/
 
           /*BEGIN VALIDAR NUEVO USUARIO*/
-          validatecolaboradores(){
+          validatetipoatencion(){
 
             $('#nuevoregistro').submit(function(){
                 $(this).find(':submit').attr('disabled','disabled');
@@ -421,24 +422,24 @@ function openCity(evt, cityName) {
 
 
           /*BEGIN DESACTIVAR UN USUARIO*/
-          desactivarcolaboradores(){
+          desactivartipoatencion(){
 
               const _this = this
 
               $( ".desactivar" ).off('click');
                 $( ".desactivar" ).click(function() {
                     
-                    const colaboradoresId = $( this ).attr( "attr-id" );
-                    var opciones = {colaboradoresId:colaboradoresId};
-                    const message = 'Seguro que desea cambiar de estatus el colaboradores?'
-                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivarcolaboradores);
+                    const tipoatencionId = $( this ).attr( "attr-id" );
+                    var opciones = {tipoatencionId:tipoatencionId};
+                    const message = 'Seguro que desea cambiar de estatus el tipoatencion?'
+                    const objConfirmacionmodal = new Confirmacionmodal(message, opciones, _this.callbackDesactivartipoatencion);
                   objConfirmacionmodal.init();
                   
               });
           }
           
 
-          callbackDesactivarcolaboradores(response, opciones){
+          callbackDesactivartipoatencion(response, opciones){
 
    
               if(response == true){
@@ -447,7 +448,7 @@ function openCity(evt, cityName) {
 
                   $.post( BASEURL+'/desactivar', 
                   {
-                      colaboradoresId: opciones.colaboradoresId,
+                      tipoatencionId: opciones.tipoatencionId,
                       _token:token 
                       }
                   )
@@ -458,34 +459,34 @@ function openCity(evt, cityName) {
 
                       if(data.response == true){
                           const modalTitle = 'Posiciones';
-                          const modalMessage = 'El colaboradores ha sido cambiado de estatus';
+                          const modalMessage = 'El tipoatencion ha sido cambiado de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          const objDistcolaboradoress = new Distcolaboradores();							
-                          objDistcolaboradoress.init();	
-                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                          const objDisttipoatencions = new Disttipoatencion();							
+                          objDisttipoatencions.init();	
+                          //objDisttipoatencions.tipoatencions($( "#search" ).val());
 
                       }else{
                           
                           const modalTitle = 'Posiciones';
-                          const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
+                          const modalMessage = 'El tipoatencion no se ha podido cambiar de estatus';
                           const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                           objMessagebasicModal.init();
 
-                          //const objDistcolaboradoress = new Distcolaboradores();							
-                          //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                          //const objDisttipoatencions = new Disttipoatencion();							
+                          //objDisttipoatencions.tipoatencions($( "#search" ).val());
                       }
                   })
                   .fail(function() {
                       
                       const modalTitle = 'Posiciones';
-                      const modalMessage = 'El colaboradores no se ha podido cambiar de estatus';
+                      const modalMessage = 'El tipoatencion no se ha podido cambiar de estatus';
                       const objMessagebasicModal = new MessagebasicModal(modalTitle, modalMessage);
                       objMessagebasicModal.init();
 
-                      //const objDistcolaboradoress = new Distcolaboradores();							
-                      //objDistcolaboradoress.colaboradoress($( "#search" ).val());
+                      //const objDisttipoatencions = new Disttipoatencion();							
+                      //objDisttipoatencions.tipoatencions($( "#search" ).val());
                       
                   })
                   .always(function() {
@@ -505,7 +506,7 @@ function openCity(evt, cityName) {
 
 $(document).ready(function(){
 
-  const objDistcolaboradores = new Distcolaboradores();
-  objDistcolaboradores.init();
+  const objDisttipoatencion = new Disttipoatencion();
+  objDisttipoatencion.init();
 
 });
