@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dist\TipoatencionController;
 use App\Http\Controllers\Dist\PosicionesController;
 use App\Http\Controllers\Dist\ColaboradoresController;
-<<<<<<< HEAD
+HEAD<<<<<<< 
 use App\Http\Controllers\Dist\DashboardController;
 use App\Http\Controllers\Dist\SolicitudController; */
 
@@ -21,11 +21,6 @@ use App\Http\Controllers\Dist\{
     MotivoController,
     SubmotivoController
 };
-
-
-=======
->>>>>>> parent of 1bc29d7 (acodeco)
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,7 +52,6 @@ Route::middleware('guest')->group(function () {
         //departamento
         Route::get('dist/test', [DepartamentosController::class, 'Index']) ->name('Index');  
 
-<<<<<<< HEAD
         // solicitud
 
         Route::get('dist/solicitud', [SolicitudController::class, 'Index']) ->name('Index'); 
@@ -74,9 +68,6 @@ Route::middleware('guest')->group(function () {
         
         Route::post('dist/solicitud/nuevo/buscatipoatencion', [SolicitudController::class, 'postBuscatipoatencion']) ->name('postBuscatipoatencion');
         Route::post('dist/solicitud/nuevo/buscamotivo', [SolicitudController::class, 'postBuscamotivo']) ->name('postBuscamotivo');
-=======
->>>>>>> parent of 1bc29d7 (acodeco)
-        
 
         // Departamento
         Route::get('dist/departamento', [DepartamentoController::class, 'Index']) ->name('Index');  
