@@ -294,16 +294,33 @@ class SolicitudController extends Controller
                     $solicitudUpdate->codigo = $solicitudCode;
                     $result = $solicitudUpdate->save();	
                     
-                    $cubiculoCount = Cubiculo::count();
+                    //$cubiculoCount = Cubiculo::count();
+                    $cubiculoCount = Cubiculo::where('estatus', 'Activo')->count();
+                    //return $cubiculoCount;
 
                     if ($cubiculoCount < 7) {
                         //return $cubiculoCount;
 
                     $colaboradorSinCubiculo = Colaboradores::where('estatus', 'Activo')
                     ->whereNotIn('id', function ($query) {
-                    $query->select('funcionarioId')->from('cubiculo');
+                    $query
+                    ->select('funcionarioId')
+                    ->where('estatus', 'Activo')
+                    ->from('cubiculo');
                     })
                     ->first();
+
+                    /*$colaboradorSinCubiculo = Colaboradores::where('estatus', 'Activo')
+                    ->whereNotIn('id', function ($query) use ($solicitudId) {
+                        $query
+                            ->select('funcionarioId')
+                            ->where('estatus', 'Activo')
+                            ->where('solicitudId', '<>', $solicitudId)
+                            ->from('cubiculo');
+                    })
+                    ->first();*/
+
+                    //return $colaboradorSinCubiculo;
 
                     if ($colaboradorSinCubiculo) {
 
@@ -390,19 +407,28 @@ class SolicitudController extends Controller
                 }*/
         
                 DB::beginTransaction();
+
                     $solicitudUpdate = Solicitud::find($solicitudId);
                     $solicitudUpdate->estatus          = $this->request->estatus;
                     $solicitudUpdate->infoextra        = $this->request->comentario;
-                    
                     $result = $solicitudUpdate->save();
 
                     if($this->request->estatus == 'Resuelto'){
-                    DB::table('cubiculo')->where('solicitudId', $solicitudId)->delete();
+                    //DB::table('cubiculo')->where('solicitudId', $solicitudId)->delete();
 
-                    $cubiculoCount = Cubiculo::count();
+                    //$cubiculoUpdate = Cubiculo::find($solicitudId);
+                    //$cubiculoUpdate->estatus          = 'Inactivo';
+                    //$result = $cubiculoUpdate->save();
+                    $cubiculoUpdate = Cubiculo::where('solicitudId', $solicitudId)
+                    ->update(['estatus' => 'Inactivo']);
+
+                    //$cubiculoCount = Cubiculo::count();
+                    $cubiculoCount = Cubiculo::where('estatus', 'Activo')->count();
+
+                    //return $cubiculoCount;
 
 
-                    if ($cubiculoCount < 7) {
+                    if ($cubiculoCount <= 7) {
 
                         $solicitud = DB::table('solicitud')
                         ->where('estatus', '=', 'Activo' )

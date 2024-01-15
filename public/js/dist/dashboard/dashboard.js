@@ -132,7 +132,7 @@ function openCity(evt, cityName) {
         console.log('actualizarLlamados')
         $('[data-llamado]').each(function() {
             var llamado = parseInt($(this).data('llamado'));
-            if (llamado < 3) {
+            if (llamado <= 3) {
                 convertirTexto();
                 // Actualiza el atributo data-llamado para evitar ejecutar convertirTexto en futuras llamadas.
                 $(this).data('llamado', llamado + 1);
@@ -140,16 +140,36 @@ function openCity(evt, cityName) {
         });
     }
 
+    function obtenerMensaje(turnoNumero) {
+        var turno = document.getElementById('turno' + turnoNumero);
+
+        console.log(turnoNumero);
+    
+        if (turno) {
+            var codigo = turno.value;
+            var llamado = turno.getAttribute('name');
+    
+            if (llamado <= 3) {
+                return 'Favor pasar al cubículo número ' + turnoNumero + ', el turno ' + codigo;
+            }
+        }
+    
+        return null;
+    }
+    
+
     function convertirTexto() {
 
+
         console.log('convertirTexto');
-        var turno1 = document.getElementById('turno1').value;
 
-        console.log(turno1);
-
-        var mensaje = 'Favor pasar al cubiculo 1, el turno ' + turno1; 
-
-
+        for (var i = 1; i <= 7; i++) {
+            var mensaje = obtenerMensaje(i);
+        
+            if (mensaje) {
+                console.log(mensaje);
+            }
+        }
         //console.log(turno1);
     
         // Crea un nuevo objeto SpeechSynthesisUtterance

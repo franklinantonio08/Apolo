@@ -36,7 +36,7 @@ class DashboardController extends Controller
         ->leftjoin('colaboradores', 'colaboradores.id', '=', 'cubiculo.funcionarioId')
         ->select('cubiculo.id', 'cubiculo.codigo', 'cubiculo.llamado',
        // DB::raw("SUBSTRING(departamento.codigo, 1, 1) as codigo_departamento"),
-         DB::raw('(ROW_NUMBER() OVER (ORDER BY cubiculo.id)) as posicion'))
+         DB::raw('SUBSTRING(colaboradores.cubico,8,1) as posicion'))
         ->get();
         //return  $solicitud;
 
@@ -54,13 +54,13 @@ class DashboardController extends Controller
 
         $cubiculo = DB::table('cubiculo')
         ->where('cubiculo.estatus', '=', 'Activo')
-        ->where('cubiculo.llamado', '<', '3')
-        ->leftjoin('solicitud', 'solicitud.id', '=', 'cubiculo.solicitudId')
-        ->leftjoin('colaboradores', 'colaboradores.id', '=', 'cubiculo.funcionarioId')
-        ->select('cubiculo.id', 'cubiculo.codigo', 'cubiculo.llamado',
+        ->where('cubiculo.llamado', '<=', '3')
+        //->leftjoin('solicitud', 'solicitud.id', '=', 'cubiculo.solicitudId')
+        //->leftjoin('colaboradores', 'colaboradores.id', '=', 'cubiculo.funcionarioId')
+        //->select('cubiculo.id', 'cubiculo.codigo', 'cubiculo.llamado',
        // DB::raw("SUBSTRING(departamento.codigo, 1, 1) as codigo_departamento"),
          //DB::raw('(ROW_NUMBER() OVER (ORDER BY cubiculo.id)) as posicion'))
-         DB::raw('SUBSTRING(colaboradores.cubico,8,1) as posicion'))
+         //DB::raw('SUBSTRING(colaboradores.cubico,8,1) as posicion'))
         ->get();
 
         foreach ($cubiculo as $key => $value) {
@@ -72,6 +72,17 @@ class DashboardController extends Controller
                 ->where('id', $cubiculoId)
                 ->update(['llamado' => $cubiculollamado]);
         }
+
+        $cubiculo = DB::table('cubiculo')
+        ->where('cubiculo.estatus', '=', 'Activo')
+       // ->where('cubiculo.llamado', '<', '3')
+        ->leftjoin('solicitud', 'solicitud.id', '=', 'cubiculo.solicitudId')
+        ->leftjoin('colaboradores', 'colaboradores.id', '=', 'cubiculo.funcionarioId')
+        ->select('cubiculo.id', 'cubiculo.codigo', 'cubiculo.llamado',
+       // DB::raw("SUBSTRING(departamento.codigo, 1, 1) as codigo_departamento"),
+         //DB::raw('(ROW_NUMBER() OVER (ORDER BY cubiculo.id)) as posicion'))
+         DB::raw('SUBSTRING(colaboradores.cubico,8,1) as posicion'))
+        ->get();
 
         return view('dist/dashboard/listado', compact('cubiculo'));
 
