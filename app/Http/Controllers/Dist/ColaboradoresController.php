@@ -78,8 +78,8 @@ public function PostIndex(){
               "id" => $value->id,
               "nombre"=> $value->nombre,
               "codigo"=> $value->codigo,
-              "correo"=> $value->correo,
-              "telefono"=> $value->telefono,
+              "departamento"=> $value->correo,
+              "correo"=> $value->telefono,
               "tipousuario"=> $value->tipoUsuario,
               "estatus"=> $value->estatus,
               "detalle"=> $detalle

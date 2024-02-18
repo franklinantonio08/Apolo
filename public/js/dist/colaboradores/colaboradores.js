@@ -304,7 +304,7 @@ function openCity(evt, cityName) {
                       { "data": "nombre" },
                       { "data": "codigo" },
                       { "data": "departamento" },
-                      { "data": "telefono" },
+                      { "data": "correo" },
                       { "data": "tipousuario" },
                       { "data": "estatus" },
                       { "data": "detalle" , "orderable": false, className: "actions text-right"},

@@ -67,6 +67,14 @@
                                         <option value="Resuelto" {{ $solicitud->estatus === 'Resuelto' ? 'selected' : '' }}>Resuelto</option>
                                     </select>
                                 </div>
+                                
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 150px;" >Ingresar Consumidor</span>
+                                    <input type="text" class="form-control" id="consumidor" name="consumidor" placeholder="" value="" >
+                                    <span class="input-group-btn">
+                                        <button type="button" id="botonconsumidor" name="agregarSingleConsumidor" class="btn waves-effect waves-light btn-warning"><i class="fa fa-plus"></i></button>
+                                    </span>
+                                </div>
 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>
