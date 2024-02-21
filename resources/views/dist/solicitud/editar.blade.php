@@ -106,6 +106,7 @@
 </div>
 
 @include('includes/messagebasicmodal')
+@include('includes/consumidorlist')
 @endsection
 
 
