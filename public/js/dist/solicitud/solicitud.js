@@ -7,6 +7,14 @@ class Distsolicitud {
         if($('#nuevoregistro').length) {
             this.cambia_motivo();
             this.cambia_tipoAtencion();
+
+            const fechaNacimientoInput = document.getElementById('fechaNacimiento');
+
+            // Obtener la fecha actual
+            const fechaActual = new Date();
+        
+            // Establecer la fecha máxima como la fecha actual
+            fechaNacimientoInput.max = fechaActual.toISOString().split('T')[0];
       }
 
       if($('#nuevoregistro').length) {

@@ -14,6 +14,7 @@ use App\Models\Colaboradores;
 use App\Models\Cubiculo;
 use App\Models\Motivo;
 use App\Models\Submotivo;
+use App\Models\Consumidor;
 
 use DB;
 use Excel;
@@ -374,9 +375,18 @@ class SolicitudController extends Controller
                  ->where('solicitud.id', '=', $solicitudId)
                  ->leftjoin('tipoAtencion', 'tipoAtencion.id', '=', 'solicitud.IdtipoAtencion')
                 ->leftjoin('departamento', 'departamento.id', '=', 'solicitud.departamentoId')
+                ->leftjoin('consumidor', 'consumidor.solicitudId', '=', 'solicitud.id')
                  //->where('rubro.distribuidorId', Auth::user()->distribuidorId)
-                 ->select('solicitud.*','departamento.id as departamentoId', 'departamento.nombre', 'tipoAtencion.id as IdTipoAtencion', 'tipoAtencion.descripcion')->first();
+                ->select('solicitud.*',
+                'departamento.id as departamentoId', 
+                'departamento.nombre as departamentoNombre',
+                'tipoAtencion.id as IdTipoAtencion', 
+                'tipoAtencion.descripcion', 
+                'consumidor.*')->first();
         
+
+                //return $solicitud;
+
                 if(empty($solicitud)){
                     return redirect('dist/solicitud')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0004");
                 }
@@ -395,6 +405,8 @@ class SolicitudController extends Controller
                 //return $request;
         
                 $solicitudId = isset($this->request->solicitudId) ? $this->request->solicitudId: '';
+
+                //$cedula = isset($this->request->cedula) ? $this->request->cedula: '';
         
                 //return $solicitudId;
         
@@ -414,6 +426,68 @@ class SolicitudController extends Controller
                     $result = $solicitudUpdate->save();
 
                     if($this->request->estatus == 'Resuelto'){
+
+                        $consumidorCount = Consumidor::where('solicitudId', $solicitudId)->count();
+
+                        //return $consumidorCount;
+
+                        if ($consumidorCount == 0) {
+                            
+                            $cedula = $this->request->cedula;
+                            $nombre = $this->request->nombre;
+                            $apellido = $this->request->apellido;
+                            $fechaNacimiento = $this->request->fechaNacimiento;
+                            $genero = $this->request->genero;
+                            $tipoConsumidor = $this->request->tipoUsuario;
+
+                            if(empty($cedula)){
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO CEDULA ESTA VACIO CODE-0005");
+                            }
+
+                            if(empty($nombre) && empty($apellido)  ){
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO NOMBRE O APELLIDO ESTA VACIO CODE-0005");
+                            }
+
+                            if(empty($fechaNacimiento)){
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO FECHA DE NACIMIENTO ESTA VACIO CODE-0005");
+                            }
+
+                            if(empty($genero)){
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO GENERO ESTA VACIO CODE-0005");
+                            }
+
+                            if(empty($tipoConsumidor)){
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO TIPO DE CONSUMIDOR ESTA VACIO CODE-0005");
+                            }
+
+
+                            $consumidor = new Consumidor;
+                            $consumidor->cedula           = $this->request->cedula;
+                            $consumidor->nombre           = $this->request->nombre;
+                            $consumidor->apellido         = $this->request->apellido;
+                            $consumidor->fechaNacimiento  = $this->request->fechaNacimiento;
+                            $consumidor->correo           = $this->request->correo;
+                            $consumidor->telefono         = $this->request->telefono;
+                            $consumidor->genero           = $this->request->genero;
+                            $consumidor->tipoConsumidor   = $this->request->tipoUsuario;
+                            $consumidor->solicitudId      = $this->request->solicitudId;
+                            $consumidor->usuarioId        = Auth::user()->id;
+                            $result = $consumidor->save();
+                        }else{
+
+                            $consumidorUpdate = Consumidor::find($solicitudId);
+                            $consumidorUpdate->cedula           = $this->request->cedula;
+                            $consumidorUpdate->nombre           = $this->request->nombre;
+                            $consumidorUpdate->apellido         = $this->request->apellido;
+                            $consumidorUpdate->fechaNacimiento  = $this->request->fechaNacimiento;
+                            $consumidorUpdate->correo           = $this->request->correo;
+                            $consumidorUpdate->telefono         = $this->request->telefono;
+                            $consumidorUpdate->genero           = $this->request->genero;
+                            $consumidorUpdate->tipoConsumidor   = $this->request->tipoUsuario;
+                            $result = $consumidorUpdate->save();
+
+                        }
+
                     //DB::table('cubiculo')->where('solicitudId', $solicitudId)->delete();
 
                     //$cubiculoUpdate = Cubiculo::find($solicitudId);

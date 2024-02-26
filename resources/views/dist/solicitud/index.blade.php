@@ -1,7 +1,7 @@
 @section('scripts')
 
 <script>
-	 var BASEURL = '{{ url()->current() }}';
+	var BASEURL = '{{ url()->current() }}';
 	var token = '{{ csrf_token() }}';
 
 	</script>

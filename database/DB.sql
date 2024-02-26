@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS `colaboradores`;
 DROP TABLE IF EXISTS `posiciones`;
 DROP TABLE IF EXISTS `departamento`;
 DROP TABLE IF EXISTS `organizacion`;
+DROP TABLE IF EXISTS `consumidor`;
+
 
 
 CREATE TABLE IF NOT EXISTS `organizacion` (
@@ -1011,4 +1013,21 @@ INSERT INTO `corregimiento` (`nombre`, `codigo`, `distritoId`) VALUES
 	('SAN JOSE', '9', '159');
 
 
-
+CREATE TABLE IF NOT EXISTS  `consumidor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `codigo` varchar(5) DEFAULT NULL,
+  `cedula` varchar(15) DEFAULT NULL,
+  `nombre` varchar(75) DEFAULT NULL,
+  `apellido` varchar(75) DEFAULT NULL,
+  `fechaNacimiento` timestamp NULL DEFAULT NULL,
+  `correo` varchar(50) DEFAULT NULL,
+  `genero` enum('Masculino','Femenino') NOT NULL DEFAULT 'Masculino',
+  `telefono` varchar(15) DEFAULT NULL,
+  `tipoConsumidor` enum('Normal','Embarazada','Discapacitado','Jubilado') NOT NULL DEFAULT 'Normal',
+  `solicitudId` int(11) NOT NULL,
+  `infoextra` text DEFAULT NULL,
+  `usuarioId` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  FOREIGN KEY (solicitudId) REFERENCES solicitud(id)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
