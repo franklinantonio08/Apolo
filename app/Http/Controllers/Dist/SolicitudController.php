@@ -382,7 +382,16 @@ class SolicitudController extends Controller
                 'departamento.nombre as departamentoNombre',
                 'tipoAtencion.id as IdTipoAtencion', 
                 'tipoAtencion.descripcion', 
-                'consumidor.*')->first();
+                //'consumidor.*')
+                'consumidor.cedula',
+                'consumidor.nombre',
+                'consumidor.apellido',
+                'consumidor.fechaNacimiento',
+                'consumidor.correo',
+                'consumidor.genero',
+                'consumidor.telefono',
+                'consumidor.tipoConsumidor')
+                ->first();
         
 
                 //return $solicitud;
@@ -441,19 +450,19 @@ class SolicitudController extends Controller
                             $tipoConsumidor = $this->request->tipoUsuario;
 
                             if(empty($cedula)){
-                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO CEDULA ESTA VACIO CODE-0005");
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO CEDULA ESTA VACIO CODE-0001");
                             }
 
                             if(empty($nombre) && empty($apellido)  ){
-                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO NOMBRE O APELLIDO ESTA VACIO CODE-0005");
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO NOMBRE O APELLIDO ESTA VACIO CODE-0002");
                             }
 
                             if(empty($fechaNacimiento)){
-                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO FECHA DE NACIMIENTO ESTA VACIO CODE-0005");
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO FECHA DE NACIMIENTO ESTA VACIO CODE-0003");
                             }
 
                             if(empty($genero)){
-                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO GENERO ESTA VACIO CODE-0005");
+                                return redirect('dist/solicitud/editar/'.$solicitudId)->withErrors("ERROR EL CAMPO GENERO ESTA VACIO CODE-0004");
                             }
 
                             if(empty($tipoConsumidor)){
@@ -504,12 +513,34 @@ class SolicitudController extends Controller
 
                     if ($cubiculoCount <= 7) {
 
+                        // $solicitud = DB::table('solicitud')
+                        // ->where('estatus', '=', 'Activo' )
+                        // ->orderBy('id', 'asc') // o 'desc' para orden descendente
+                        // ->first();
+                        
                         $solicitud = DB::table('solicitud')
-                        ->where('estatus', '=', 'Activo' )
+                        ->where('estatus', '=', 'Activo')
+                        ->whereNotExists(function ($query) {
+                            $query->select(DB::raw(1))
+                            ->from('cubiculo')
+                            ->whereRaw('cubiculo.solicitudId = solicitud.id');
+                        })
                         ->orderBy('id', 'asc') // o 'desc' para orden descendente
                         ->first();
 
-                        //return $solicitud;
+                        $colaborador = DB::table('colaboradores')
+                        ->where('estatus', '=', 'Activo')
+                        ->whereExists(function ($query) {
+                            $query->select(DB::raw(1))
+                            ->from('cubiculo')
+                            ->whereRaw('cubiculo.funcionarioId = colaboradores.id')
+                            ->where('cubiculo.estatus', '=', 'Inactivo');
+                        })
+                        ->orderBy('id', 'asc') // o 'desc' para orden descendente
+                        ->first();
+
+                        //return $solicitud->codigo;
+
                     if(isset($solicitud)){ 
                                                //return $cubiculoCount;
                         $cubiculo = new Cubiculo;

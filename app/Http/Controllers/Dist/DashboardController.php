@@ -81,8 +81,11 @@ class DashboardController extends Controller
         ->select('cubiculo.id', 'cubiculo.codigo', 'cubiculo.llamado',
        // DB::raw("SUBSTRING(departamento.codigo, 1, 1) as codigo_departamento"),
          //DB::raw('(ROW_NUMBER() OVER (ORDER BY cubiculo.id)) as posicion'))
-         DB::raw('SUBSTRING(colaboradores.cubico,8,1) as posicion'))
+         DB::raw('SUBSTRING(colaboradores.cubico,8,1) as posicion')
+         )
         ->get();
+
+        return $cubiculo;
 
         return view('dist/dashboard/listado', compact('cubiculo'));
 
