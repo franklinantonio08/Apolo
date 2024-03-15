@@ -85,7 +85,7 @@ class DashboardController extends Controller
          )
         ->get();
 
-        return $cubiculo;
+       // return $cubiculo;
 
         return view('dist/dashboard/listado', compact('cubiculo'));
 
