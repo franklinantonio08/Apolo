@@ -545,7 +545,7 @@ class SolicitudController extends Controller
                                                //return $cubiculoCount;
                         $cubiculo = new Cubiculo;
                         $cubiculo->solicitudId      = $solicitud->id;
-                        $cubiculo->funcionarioId    = Auth::user()->id;
+                        $cubiculo->funcionarioId    = $colaborador->id;
                         $cubiculo->llamado          = 0;
                         $cubiculo->estatus          = 'Activo';	
                         $cubiculo->codigo           = $solicitud->codigo;
