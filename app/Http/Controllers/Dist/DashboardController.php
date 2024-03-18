@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Dashboard;
 use App\Models\Cubiculo;
+use App\Models\Solicitud;
 
 use DB;
 use Excel;
@@ -25,6 +26,40 @@ class DashboardController extends Controller
 
     public function __construct(Request $request){
         $this->request = $request;
+    }
+
+    public function Dashboard(){
+
+        $year = date('Y'); // Obtiene el año actual
+
+        // $totalSolicitudes = DB::table('solicitud')
+        // ->whereYear('fechaAtencion', $year)
+        // ->count();
+
+        // view()->share('totalSolicitudes', $totalSolicitudes);	
+
+        $resultados = DB::table('solicitud')
+        ->selectRaw('COUNT(*) as totalSolicitudes,
+                     DATE_FORMAT(MIN(fechaAtencion), "%M") as primeraSolicitudMes,
+                     DATE_FORMAT(MAX(fechaAtencion), "%M") as ultimaSolicitudMes')
+        ->whereYear('fechaAtencion', $year)
+        ->first();
+
+        $totalSolicitudes = $resultados->totalSolicitudes;
+        $primeraSolicitud = $resultados->primeraSolicitudMes;
+        $ultimaSolicitud = $resultados->ultimaSolicitudMes;
+
+       
+
+       //return \view('dashboard');
+
+       return view('layouts.app', [
+        'year' => $year,
+        'totalSolicitudes' => $totalSolicitudes,
+        'primeraSolicitud' => $primeraSolicitud,
+        'ultimaSolicitud' => $ultimaSolicitud,
+    ]);
+
     }
 
     public function Index(){

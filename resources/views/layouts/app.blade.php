@@ -84,10 +84,10 @@
                     <div class="card-body p-4">
                       <div class="row">
                           <div class="col">
-                            <div class="card-title fs-4 fw-semibold">Sale</div>
-                            <div class="card-subtitle text-disabled">January - July 2022</div>
+                            <div class="card-title fs-4 fw-semibold">Atenciones</div>
+                            <div class="card-subtitle text-disabled">{{ $primeraSolicitud }} - {{ $ultimaSolicitud }}  {{ $year }}</div>
                           </div>
-                          <div class="col text-end text-primary fs-4 fw-semibold">$613.200</div>
+                          <div class="col text-end text-primary fs-4 fw-semibold">{{ $totalSolicitudes }}</div>
                       </div>
                     </div>
                       <div class="chart-wrapper mt-3" style="height:150px;">
@@ -145,8 +145,8 @@
               <div class="col-lg-8">
                 <div class="card mb-4">
                   <div class="card-body p-4">
-                    <div class="card-title fs-4 fw-semibold">Traffic</div>
-                    <div class="card-subtitle text-disabled">January 01, 2021 - December 31, 2021</div>
+                    <div class="card-title fs-4 fw-semibold">Trafico Mensual</div>
+                    <div class="card-subtitle text-disabled">{{ $primeraSolicitud }} - {{ $ultimaSolicitud }}  {{ $year }}</div>
                     <div class="chart-wrapper" style="height:300px;margin-top:40px;">
                       <canvas class="chart" id="main-bar-chart" height="300"></canvas>
                     </div>
@@ -162,8 +162,8 @@
         <div class="card-body p-4">
         <div class="row">
         <div class="col">
-        <div class="card-title fs-4 fw-semibold">Users</div>
-        <div class="card-subtitle text-disabled mb-4">1.232.150 registered users</div>
+        <div class="card-title fs-4 fw-semibold">Funcionarios</div>
+        <div class="card-subtitle text-disabled mb-4">1.232.150 Consumidores registrados</div>
         </div>
         <div class="col-auto ms-auto">
         <button class="btn btn-secondary">
@@ -483,7 +483,7 @@
         </div>
 
         
-        <div class="row">
+        <!--div class="row">
         <div class="col-md-12">
         <div class="card mb-4">
         <div class="card-body p-4">
@@ -697,7 +697,7 @@
         </div>
         </div>
         
-        </div>
+        </div-->
         
         </div>
         </div>

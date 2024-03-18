@@ -52,6 +52,14 @@ Route::middleware('guest')->group(function () {
     
 
         //dashboard
+
+        // Route::get('/dashboard', function () {
+        //     return view('dashboard');
+        // })->middleware(['auth'])->name('dashboard');
+
+
+        Route::get('dashboard', [DashboardController::class, 'Dashboard']) ->name('Dashboard');  
+
         Route::get('dist/dashboard', [DashboardController::class, 'Index']) ->name('Index');  
         Route::get('dist/dashboard/listado', [DashboardController::class, 'PostIndex']) ->name('PostIndex');  
 
@@ -144,8 +152,8 @@ Route::middleware('guest')->group(function () {
     });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
