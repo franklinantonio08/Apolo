@@ -117,9 +117,9 @@
                                 <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-chart-line') }}"></use>
                         </svg> Reportes</a>
                         <ul class="nav-group-items">
-                                <li class="nav-item"><a class="nav-link" href="notifications/alerts.html"><span class="nav-icon"></span> Categoria de Activo</a></li>
-                                <li class="nav-item"><a class="nav-link" href="notifications/badge.html"><span class="nav-icon"></span> Lista de Activos</a></li>
-                                <li class="nav-item"><a class="nav-link" href="notifications/badge.html"><span class="nav-icon"></span> Logistica</a></li>
+                                <li class="nav-item"><a class="nav-link" href="../dashboard"><span class="nav-icon"></span> Reportes Generales</a></li>
+                                {{-- <li class="nav-item"><a class="nav-link" href="notifications/badge.html"><span class="nav-icon"></span> Lista de Activos</a></li>
+                                <li class="nav-item"><a class="nav-link" href="notifications/badge.html"><span class="nav-icon"></span> Logistica</a></li> --}}
                         </ul>
                 </li>
         
