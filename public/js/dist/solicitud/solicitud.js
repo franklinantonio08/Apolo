@@ -4,7 +4,7 @@ class Distsolicitud {
 
     init(){
         
-        if($('#nuevoregistro').length) {
+        if($('#editarregistro').length) {
             this.cambia_motivo();
             this.cambia_tipoAtencion();
 
@@ -18,7 +18,10 @@ class Distsolicitud {
       }
 
       if($('#nuevoregistro').length) {
-          this.validatesolicitud();
+        //this.cambia_motivo();
+        this.cambia_tipoAtencion();
+        
+        this.validatesolicitud();
       }
 
       if($('#solicitud').length) {

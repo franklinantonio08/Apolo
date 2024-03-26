@@ -15,6 +15,7 @@ use App\Models\Cubiculo;
 use App\Models\Motivo;
 use App\Models\Submotivo;
 use App\Models\Consumidor;
+use App\Models\Departamento;
 
 use DB;
 use Excel;
@@ -288,13 +289,74 @@ class SolicitudController extends Controller
                         DB::rollBack();
                         return redirect('dist/solicitud/nuevo')->withErrors("ERROR AL GUARDAR EL CONTRATO NO SE GENERO UN # DE CONTRATO CORRECTO CODE-0196");
                     }
+
+                    $ultimoCodigo = Solicitud::whereNotNull('codigo')
+                    ->orderBy('id', 'desc')
+                    ->value('codigo');
+
+                    $ultimoCodigoletra = substr($ultimoCodigo, 0, 1);
+                    $ultimoCodigoN = intval(substr($ultimoCodigo, 1));
+
+                    $ultimoCodigoN++;
                     
-                    $solicitudCode =  $cod_depart . str_pad($solicitudId,2, "0",STR_PAD_LEFT);
+                    // $departamento = Departamento::where('nombre', 'Atención al Cliente')->first();
+                    // if ($departamento) {
+                    //     $cod_depart = $departamento->codigo;
+                    // } 
+
+                    //$letra = substr($ultimaSolicitudCodigo, 0, 1); // Obtener la última letra del código de solicitud
+                         //$numeros = intval(substr($ultimaSolicitudCodigo, 1)); // Obtener la parte numérica del código de solicitud
+
+
+                     // Verificar si se necesita cambiar de letra y reiniciar el número de solicitud
+                     if ($ultimoCodigoN > 999) {
+                        $ultimoCodigoN = 1; // Reiniciar el número de solicitud
+                        $ultimoCodigoletra = chr(ord($ultimoCodigoletra) + 1); // Obtener la siguiente letra ASCII
+                        if ($ultimoCodigoletra > 'Z') {
+                            $ultimoCodigoletra = 'A'; // Volver a 'A' si llega a 'Z'
+                        }
+                    }
+
+                    // Crear el nuevo código de solicitud
+                    $solicitudCode = $ultimoCodigoletra . str_pad($ultimoCodigoN, 3, "0", STR_PAD_LEFT);
+
                     //return $solicitudCode;
+
+                    //$solicitudCode =  $cod_depart . str_pad($ultimoCodigo,3, "0",STR_PAD_LEFT);
+
                     $solicitudUpdate = Solicitud::find($solicitudId);
                     $solicitudUpdate->codigo = $solicitudCode;
                     $result = $solicitudUpdate->save();	
-                    
+
+                    //return $solicitudCode;
+
+
+                    // Obtener el último código de solicitud
+                    //$ultimaSolicitud = Solicitud::orderBy('id', 'desc')->first();
+
+                    //return $ultimaSolicitud;
+                    //
+                    // if ($ultimaSolicitud) {
+
+                    //     $ultimaSolicitudCodigo = $ultimaSolicitud->codigo;
+
+                    //     return $ultimaSolicitudCodigo;
+
+                    //   
+                        
+                    // } 
+
+                    //return  $cod_depart;
+
+                    // Incrementar el número de solicitud
+                    //$numeros++;
+
+                   
+
+                    //  $solicitudUpdate = Solicitud::find($solicitudId);
+                    //  $solicitudUpdate->codigo = $solicitudCode;
+                    //  $result = $solicitudUpdate->save();	
+
                     //$cubiculoCount = Cubiculo::count();
                     $cubiculoCount = Cubiculo::where('estatus', 'Activo')->count();
                     //return $cubiculoCount;

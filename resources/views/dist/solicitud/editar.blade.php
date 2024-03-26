@@ -66,7 +66,7 @@
                 <!-- Formulario -->
 
                 <div class="container-fluid px-2 my-2">
-                    <form id="nuevoregistro" name="editarregistro" autocomplete="off"  method="POST" action="{{ url()->current('/dist/solicitud/nuevo') }}" enctype="multipart/form-data">
+                    <form id="editarregistro" name="editarregistro" autocomplete="off"  method="POST" action="{{ url()->current('/dist/solicitud/nuevo') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             
                             <input type="hidden" id="solicitudId" name="solicitudId" value="{{$solicitud->id}}" class="form-control text-right" >
