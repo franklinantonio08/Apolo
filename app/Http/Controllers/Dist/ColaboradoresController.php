@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 use App\Models\Colaboradores;
+use App\Models\User; 
 
 use DB;
 use Excel;
@@ -265,30 +269,64 @@ public function PostEditar(){
 
     //return $request;
 
-    $posicionesId = isset($this->request->posicionesId) ? $this->request->posicionesId: '';
+    $usuarioId = isset($this->request->usuarioId) ? $this->request->usuarioId: '';
 
-    //return $posicionesId;
+    //return $usuarioId;
 
-    $posiciones = Colaboradores::where('id', $posicionesId)
-    //->where('distribuidorId',Auth::user()->distribuidorId)
-    ->first();
+    // $usuarioId = Colaboradores::where('id', $usuarioId)
+    // //->where('distribuidorId',Auth::user()->distribuidorId)
+    // ->first();
 
-    if(empty($posiciones)){
-        return redirect('dist/posiciones')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0005");
-    }
+    // if(empty($usuarioId)){
+    //     return redirect('dist/posiciones')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0005");
+    // }
 
     DB::beginTransaction();
-        $posicionesUpdate = Colaboradores::find($posicionesId);
-        $posicionesUpdate->nombre           = $this->request->nombre;
-        $posicionesUpdate->departamentoId   = $this->request->departamento;
-        $posicionesUpdate->infoextra        = $this->request->comentario;
+
+
+    $colaborador = Colaboradores::find($usuarioId);
+        if (!$colaborador) {
+            //return response()->json(['error' => 'El usuario no existe'], 404);
+            return redirect('dist/colaboradores/editar/'.$usuarioId)->withErrors("ERROR AL EDITAR ELEMENTOS DE STORE CEBECECO CODE-0006");
+        }
+
+     
+
+         $posicionesUpdate = Colaboradores::find($usuarioId);
+         $posicionesUpdate->nombre           = $this->request->nombre;
+         $posicionesUpdate->apellido         = $this->request->apellido;
+         $posicionesUpdate->cedula           = $this->request->cedula;
         
-        $result = $posicionesUpdate->save();
+         $posicionesUpdate->correo           = $this->request->correo;
+         $posicionesUpdate->telefono         = $this->request->telefono;
+         $posicionesUpdate->genero           = $this->request->genero;
+         $posicionesUpdate->tipoSangre       = $this->request->tipoSangre;
+         $posicionesUpdate->tipoUsuario      = $this->request->tipoUsuario;
+         $posicionesUpdate->cubico           = $this->request->cubiculo;
+
+        // //$posicionesUpdate->departamentoId   = $this->request->departamento;
+         $posicionesUpdate->infoextra        = $this->request->comentario;
+        
+         $result = $posicionesUpdate->save();
+
+        $newPassword = Hash::make($this->request->contrasena);
+        $newRememberToken = Str::random(60);
+
+       
+
+        // Realizar la actualización en la base de datos
+        User::where('id', $usuarioId)->update([
+        'password' => $newPassword,
+        'remember_token' => $newRememberToken
+        ]);
+
+        // 'password' => Hash::make($request->password),
+        // 'remember_token' => Str::random(60),
 
     if($result != 1){
         DB::rollBack();
 
-        return redirect('dist/colaboradores/editar/'.$posicionesId)->withErrors("ERROR AL EDITAR ELEMENTOS DE STORE CEBECECO CODE-0006");
+        return redirect('dist/colaboradores/editar/'.$usuarioId)->withErrors("ERROR AL EDITAR ELEMENTOS DE STORE CEBECECO CODE-0006");
     }
 
     DB::commit();

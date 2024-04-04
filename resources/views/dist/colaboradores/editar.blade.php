@@ -78,6 +78,8 @@
                     {{ csrf_field() }}
                 <div class="col-lg-5 m-b-6">
 
+                    <input class="form-control" id="usuarioId" name="usuarioId" hidden type="text" placeholder="usuarioId" value="{{$usuario->usuarioId}}"/>
+
                         <div class="input-group mb-3">
                             <span class="input-group-text" style="width: 130px;" >Cedula</span>
                             <input class="form-control" id="cedula" name="cedula" type="text" placeholder="cedula" value="{{$usuario->cedula}}"/>
@@ -166,7 +168,7 @@
 
                           <div class="input-group mb-3">
                             <span class="input-group-text" style="width: 130px;">Contraseña</span>
-                            <input class="form-control" id="contrasena" name="contrasena" type="text" placeholder="contrasena" value=""/>
+                            <input class="form-control" id="contrasena" name="contrasena" type="password" placeholder="contrasena" value=""/>
                         </div>
 
                     <!-- 
