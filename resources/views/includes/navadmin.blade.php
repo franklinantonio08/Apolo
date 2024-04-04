@@ -137,7 +137,7 @@
                                 <li class="nav-item"><a class="nav-link" href="/dist/posiciones"><span class="nav-icon"></span> Posiciones</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/dist/motivo"><span class="nav-icon"></span> Motivo</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/dist/submotivo"><span class="nav-icon"></span> SubMotivo</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/dist/cubiculo"><span class="nav-icon"></span> Cubiculos</a></li>
+                                {{-- <li class="nav-item"><a class="nav-link" href="/dist/cubiculo"><span class="nav-icon"></span> Cubiculos</a></li> --}}
               
                         </ul>
                 </li>

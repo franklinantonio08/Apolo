@@ -212,6 +212,8 @@ public function Editar($colaboradoresId){
         return redirect('dist/colaboradores')->withErrors("ERROR STORE CEBECECO NO EXISTE CODE-0004");
     }
 
+    //return $colaboradores;
+
     /*$departamento = DB::table('departamento')
     ->where('estatus', '=', 'Activo')
     ->where('organizacionId', '=', '1')
@@ -224,7 +226,7 @@ public function Editar($colaboradoresId){
 */
     view()->share('usuario', $colaboradores);	
 
-    view()->share('colaboradores', $colaboradores);
+    //view()->share('colaboradores', $colaboradores);
 
     $departamento = DB::table('departamento')
     ->where('estatus', '=', 'Activo')
