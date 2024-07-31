@@ -20,8 +20,25 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        // return view('auth.tipo-acceso');
         return view('auth.register');
     }
+
+    public function tipoAcceso()
+    {
+        return view('auth.tipo-acceso');
+    }
+    
+    public function prestadorServicio()
+    {
+        return view('auth.prestador-servicio');
+    }
+
+    public function informacionPersonal()
+    {
+        return view('auth.informacion-personal');
+    }
+
 
     /**
      * Handle an incoming registration request.

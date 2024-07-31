@@ -19,40 +19,51 @@
     </form>
     <ul class="header-nav ms-auto me-3">
     <li class="nav-item dropdown d-md-down-none"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="d-inline-block my-1 mx-2 position-relative">
-    <svg class="icon icon-lg">
-    <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-bell') }}"></use>
-    </svg><span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"><span class="visually-hidden">New alerts</span></span></span></a>
-    <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg pt-0">
-    <div class="dropdown-header bg-light dark:bg-white dark:bg-opacity-10"><strong>You have 5 notifications</strong></div><a class="dropdown-item" href="#">
-    <svg class="icon me-2 text-success">
-    <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-user-follow') }}"></use>
-    </svg> New user registered</a><a class="dropdown-item" href="#">
-    <svg class="icon me-2 text-danger">
-    <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-user-unfollow') }}"></use>
-    </svg> User deleted</a><a class="dropdown-item" href="#">
-    <svg class="icon me-2 text-info">
-    <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-chart') }}"></use>
-    </svg> Sales report is ready</a><a class="dropdown-item" href="#">
-    <svg class="icon me-2 text-success">
-    <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-basket') }}"></use>
-    </svg> New client</a><a class="dropdown-item" href="#">
-    <svg class="icon me-2 text-warning">
-    <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}"></use>
-    </svg> Server overloaded</a>
-    <div class="dropdown-header bg-light dark:bg-white dark:bg-opacity-10"><strong>Server</strong></div><a class="dropdown-item d-block" href="#">
-    <div class="text-uppercase mb-1"><small><b>CPU Usage</b></small></div><span class="progress progress-thin">
-    <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-    </span><small class="text-medium-emphasis">348 Processes. 1/4 Cores.</small>
-    </a><a class="dropdown-item d-block" href="#">
-    <div class="text-uppercase mb-1"><small><b>Memory Usage</b></small></div><span class="progress progress-thin">
-    <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-    </span><small class="text-medium-emphasis">11444GB/16384MB</small>
-    </a><a class="dropdown-item d-block" href="#">
-    <div class="text-uppercase mb-1"><small><b>SSD 1 Usage</b></small></div><span class="progress progress-thin">
-    <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-    </span><small class="text-medium-emphasis">243GB/256GB</small>
-    </a>
-    </div>
+        <svg class="icon icon-lg">
+            <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-bell') }}"></use>
+        </svg><span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"><span class="visually-hidden">New alerts</span></span></span></a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg pt-0">
+        <div class="dropdown-header bg-light dark:bg-white dark:bg-opacity-10"><strong>You have 5 notifications</strong>
+        </div>
+            <a class="dropdown-item" href="#">
+            <svg class="icon me-2 text-success">
+            <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-user-follow') }}"></use>
+            </svg> New user registered</a>
+
+            <a class="dropdown-item" href="#">
+            <svg class="icon me-2 text-danger">
+            <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-user-unfollow') }}"></use>
+            </svg> User deleted</a>
+
+            <a class="dropdown-item" href="#">
+            <svg class="icon me-2 text-info">
+            <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-chart') }}"></use>
+            </svg> Sales report is ready</a>
+        
+            <a class="dropdown-item" href="#">
+            <svg class="icon me-2 text-success">
+            <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-basket') }}"></use>
+            </svg> New client</a>
+
+            <a class="dropdown-item" href="#">
+            <svg class="icon me-2 text-warning">
+            <use xlink:href="{{ asset('../vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}"></use>
+            </svg> Server overloaded</a>
+            
+        <div class="dropdown-header bg-light dark:bg-white dark:bg-opacity-10"><strong>Server</strong></div><a class="dropdown-item d-block" href="#">
+        <div class="text-uppercase mb-1"><small><b>CPU Usage</b></small></div><span class="progress progress-thin">
+        <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </span><small class="text-medium-emphasis">348 Processes. 1/4 Cores.</small>
+        </a><a class="dropdown-item d-block" href="#">
+        <div class="text-uppercase mb-1"><small><b>Memory Usage</b></small></div><span class="progress progress-thin">
+        <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+        </span><small class="text-medium-emphasis">11444GB/16384MB</small>
+        </a><a class="dropdown-item d-block" href="#">
+        <div class="text-uppercase mb-1"><small><b>SSD 1 Usage</b></small></div><span class="progress progress-thin">
+        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+        </span><small class="text-medium-emphasis">243GB/256GB</small>
+        </a>
+        </div>
     </li>
     <li class="nav-item dropdown d-md-down-none"><a class="nav-link" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="d-inline-block my-1 mx-2 position-relative">
     <svg class="icon icon-lg">

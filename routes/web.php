@@ -18,7 +18,19 @@ use App\Http\Controllers\Dist\{
     PosicionesController,
     ColaboradoresController,
     MotivoController,
-    SubmotivoController
+    SubmotivoController,
+
+    PaisController,
+    ProvinciaController,
+    DistritoController,
+    CorregimientoController
+
+};
+
+use App\Http\Controllers\Admin\{
+    RIDAfinidadController,
+    RIDMigrantesController,
+    RIDPuestocontrolController
 };
 
 
@@ -42,14 +54,11 @@ use App\Http\Controllers\Dist\{
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])
-    ->name('login');
+    Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
     });
 
 
-    Route::middleware('auth')->group(function () {
-
-    
+    Route::middleware('auth')->group(function () {    
 
         //dashboard
 
@@ -145,10 +154,60 @@ Route::middleware('guest')->group(function () {
         Route::post('dist/colaboradores/nuevo/buscaposiciones', [ColaboradoresController::class, 'postBuscaposiciones']) ->name('postBuscaposiciones');
 
 
+
+        //PAIS
+        Route::get('dist/pais', [PaisController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/pais', [PaisController::class, 'PostIndex']) ->name('PostIndex'); 
         /*Route::get('dist/organizacion/importar', [OrganizacionController::class, 'Importar']) ->name('Importar'); 
         Route::post('dist/organizacion/importar', [OrganizacionController::class, 'PostImportar']) ->name('PostImportar'); 
-*/
+        */
 
+        // PROVINCIA
+        Route::get('dist/provincia', [ProvinciaController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/provincia', [ProvinciaController::class, 'PostIndex']) ->name('PostIndex'); 
+        
+        //DISTRITO
+        Route::get('dist/distrito', [DistritoController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/distrito', [DistritoController::class, 'PostIndex']) ->name('PostIndex'); 
+        
+        //CORREGIMIENTO
+        Route::get('dist/corregimiento', [CorregimientoController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/corregimiento', [CorregimientoController::class, 'PostIndex']) ->name('PostIndex'); 
+
+
+
+        //CORREGIMIENTO
+        Route::get('dist/corregimiento', [CorregimientoController::class, 'Index']) ->name('Index'); 
+        Route::post('dist/corregimiento', [CorregimientoController::class, 'PostIndex']) ->name('PostIndex'); 
+
+
+        //RID MIGRANTES
+        Route::get('admin/RIDmigrantes', [RIDMigrantesController::class, 'Index']) ->name('Index'); 
+        Route::post('admin/RIDmigrantes', [RIDMigrantesController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('admin/RIDmigrantes/nuevo', [RIDMigrantesController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('admin/RIDmigrantes/nuevo', [RIDMigrantesController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('admin/RIDmigrantes/editar/{Id}', [RIDMigrantesController::class, 'Editar']) ->name('Editar');
+        Route::post('admin/RIDmigrantes/editar/{Id}', [RIDMigrantesController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('admin/RIDmigrantes/mostrar/{Id}', [RIDMigrantesController::class, 'Mostrar']) ->name('Mostrar');
+
+        //RID PUESTO DE CONTROL
+        Route::get('admin/RIDpuestocontrol', [RIDPuestocontrolController::class, 'Index']) ->name('Index'); 
+        Route::post('admin/RIDpuestocontrol', [RIDPuestocontrolController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('admin/RIDpuestocontrol/nuevo', [RIDPuestocontrolController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('admin/RIDpuestocontrol/nuevo', [RIDPuestocontrolController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('admin/RIDpuestocontrol/editar/{Id}', [RIDPuestocontrolController::class, 'Editar']) ->name('Editar');
+        Route::post('admin/RIDpuestocontrol/editar/{Id}', [RIDPuestocontrolController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('admin/RIDpuestocontrol/mostrar/{Id}', [RIDPuestocontrolController::class, 'Mostrar']) ->name('Mostrar');
+
+        //RID AFINIDAD
+        Route::get('admin/RIDafinidad', [RIDAfinidadController::class, 'Index']) ->name('Index'); 
+        Route::post('admin/RIDafinidad', [RIDAfinidadController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('admin/RIDafinidad/nuevo', [RIDAfinidadController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('admin/RIDafinidad/nuevo', [RIDAfinidadController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('admin/RIDafinidad/editar/{Id}', [RIDAfinidadController::class, 'Editar']) ->name('Editar');
+        Route::post('admin/RIDafinidad/editar/{Id}', [RIDAfinidadController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('admin/RIDafinidad/mostrar/{Id}', [RIDAfinidadController::class, 'Mostrar']) ->name('Mostrar');
+      
     });
 
 

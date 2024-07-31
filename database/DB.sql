@@ -19,43 +19,45 @@ DROP TABLE IF EXISTS `consumidor`;
 
 
 CREATE TABLE IF NOT EXISTS `organizacion` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nombre` varchar(75) DEFAULT NULL,
     `codigo` varchar(5) DEFAULT NULL,
     `estatus` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo',
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
+
 
 CREATE TABLE IF NOT EXISTS `departamento` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nombre` varchar(75) DEFAULT NULL,
     `codigo` varchar(5) DEFAULT NULL,
     `estatus` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo',
-    `organizacionId` int(11) NOT NULL,
+    `organizacionId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (organizacionId) REFERENCES organizacion(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `posiciones` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nombre` varchar(75) DEFAULT NULL,
     `codigo` varchar(5) DEFAULT NULL,
     `estatus` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo',
-    `departamentoId` int(11) NOT NULL,
+    `departamentoId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (departamento›Id) REFERENCES departamento(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+    FOREIGN KEY (departamentoId) REFERENCES departamento(id)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
+
 
 CREATE TABLE IF NOT EXISTS `colaboradores` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `codigo` varchar(5) DEFAULT NULL,
     `cedula` varchar(15) DEFAULT NULL,
     `nombre` varchar(75) DEFAULT NULL,
@@ -65,139 +67,146 @@ CREATE TABLE IF NOT EXISTS `colaboradores` (
     `genero` enum('Masculino','Femenino' ) NOT NULL DEFAULT 'Masculino',
     `tipoUsuario` enum('Admin','SuperAdmin', 'Colaborador', 'Recursos Humanos') NOT NULL DEFAULT 'Colaborador',
     `telefono` varchar(15) DEFAULT NULL,
-    `departamentoId` int(11) NOT NULL,
-    `posicionId` int(11) NOT NULL,
+    `departamentoId` int NOT NULL,
+    `posicionId` int NOT NULL,
     `estatus` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo',
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (departamentoId) REFERENCES departamento(id),
     FOREIGN KEY (posicionId) REFERENCES posiciones(id)
-  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+  ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `provincia` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `nombre` varchar(75) COLLATE utf8_general_ci NULL,
-    `codigo` varchar(5) COLLATE utf8_general_ci NULL,
-    `estatus` enum('Activo','Inactivo') COLLATE utf8_general_ci NOT NULL DEFAULT 'Activo',
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `nombre` varchar(75) COLLATE UTF8MB4_general_ci NULL,
+    `codigo` varchar(5) COLLATE UTF8MB4_general_ci NULL,
+    `estatus` enum('Activo','Inactivo') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Activo',
     `created_at` timestamp NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;  
+  ) ENGINE=InnoDB  DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_general_ci AUTO_INCREMENT=0;  
 
 CREATE TABLE IF NOT EXISTS `distrito` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `nombre` varchar(75) COLLATE utf8_general_ci NULL,
-    `codigo` varchar(5) COLLATE utf8_general_ci NULL,
-    `estatus` enum('Activo','Inactivo') COLLATE utf8_general_ci NOT NULL DEFAULT 'Activo',
-    `provinciaId` int(11) NOT NULL,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `nombre` varchar(75) COLLATE UTF8MB4_general_ci NULL,
+    `codigo` varchar(5) COLLATE UTF8MB4_general_ci NULL,
+    `estatus` enum('Activo','Inactivo') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Activo',
+    `provinciaId` int NOT NULL,
     `created_at` timestamp NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (provinciaId) REFERENCES provincia(id)
-  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;  
+  ) ENGINE=InnoDB  DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_general_ci AUTO_INCREMENT=0;  
 
 CREATE TABLE IF NOT EXISTS `corregimiento` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nombre` varchar(75) COLLATE utf8_general_ci NULL,
     `codigo` varchar(5) COLLATE utf8_general_ci NULL,
     `estatus` enum('Activo','Inactivo') COLLATE utf8_general_ci NOT NULL DEFAULT 'Activo',
-    `distritoId` int(11) NOT NULL,
+    `distritoId` int NOT NULL,
     `created_at` timestamp NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (distritoId) REFERENCES distrito(id)
-  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;  
+  ) ENGINE=InnoDB  DEFAULT CHARSET=UTF8MB4 COLLATE=UTF8MB4_general_ci AUTO_INCREMENT=0;  
 
- CREATE TABLE IF NOT EXISTS `direccion` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `direccion` varchar(75) DEFAULT NULL,
-    `provinciaId` int(11) NOT NULL,
-    `distritoId` int(11) NOT NULL,
-    `corregimientoId` int(11) NOT NULL,
-    `contacto` varchar(25) DEFAULT NULL,
-    `telefono` varchar(15) DEFAULT NULL,
-    `contactoDireccion` varchar(75) DEFAULT NULL,
-    `colaboradorId` int(11) NOT NULL,
-    `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
-    `created_at` timestamp NULL DEFAULT NULL,
-    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (colaboradorId) REFERENCES colaboradores(id),
-    FOREIGN KEY (provinciaId) REFERENCES provincia(id),
-    FOREIGN KEY (distritoId) REFERENCES distrito(id),
-    FOREIGN KEY (corregimientoId) REFERENCES corregimiento(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `direccion` (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `direccion` VARCHAR(75) DEFAULT NULL,
+    `provinciaId` INT NOT NULL,
+    `distritoId` INT NOT NULL,
+    `corregimientoId` INT NOT NULL,
+    `contacto` VARCHAR(50) DEFAULT NULL,
+    `telefono` VARCHAR(15) DEFAULT NULL,
+    `contactoDireccion` VARCHAR(75) DEFAULT NULL,
+    `colaboradorId` INT NOT NULL,
+    `infoextra` TEXT DEFAULT NULL,
+    `usuarioId` INT NOT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX (`provinciaId`),
+    INDEX (`distritoId`),
+    INDEX (`corregimientoId`),
+    INDEX (`colaboradorId`),
+    INDEX (`usuarioId`),
+    CONSTRAINT `fk_colaborador` FOREIGN KEY (`colaboradorId`) REFERENCES `colaboradores`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_provincia` FOREIGN KEY (`provinciaId`) REFERENCES `provincia`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_distrito` FOREIGN KEY (`distritoId`) REFERENCES `distrito`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_corregimiento` FOREIGN KEY (`corregimientoId`) REFERENCES `corregimiento`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8MB4;
+
 
  CREATE TABLE IF NOT EXISTS `educacion` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `titulo` varchar(200) DEFAULT NULL,
     `institucion` varchar(200) DEFAULT NULL,
-    `resultado`  enum('En curso', 'Completado', 'Abandonado', 'Otro') COLLATE utf8_general_ci NOT NULL DEFAULT 'Completado',
+    `resultado`  enum('En curso', 'Completado', 'Abandonado', 'Otro') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Completado',
     `fechainicio` DATETIME NULL DEFAULT NULL,
     `fechafinalizacion` DATETIME NULL DEFAULT NULL,
-    `colaboradorId` int(11) NOT NULL,
+    `colaboradorId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (colaboradorId) REFERENCES colaboradores(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `informacionBancaria` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nombreBanco` varchar(200) DEFAULT NULL,
     `numeroCuenta` varchar(20) DEFAULT NULL,
-    `tipoCuenta`  enum('Ahorro', 'Corriente', 'Otro') COLLATE utf8_general_ci NOT NULL DEFAULT 'Ahorro',
-    `colaboradorId` int(11) NOT NULL,
+    `tipoCuenta`  enum('Ahorro', 'Corriente', 'Otro') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Ahorro',
+    `colaboradorId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (colaboradorId) REFERENCES colaboradores(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `salarios` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `tipoContrato` enum('Contrato por Tiempo Indefinido', 'Contrato por Tiempo Determinado', 'Contrato por Obra o Servicio Determinado', 'Contrato por Prueba', 'Contrato de Reemplazo', 'Contrato de Aprendizaje', 'Contrato a Tiempo Parcial', 'Contrato de Teletrabajo', 'Contrato por Temporada', 'Contrato de Extranjeros', 'Contrato a Domicilio') COLLATE utf8_general_ci NOT NULL DEFAULT 'Contrato por Tiempo Indefinido',
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `tipoContrato` enum('Contrato por Tiempo Indefinido', 'Contrato por Tiempo Determinado', 'Contrato por Obra o Servicio Determinado', 'Contrato por Prueba', 'Contrato de Reemplazo', 'Contrato de Aprendizaje', 'Contrato a Tiempo Parcial', 'Contrato de Teletrabajo', 'Contrato por Temporada', 'Contrato de Extranjeros', 'Contrato a Domicilio') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Contrato por Tiempo Indefinido',
     `fechaInicio` DATETIME NULL DEFAULT NULL,
     `fechafinalizacion` DATETIME NULL DEFAULT NULL,
-    `tipoSalario` enum('Hora', 'Semanal', 'Quincenal', 'Mensual') COLLATE utf8_general_ci NOT NULL DEFAULT 'Quincenal',
+    `tipoSalario` enum('Hora', 'Semanal', 'Quincenal', 'Mensual') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Quincenal',
     `monto` decimal(13,4) DEFAULT '0.0000',
-    `tipoPago`  enum('Ahorro', 'Corriente', 'Otro') COLLATE utf8_general_ci NOT NULL DEFAULT 'Ahorro',
-    `colaboradorId` int(11) NOT NULL,
+    `tipoPago`  enum('Ahorro', 'Corriente', 'Otro') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Ahorro',
+    `colaboradorId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (colaboradorId) REFERENCES colaboradores(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
 CREATE TABLE IF NOT EXISTS `beneficiosDeduciones` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `tipobd` enum('Beneficio', 'Deduciones') COLLATE utf8_general_ci NOT NULL DEFAULT 'Beneficio',
-    `tipo` enum('Comida', 'Alquiler', 'Seguro Medico Privado', 'Transporte', 'Seguro Social', 'Seguro Educativo', 'Ahorro', 'Otros') COLLATE utf8_general_ci NOT NULL DEFAULT 'Otros',
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `tipobd` enum('Beneficio', 'Deduciones') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Beneficio',
+    `tipo` enum('Comida', 'Alquiler', 'Seguro Medico Privado', 'Transporte', 'Seguro Social', 'Seguro Educativo', 'Ahorro', 'Otros') COLLATE UTF8MB4_general_ci NOT NULL DEFAULT 'Otros',
     `monto` decimal(13,4) DEFAULT '0.0000',
-    `colaboradorId` int(11) NOT NULL,
+    `colaboradorId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (colaboradorId) REFERENCES colaboradores(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
  CREATE TABLE IF NOT EXISTS `experienciasLaborales` (
-    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `empresa` varchar(100) DEFAULT NULL,
     `posicion` varchar(50) DEFAULT NULL,
     `direccion`  varchar(200) DEFAULT NULL,
     `fechainicio` DATETIME NULL DEFAULT NULL,
     `fechafinalizacion` DATETIME NULL DEFAULT NULL,
-    `colaboradorId` int(11) NOT NULL,
+    `colaboradorId` int NOT NULL,
     `infoextra` text,
-    `usuarioId` int(11) NOT NULL,
+    `usuarioId` int NOT NULL,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (colaboradorId) REFERENCES colaboradores(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;
 
 #inserta organizacion
 INSERT INTO `organizacion` (`nombre`, `codigo`, `usuarioId`) VALUES
@@ -1014,7 +1023,7 @@ INSERT INTO `corregimiento` (`nombre`, `codigo`, `distritoId`) VALUES
 
 
 CREATE TABLE IF NOT EXISTS  `consumidor` (
-  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `codigo` varchar(5) DEFAULT NULL,
   `cedula` varchar(15) DEFAULT NULL,
   `nombre` varchar(75) DEFAULT NULL,
@@ -1024,10 +1033,10 @@ CREATE TABLE IF NOT EXISTS  `consumidor` (
   `genero` enum('Masculino','Femenino') NOT NULL DEFAULT 'Masculino',
   `telefono` varchar(15) DEFAULT NULL,
   `tipoConsumidor` enum('Normal','Embarazada','Discapacitado','Jubilado') NOT NULL DEFAULT 'Normal',
-  `solicitudId` int(11) NOT NULL,
+  `solicitudId` int NOT NULL,
   `infoextra` text DEFAULT NULL,
-  `usuarioId` int(11) NOT NULL,
+  `usuarioId` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   FOREIGN KEY (solicitudId) REFERENCES solicitud(id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=UTF8MB4;

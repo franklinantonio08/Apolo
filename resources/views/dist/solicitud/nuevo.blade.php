@@ -28,131 +28,53 @@
 	<div class="col-lg-12">
         <div class="card mb-4">
 			
-            <div class="card-body p-4">
-                <div class="row">
-                    <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Solicitud</div>
-                    </div>
-                </div>
-			</div>
+         
 
             <div class="table-responsive">
                    
                 <!-- Formulario -->
 
                 <div class="container-fluid px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/dist/departamento/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
+                    
                             {{ csrf_field() }}
-                        <div class="col-lg-5 m-b-6">
-<!--
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;" >Cedula</span>
-                                    <input type="text" class="form-control" id="cedula" name="cedula" placeholder="">
-                                </div>
+                        <div class="col-lg-12 mb-6">
 
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;">Nombre</span>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="">
-                                </div>
+                            <!-- Información Adicional -->
+                            <div class="alert alert-info" role="alert">
+                                <p><strong>Seleccione una ubicación y asegúrese de tener los documentos e información que necesitará.</strong></p>
+                                <button id="nuevaSolicitudForm" name="nuevaSolicitudForm" type="submit" class="btn btn-primary text-white"><i class="fa fa-check m-r-5"></i> INICIAR UNA APLICACIÓN</button>
+                                <br>                                
+                                <strong>Se le pedirá su ID de aplicación y responder una pregunta de seguridad.</strong></p>
+                                <button id="recuperaSolicitudForm" name="recuperaSolicitudForm" type="submit" class="btn btn-secondary text-white"><i class="fa fa-check m-r-5"></i> RECUPERAR UNA APLICACIÓN</button>
+                                <br>
+                                <p><strong>Información Adicional:</strong></p>
+                                <ul>
+                                    <li>Anote el ID de la aplicación que se muestra en la esquina superior derecha de la página. Si cierra la ventana del navegador, necesitará su ID para acceder a su aplicación nuevamente.</li>
+                                    <li>Guarde su aplicación frecuentemente. El sistema se cerrará después de 20 minutos de inactividad y perderá toda la información no guardada.</li>
+                                    <li>Lea más sobre visas de EE. UU. en travel.state.gov.</li>
+                                    <li>Visite el sitio web de la Embajada o Consulado de EE. UU.</li>
+                                </ul>
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;">Apellido</span>
-                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="">
-                                </div>
+                            <!--Declaración de Confidencialidad -->
+                            <div class="alert alert-secondary mt-3" role="alert">
+                                <p><strong>Declaración de Confidencialidad:</strong></p>
+                                <p>La carga pública para esta recopilación de información se estima en un promedio de 90 minutos por respuesta, incluyendo el tiempo requerido para buscar fuentes de datos existentes, reunir la documentación necesaria, proporcionar la información y/o documentos requeridos, y revisar la recopilación final. Usted no está obligado a proporcionar esta información a menos que esta recopilación muestre un número de control OMB válido. Si tiene comentarios sobre la precisión de esta estimación de carga y/o recomendaciones para reducirla, por favor envíelos a: <a href="mailto:PRA_BurdenComments@state.gov">PRA_BurdenComments@state.gov</a>.</p>
+                                <p>La información solicitada en este formulario se pide de conformidad con la Sección 222 de la Ley de Inmigración y Nacionalidad. La Sección 222(f) de la INA establece que los registros del Departamento de Estado y de las oficinas diplomáticas y consulares de los Estados Unidos relacionados con la emisión y denegación de visas o permisos para ingresar a los Estados Unidos se considerarán confidenciales y se utilizarán únicamente para la formulación, enmienda, administración o aplicación de las leyes de inmigración, nacionalidad y otras leyes de los Estados Unidos. Se pueden hacer copias certificadas de dichos registros disponibles para un tribunal, siempre que el tribunal certifique que la información contenida en dichos registros es necesaria en un caso pendiente ante el tribunal.</p>
+                            </div>
 
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo" >
-                                    <span class="input-group-text" style="width: 130px;">@example.com</span>
-                                  </div>
+                            
 
-                                  <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;">Teléfono</span>
-                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="">
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" style="width: 130px;" for="inputGroupSelect01">Genero</label>
-                                    <select class="form-select" id="genero" name="genero">
-                                        <option value="" selected disabled>Seleccionar...</option>	
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>										
-                                    </select>
-                                  </div> -->
-
-                                  <div class="input-group mb-3">
-                                    <label class="input-group-text" style="width: 130px;" for="departamento">Departamento</label>
-                                    <select class="form-select" id="departamento" name="departamento">
-                                        <option value="" selected disabled>Selecciona...</option>
-                                        @foreach ($departamento as $key => $value) 										
-                                        <option value="{{ $value->id }}">{{ $value->nombre }}</option>										
-                                        @endForeach
-                                    </select>
-                                  </div>
-
-                                  <div class="input-group mb-3" id='DivResultado_tipoAtencion'>
-                                    <div class="input-group mb-3">
-                                    <label class="input-group-text" style="width: 130px;" for="motivo">Tipo Atencion</label>
-                                    <select class="form-select" id="tipoAtencion" name="tipoAtencion">
-                                        <option value="" selected disabled>Selecciona...</option>
-                                    </select>
-                                    </div>
-                                </div> 
-
-                                <!--
-                                    <div class="input-group mb-3" id='DivResultado_motivo'>
-                                        <div class="input-group mb-3">
-                                        <label class="input-group-text" style="width: 130px;" for="motivo">Motivo</label>
-                                        <select class="form-select" id="motivo" name="motivo">
-                                            <option value="" selected disabled>Selecciona...</option>
-                                        </select>
-                                        </div>
-                                    </div> 
-
-                                    <div class="input-group mb-3" id='DivResultado_submotivo'>
-                                        <div class="input-group mb-3">
-                                        <label class="input-group-text" style="width: 130px;" for="submotivo">Submotivo</label>
-                                        <select class="form-select" id="submotivo" name="submotivo">
-                                            <option value="" selected disabled>Selecciona...</option>
-                                        </select>
-                                        </div>
-                                    </div> -->
-
-
-                                
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>
-                                    <label for="comentario">Comentario</label>
-                                </div>
-
-                                <!-- ACTION BUTTONS -->
-                                    <div class="form-group row">
-                                        <div class="offset-12 col-12">
-                                            <button id="submitForm" name="submitForm" type="submit" class="btn btn-primary text-white"><i class="fa fa-check m-r-5"></i> Guardar</button>
-                                            <a href="{{ url()->previous() }}"  class="btn btn-danger text-white"><i class="fa fa-remove m-r-5"></i> Cancelar</a>
-                                        </div>
-                                    </div>
-                                <!-- end ACTION BUTTONS -->
-
-                               
                         </div>
                         
-                    </form>
+                    {{-- </form> --}}
                 </div>
-
-                
-            
-                <!-- Fin Formulario-->
 
             </div>
 	    </div>    
     </div>  
 
-
-
 </div>
 
 @include('includes/messagebasicmodal')
 @endsection
-
-
-
