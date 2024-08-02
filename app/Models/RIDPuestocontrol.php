@@ -9,5 +9,5 @@ class RIDPuestocontrol extends Model
 {
     use HasFactory;
 
-    protected $table = 'RID_puestoControl';
+    protected $table = 'rid_puestocontrol';
 }

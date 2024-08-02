@@ -98,7 +98,8 @@
 
     <footer class="footer">
         <div class="mx-auto">
-           © New Wave Technologies. All Rights Reserved
+         
+          <div><a href="https://www.migracion.gob.pa/">Servicio Nacional de Migración </a> © 2024 Todos los Derechos Reservados</div>
         </div>
         
     </footer>

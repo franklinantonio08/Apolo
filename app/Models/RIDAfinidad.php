@@ -9,5 +9,5 @@ class RIDAfinidad extends Model
 {
     use HasFactory;
 
-    protected $table = 'RID_afinidad';
+    protected $table = 'rid_afinidad';
 }

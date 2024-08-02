@@ -88,7 +88,7 @@ class RIDMigrantesController extends Controller
             $data[] = array(
                     "DT_RowId" => $value->id,
                     "id" => $value->id,
-                    "nombre"=> $value->nombre . ' ' . $value->apellido,                         
+                    "nombre"=> $value->primerNombre . ' ' . $value->primerApellido,                         
                     "codigo"=> $value->documento,
                     "genero" => $value->genero,
                     "tipo" => $value->tipo,
@@ -119,7 +119,7 @@ class RIDMigrantesController extends Controller
 
         $rid_paises = DB::table('rid_paises')
     	->where('estatus', '=', 'Activo')
-    	->select('id', 'pais', 'region_id')
+    	->select('id', 'pais', 'region_id' , 'nacionalidad')
 		->get();
 
 		if(empty($rid_paises)){
@@ -136,6 +136,16 @@ class RIDMigrantesController extends Controller
     		return redirect('admin/RIDmigrantes')->withErrors("ERROR REGISTRO DE MIGRANTES ESTA VACIA CODE-0018");
     	}	
 		view()->share('RIDPuestocontrol', $rid_puestocontrol);	
+
+        $rid_estaciontemporal = DB::table('rid_estaciontemporal')
+    	->where('estatus', '=', 'Activo')
+    	->select('id', 'descripcion')
+		->get();
+
+		if(empty($rid_estaciontemporal)){
+    		return redirect('admin/RIDmigrantes')->withErrors("ERROR REGISTRO DE MIGRANTES ESTA VACIA CODE-0018");
+    	}	
+		view()->share('RIDEstaciontemporal', $rid_estaciontemporal);	
 
         $rid_afinidad = DB::table('rid_afinidad')
     	->where('estatus', '=', 'Activo')
@@ -188,31 +198,34 @@ class RIDMigrantesController extends Controller
             $diferencia = $fechaActual->diff($fechaNacimientoDateTime);
 
             $RIDMigrantes = new RIDMigrantes;
-            $RIDMigrantes->nombre           = trim($this->request->nombres);
-            $RIDMigrantes->apellido         = trim($this->request->apellidos);
-            $RIDMigrantes->fechaNacimiento  = $fechaNacimientoDateTime->format('Y-m-d'); //trim($fechaNacimientoDateTime);
-            $RIDMigrantes->documento        = trim($this->request->documento);
-            $RIDMigrantes->regionId         = trim($nacionalidad->region_id);
-            $RIDMigrantes->paisId           = trim($this->request->pais);
-            $RIDMigrantes->nacionalidadId   = trim($this->request->nacionalidad);
-            $RIDMigrantes->genero           = trim($this->request->genero);
+            $RIDMigrantes->primerNombre             = trim($this->request->primerNombre);
+            $RIDMigrantes->segundoNombre            = trim($this->request->segundoNombre);
+            $RIDMigrantes->primerApellido           = trim($this->request->primerApellido);
+            $RIDMigrantes->segundoApellido          = trim($this->request->segundoApellido);
+            $RIDMigrantes->fechaNacimiento          = $fechaNacimientoDateTime->format('Y-m-d'); //trim($fechaNacimientoDateTime);
+            $RIDMigrantes->documento                = trim($this->request->documento);
+            $RIDMigrantes->regionId                 = trim($nacionalidad->region_id);
+            $RIDMigrantes->paisId                   = trim($this->request->pais);
+            $RIDMigrantes->nacionalidadId           = trim($this->request->nacionalidad);
+            $RIDMigrantes->genero                   = trim($this->request->genero);
 
             if ($diferencia->y >= 18) {
-                $RIDMigrantes->tipo             = 'Adulto';
+                $RIDMigrantes->tipo                 = 'Adulto';
             } else {
-                $RIDMigrantes->tipo             = 'Menor';
+                $RIDMigrantes->tipo                 = 'Menor';
             }            
 
-            $RIDMigrantes->puestoId         = trim($this->request->puestoControl);
-            $RIDMigrantes->afinidadId       = trim($this->request->afinidad);
+            $RIDMigrantes->puestoId                 = trim($this->request->puestoControl);
+            $RIDMigrantes->estacionTemporalId       = trim($this->request->estacionTemporal);
+            $RIDMigrantes->afinidadId               = trim($this->request->afinidad);
 
             if(isset($this->request->comentario)){
-                $RIDMigrantes->infoextra    = trim($this->request->comentario); 
+                $RIDMigrantes->infoextra            = trim($this->request->comentario); 
             }
              
-            $RIDMigrantes->estatus          = 'Pendiente';
-            $RIDMigrantes->created_at       = date('Y-m-d H:i:s');
-            $RIDMigrantes->usuarioId        = Auth::user()->id; 
+            $RIDMigrantes->estatus                  = 'Pendiente';
+            $RIDMigrantes->created_at               = date('Y-m-d H:i:s');
+            $RIDMigrantes->usuarioId                = Auth::user()->id; 
             
             $result = $RIDMigrantes->save();
 
@@ -231,7 +244,7 @@ class RIDMigrantesController extends Controller
 
         } catch(\Illuminate\Database\QueryException $ex){ 
             DB::rollBack();
-            return redirect('admin/RIDmigrantes/nuevo')->withErrors('ERROR AL GUARDAR EL REGISTRO DE MIGRANTES  CODE-0022');
+            return redirect('admin/RIDmigrantes/nuevo')->withErrors('ERROR AL GUARDAR EL REGISTRO DE MIGRANTES  CODE-0022'.$ex);
         }
         
         if($result != 1){
@@ -251,7 +264,7 @@ class RIDMigrantesController extends Controller
             ->leftJoin('rid_paises', 'RID_migrante.paisId', '=', 'rid_paises.id')
             ->leftJoin('rid_regiones', 'rid_paises.region_id', '=', 'rid_regiones.id')
             ->leftJoin('rid_afinidad', 'RID_migrante.afinidadId', '=', 'rid_afinidad.id')
-            ->select('RID_migrante.*', 'rid_afinidad.descripcion as afinidad', 'rid_regiones.region', 'rid_paises.pais', 'nacionalidad.pais as nacionalidad', 'rid_puestocontrol.descripcion as puestoControl')
+            ->select('RID_migrante.*', 'rid_afinidad.descripcion as afinidad', 'rid_regiones.region', 'rid_paises.pais', 'nacionalidad.nacionalidad', 'rid_puestocontrol.descripcion as puestoControl')
             ->first();
     
         if (empty($RID_migrante)) {
@@ -319,17 +332,19 @@ class RIDMigrantesController extends Controller
 
             $migrantesUpdate = RIDMigrantes::find($migranteId);
 
-            $migrantesUpdate->nombre           = trim($this->request->nombre);
-            $migrantesUpdate->apellido         = trim($this->request->apellido);
-            $migrantesUpdate->fechaNacimiento  = $fechaNacimientoDateTime->format('Y-m-d'); //trim($fechaNacimientoDateTime);
-            $migrantesUpdate->documento        = trim($this->request->documento);
-            $migrantesUpdate->genero           = trim($this->request->genero);
-            $migrantesUpdate->afinidadId       = trim($this->request->afinidad);
-            $migrantesUpdate->regionId         = trim($nacionalidad->region_id);
-            $migrantesUpdate->paisId           = trim($this->request->pais);
-            $migrantesUpdate->nacionalidadId   = trim($this->request->nacionalidad);
-            $migrantesUpdate->puestoId         = trim($this->request->puestoControl);
-            $migrantesUpdate->infoextra          = $this->request->comentario;
+            $migrantesUpdate->primerNombre              = trim($this->request->primerNombre);
+            $migrantesUpdate->segundoNombre             = trim($this->request->segundoNombre);
+            $migrantesUpdate->primerApellido            = trim($this->request->primerApellido);
+            $migrantesUpdate->segundoApellido           = trim($this->request->segundoApellido);
+            $migrantesUpdate->fechaNacimiento           = $fechaNacimientoDateTime->format('Y-m-d'); //trim($fechaNacimientoDateTime);
+            $migrantesUpdate->documento                 = trim($this->request->documento);
+            $migrantesUpdate->genero                    = trim($this->request->genero);
+            $migrantesUpdate->afinidadId                = trim($this->request->afinidad);
+            $migrantesUpdate->regionId                  = trim($nacionalidad->region_id);
+            $migrantesUpdate->paisId                    = trim($this->request->pais);
+            $migrantesUpdate->nacionalidadId            = trim($this->request->nacionalidad);
+            $migrantesUpdate->puestoId                  = trim($this->request->puestoControl);
+            $migrantesUpdate->infoextra                 = $this->request->comentario;
             
             $result = $migrantesUpdate->save();
 
@@ -360,7 +375,7 @@ class RIDMigrantesController extends Controller
             ->leftJoin('rid_paises', 'RID_migrante.paisId', '=', 'rid_paises.id')
             ->leftJoin('rid_regiones', 'rid_paises.region_id', '=', 'rid_regiones.id')
             ->leftJoin('rid_afinidad', 'RID_migrante.afinidadId', '=', 'rid_afinidad.id')
-            ->select('RID_migrante.*', 'rid_afinidad.descripcion as afinidad', 'rid_regiones.region', 'rid_paises.pais', 'nacionalidad.pais as nacionalidad')
+            ->select('RID_migrante.*', 'rid_afinidad.descripcion as afinidad', 'rid_regiones.region', 'rid_paises.pais', 'nacionalidad.nacionalidad')
             ->first();
     
         if(empty($RID_migrante)){

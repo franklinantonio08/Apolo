@@ -98,7 +98,7 @@
 
               <footer class="footer" style="padding: 50px; font-size: 24px; background-color: #001936; color: white;">
                 <div class="container-fluid">
-                   © New Wave Technologies. All Rights Reserved
+                   © Servicios Nacional de Migracion. All Rights Reserved
                 </div>
             </footer>
     </div>

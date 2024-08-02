@@ -30,7 +30,8 @@ use App\Http\Controllers\Dist\{
 use App\Http\Controllers\Admin\{
     RIDAfinidadController,
     RIDMigrantesController,
-    RIDPuestocontrolController
+    RIDPuestocontrolController,
+    RIDEstaciontemporalController
 };
 
 
@@ -68,6 +69,9 @@ Route::middleware('guest')->group(function () {
 
 
         Route::get('dashboard', [DashboardController::class, 'Dashboard']) ->name('Dashboard');  
+        Route::post('dashboard', [DashboardController::class, 'TotalMigrantes']) ->name('TotalMigrantes');  
+        Route::post('dashboard/migrantes-mensual', [DashboardController::class, 'TotalMigrantesMensual']) ->name('TotalMigrantesMensual');  
+
 
         Route::get('dist/dashboard', [DashboardController::class, 'Index']) ->name('Index');  
         Route::get('dist/dashboard/listado', [DashboardController::class, 'PostIndex']) ->name('PostIndex');  
@@ -198,6 +202,15 @@ Route::middleware('guest')->group(function () {
         Route::get('admin/RIDpuestocontrol/editar/{Id}', [RIDPuestocontrolController::class, 'Editar']) ->name('Editar');
         Route::post('admin/RIDpuestocontrol/editar/{Id}', [RIDPuestocontrolController::class, 'PostEditar']) ->name('PostEditar'); 
         Route::get('admin/RIDpuestocontrol/mostrar/{Id}', [RIDPuestocontrolController::class, 'Mostrar']) ->name('Mostrar');
+
+        //RID PUESTO DE CONTROL
+        Route::get('admin/RIDestaciontemporal', [RIDEstaciontemporalController::class, 'Index']) ->name('Index'); 
+        Route::post('admin/RIDestaciontemporal', [RIDEstaciontemporalController::class, 'PostIndex']) ->name('PostIndex'); 
+        Route::get('admin/RIDestaciontemporal/nuevo', [RIDEstaciontemporalController::class, 'Nuevo']) ->name('Nuevo'); 
+        Route::post('admin/RIDestaciontemporal/nuevo', [RIDEstaciontemporalController::class, 'PostNuevo']) ->name('PostNuevo'); 
+        Route::get('admin/RIDestaciontemporal/editar/{Id}', [RIDEstaciontemporalController::class, 'Editar']) ->name('Editar');
+        Route::post('admin/RIDestaciontemporal/editar/{Id}', [RIDEstaciontemporalController::class, 'PostEditar']) ->name('PostEditar'); 
+        Route::get('admin/RIDestaciontemporal/mostrar/{Id}', [RIDEstaciontemporalController::class, 'Mostrar']) ->name('Mostrar');
 
         //RID AFINIDAD
         Route::get('admin/RIDafinidad', [RIDAfinidadController::class, 'Index']) ->name('Index'); 

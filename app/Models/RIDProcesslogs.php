@@ -9,7 +9,7 @@ class RIDProcesslogs extends Model
 {
     use HasFactory;
 
-    protected $table = 'RID_ProcessLogs';
+    protected $table = 'rid_processlogs';
 
 
     protected $fillable = [

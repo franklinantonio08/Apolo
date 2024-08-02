@@ -9,7 +9,7 @@ class RIDMigrantes extends Model
 {
     use HasFactory;
 
-    protected $table = 'RID_migrante';
+    protected $table = 'rid_migrante';
 
     const STATUS_PENDIENTE = 'Pendiente';
     const STATUS_ENVIADO = 'Enviado';

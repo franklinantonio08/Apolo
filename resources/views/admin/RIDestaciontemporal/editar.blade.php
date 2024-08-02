@@ -4,7 +4,7 @@
 	var token = '{{ csrf_token() }}';
 </script>
 	
-<script type="text/javascript" src="{{ asset('../js/admin/RIDAfinidad/RIDAfinidad.js') }}"></script>
+<script type="text/javascript" src="{{ asset('../js/admin/RIDestaciontemporal/RIDestaciontemporal.js') }}"></script>
 <script src="{{ asset('../js/comun/messagebasicModal.js') }}"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
@@ -30,7 +30,7 @@
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Afinidad</div>
+                        <div class="card-title fs-4 fw-semibold">Estaciones Temporales</div>
                     </div>
                 </div>
 			</div>
@@ -42,34 +42,17 @@
                 <!-- Formulario -->
 
                 <div class="container-fluid px-2 my-2">
-                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/admin/RIDAfinidad/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
+                    <form id="nuevoregistro" name="nuevoregistro" method="POST" action="{{ url()->current('/admin/RIDestaciontemporal/nuevo') }}" enctype="multipart/form-data" autocomplete="off">
                             {{ csrf_field() }}
                             
-                            <input type="hidden" id="afinidadId" name="afinidadId" value="{{$RID_afinidad->id}}" class="form-control text-right" placeholder="">
+                            <input type="hidden" id="estaciontemporalId" name="estaciontemporalId" value="{{$RIDestaciontemporal->id}}" class="form-control text-right" placeholder="">
 
                         <div class="col-lg-6 m-b-10">
 
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" style="width: 130px;" >Descripcion</span>
-                                    <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="" value="{{$RID_afinidad->descripcion}}">
+                                    <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="" value="{{$RIDestaciontemporal->descripcion}}">
                                 </div>
-
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" style="width: 150px;" for="inputGroupSelect01">Tipo de Usuario</label>
-                                    <select class="form-select" id="tipoUsuario" name="tipoUsuario">
-                                        <option value="" selected disabled>Seleccionar...</option>	
-                                        <option value="Parentesco Directo (Consanguíneo)" {{ $RID_afinidad->tipo_afinidad === 'Parentesco Directo (Consanguíneo)' ? 'selected' : '' }} >Parentesco Directo (Consanguíneo)</option>				
-                                        <option value="Parentesco Colateral" {{ $RID_afinidad->tipo_afinidad === 'Parentesco Colateral' ? 'selected' : '' }} >Parentesco Colateral</option>				
-                                        <option value="Parentesco por Afinidad" {{ $RID_afinidad->tipo_afinidad === 'Parentesco por Afinidad' ? 'selected' : '' }} >Parentesco por Afinidad</option>				
-                                        <option value="Sin Parentesco" {{ $RID_afinidad->tipo_afinidad === 'Sin Parentesco' ? 'selected' : '' }} >Sin Parentesco"</option>				
-                                    </select>
-                                  </div>
-
-                                  <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 130px;" >Código</span>
-                                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="" value="{{$RID_afinidad->codigo}}">
-                                </div>
-
 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="comentario" name="comentario" type="text" placeholder="Comentario" style="height: 10rem;" ></textarea>

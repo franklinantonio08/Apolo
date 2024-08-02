@@ -45,13 +45,23 @@
                         <div class="col-lg-6 m-b-10">
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="nombres" name="nombres" type="text" placeholder="Nombres" readonly value="{{$RIDmigrantes->nombre}}"/>
-                                <label for="nombres">Nombres</label>
+                                <input class="form-control" id="primerNombre" name="primerNombre" type="text" placeholder="Primer Nombre" readonly value="{{$RIDmigrantes->primerNombre}}"/>
+                                <label for="primerNombre">Primer Nombre</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="apellidos" name="apellidos" type="text" placeholder="Apellidos" readonly value="{{$RIDmigrantes->apellido}}"/>
-                                <label for="apellidos">Apellidos</label>
+                                <input class="form-control" id="segundoNombre" name="segundoNombre" type="text" placeholder="Segundo Nombre" readonly value="{{$RIDmigrantes->segundoNombre}}"/>
+                                <label for="segundoNombre">Segundo Nombre</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="primerApellido" name="primerApellido" type="text" placeholder="Primer Apellido" readonly value="{{$RIDmigrantes->primerApellido}}"/>
+                                <label for="primerApellido">Primer Apellidos</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="segundoApellido" name="segundoApellido" type="text" placeholder="Segundo Apellido" readonly value="{{$RIDmigrantes->segundoApellido}}"/>
+                                <label for="segundoApellido">Segundo Apellido</label>
                             </div>
 
                             <div class="form-floating mb-3">
@@ -75,7 +85,7 @@
 
                                 <div class="form-floating mb-3">
                                     <input class="form-control" id="pais" name="pais" type="text" placeholder="Pais" readonly value="{{$RIDmigrantes->pais}}"/>
-                                    <label for="pais">Pais</label>
+                                    <label for="pais">Pais de Residencia</label>
                                 </div>
 
                                 <div class="form-floating mb-3">

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Dashboard;
 use App\Models\Cubiculo;
 use App\Models\Solicitud;
+use App\Models\RIDMigrantes;
 
 use DB;
 use Excel;
@@ -38,16 +39,17 @@ class DashboardController extends Controller
 
         // view()->share('totalSolicitudes', $totalSolicitudes);	
 
-        $resultados = DB::table('solicitud')
-        ->selectRaw('COUNT(*) as totalSolicitudes,
-                     DATE_FORMAT(MIN(fechaAtencion), "%M") as primeraSolicitudMes,
-                     DATE_FORMAT(MAX(fechaAtencion), "%M") as ultimaSolicitudMes')
-        ->whereYear('fechaAtencion', $year)
-        ->first();
+        $resultados = DB::table('rid_migrante')
+            ->selectRaw('COUNT(*) as totalMigrantes,
+                         DATE_FORMAT(MIN(created_at), "%M") as primeraMigranteMes,
+                         DATE_FORMAT(MAX(created_at), "%M") as ultimaMigranteMes')
+            ->whereYear('created_at', $year)
+            ->first();
+        
 
-        $totalSolicitudes = $resultados->totalSolicitudes;
-        $primeraSolicitud = $resultados->primeraSolicitudMes;
-        $ultimaSolicitud = $resultados->ultimaSolicitudMes;
+        $totalMigrantes = $resultados->totalMigrantes;
+        $primeraSolicitud = $resultados->primeraMigranteMes;
+        $ultimaSolicitud = $resultados->ultimaMigranteMes;
 
        
 
@@ -55,7 +57,7 @@ class DashboardController extends Controller
 
        return view('layouts.app', [
         'year' => $year,
-        'totalSolicitudes' => $totalSolicitudes,
+        'totalMigrantes' => $totalMigrantes,
         'primeraSolicitud' => $primeraSolicitud,
         'ultimaSolicitud' => $ultimaSolicitud,
     ]);
@@ -126,4 +128,102 @@ class DashboardController extends Controller
 
 
     }
+
+    public function TotalMigrantes(Request $request)
+    {
+        $currentYear = date('Y');
+
+        $results = RIDMigrantes::select(
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTHNAME(created_at) as month_name'),
+                DB::raw('COUNT(*) as total_migrants')
+            )
+            ->whereYear('created_at', $currentYear)
+            ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('MONTHNAME(created_at)'))
+            ->orderBy(DB::raw('YEAR(created_at)'), 'asc') // Asegúrate de usar 'asc' o 'desc'
+            ->orderBy(DB::raw('MONTH(created_at)'), 'asc') // Asegúrate de usar 'asc' o 'desc'
+            ->get();
+
+        // Depuración: ver los resultados obtenidos
+        //return response()->json($results); 
+
+        $labels = [];
+        $data = [];
+
+        foreach ($results as $result) {
+            $labels[] = $result->month_name;
+            $data[] = $result->total_migrants;
+        }
+
+        $responseData = [
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Total Migrantes',
+                    'backgroundColor' => 'rgba(0, 123, 255, .1)',
+                    'borderColor' => '#007bff',
+                    'borderWidth' => 3,
+                    'data' => $data,
+                    'fill' => true
+                ]
+            ]
+        ];
+
+        return response()->json($responseData);
+    }
+  
+
+
+
+public function TotalMigrantesMensual()
+{
+    $results = DB::table('rid_migrante')
+        ->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('MONTHNAME(created_at) as month_name'),
+            DB::raw('COUNT(*) as total_migrants')
+        )
+        ->whereYear('created_at', 2024)
+        ->orWhereYear('created_at', 2023)
+        ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('MONTHNAME(created_at)'))
+        ->get();
+
+    $data = [
+        'labels' => [],
+        'datasets' => [
+            [
+                'label' => '2023',
+                'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
+                'borderColor' => 'rgba(75, 192, 192, 1)',
+                'borderWidth' => 1,
+                'data' => []
+            ],
+            [
+                'label' => '2024',
+                'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
+                'borderColor' => 'rgba(153, 102, 255, 1)',
+                'borderWidth' => 1,
+                'data' => []
+            ]
+        ]
+    ];
+
+    foreach ($results as $result) {
+        if (!in_array($result->month_name, $data['labels'])) {
+            $data['labels'][] = $result->month_name;
+        }
+
+        if ($result->year == 2023) {
+            $data['datasets'][0]['data'][] = $result->total_migrants;
+        } else {
+            $data['datasets'][1]['data'][] = $result->total_migrants;
+        }
+    }
+
+    return response()->json($data);
+}
+
+    
+    
 }

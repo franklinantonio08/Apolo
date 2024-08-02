@@ -50,13 +50,23 @@
                         <div class="col-lg-6 m-b-10">
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 180px;" >Nombres</span>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="{{$RIDmigrantes->nombre}}">
+                                    <span class="input-group-text" style="width: 180px;" >Primer Nombre</span>
+                                    <input type="text" class="form-control" id="primerNombre" name="primerNombre" placeholder="" value="{{$RIDmigrantes->primerNombre}}">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 180px;" >Apellidos</span>
-                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="" value="{{$RIDmigrantes->apellido}}">
+                                    <span class="input-group-text" style="width: 180px;" >Segundo Nombre</span>
+                                    <input type="text" class="form-control" id="segundoNombre" name="segundoNombre" placeholder="" value="{{$RIDmigrantes->segundoNombre}}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 180px;" >Primer Apellido</span>
+                                    <input type="text" class="form-control" id="primerApellido" name="primerApellido" placeholder="" value="{{$RIDmigrantes->primerApellido}}">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="width: 180px;" >Segundo Apellido</span>
+                                    <input type="text" class="form-control" id="segundoApellido" name="segundoApellido" placeholder="" value="{{$RIDmigrantes->segundoApellido}}">
                                 </div>
 
                                 <div class="input-group mb-3">
@@ -104,7 +114,7 @@
 
                                 
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" style="width: 180px;">Pais ultima Residencia</span>
+                                    <span class="input-group-text" style="width: 180px;">Pais de Residencia</span>
                                     <select class="form-control" id="pais" name="pais">
                                         <option value="{{ $RIDmigrantes->paisId }}" selected>{{ $RIDmigrantes->pais }}</option>
                                         @foreach ($paises as $pais)

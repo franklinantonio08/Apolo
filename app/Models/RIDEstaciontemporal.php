@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RIDPaises extends Model
+class RIDEstaciontemporal extends Model
 {
     use HasFactory;
 
-    protected $table = 'rid_paises';
+    protected $table = 'rid_estaciontemporal';
 }

@@ -46,13 +46,23 @@
                         <div class="col-lg-6 m-b-10">
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text" style="width: 180px;" >Nombres</span>
-                                <input type="text" class="form-control" id="nombres" name="nombres" placeholder="">
+                                <span class="input-group-text" style="width: 180px;" >Primer Nombre</span>
+                                <input type="text" class="form-control" id="primerNombre" name="primerNombre" placeholder="">
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text" style="width: 180px;" >Apellidos</span>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="">
+                                <span class="input-group-text" style="width: 180px;" >Segundo Nombre</span>
+                                <input type="text" class="form-control" id="segundoNombre" name="segundoNombre" placeholder="">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" style="width: 180px;" >Primer Apellido</span>
+                                <input type="text" class="form-control" id="primerApellido" name="primerApellido" placeholder="">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" style="width: 180px;" >Segundo Apellido</span>
+                                <input type="text" class="form-control" id="segundoApellido" name="segundoApellido" placeholder="">
                             </div>
 
                             <div class="input-group mb-3">
@@ -90,14 +100,14 @@
                                 <select class="form-select" id="nacionalidad" name="nacionalidad" >
                                     <option value="" selected disabled>Selecciona...</option>
                                     @foreach ($RIDPaises as $key => $value) 										
-                                    <option value="{{ $value->id }}">{{ $value->pais }}</option>										
+                                    <option value="{{ $value->id }}">{{ $value->nacionalidad }}</option>										
                                     @endForeach
                                 </select>
                               </div>
                             
 
                             <div class="input-group mb-3">
-                                <label class="input-group-text" style="width: 180px;" for="pais">Pais ultima Residencia</label>
+                                <label class="input-group-text" style="width: 180px;" for="pais">Pais de Residencia</label>
                                 <select class="form-select" id="pais" name="pais">
                                     <option value="" selected disabled>Selecciona...</option>
                                     @foreach ($RIDPaises as $key => $value) 										
@@ -116,6 +126,15 @@
                                 </select>
                             </div>
 
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" style="width: 180px;" for="estacionTemporal">Estaciones Temporales</label>
+                                <select class="form-select" id="estacionTemporal" name="estacionTemporal">
+                                    <option value="" selected disabled>Selecciona...</option>
+                                    @foreach ($RIDEstaciontemporal as $key => $value) 										
+                                    <option value="{{ $value->id }}">{{ $value->descripcion }}</option>										
+                                    @endForeach
+                                </select>
+                            </div>
 
                                 
                             <div class="form-floating mb-3">

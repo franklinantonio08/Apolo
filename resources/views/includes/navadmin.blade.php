@@ -118,9 +118,9 @@
                         </svg> Registro Irregulares Darien</a>
                         <ul class="nav-group-items">
                                 <li class="nav-item"><a class="nav-link" href="/admin/RIDmigrantes"><span class="nav-icon"></span> Migrantes</a></li>
-                                {{-- <li class="nav-item"><a class="nav-link" href="/dist/solicitud/nuevo"><span class="nav-icon"></span> Crear Solicitud</a></li>  --}}
                                 <li class="nav-item"><a class="nav-link" href="/admin/RIDafinidad"><span class="nav-icon"></span> Afinidad</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/RIDpuestocontrol"><span class="nav-icon"></span> Punto de Control</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/admin/RIDestaciontemporal"><span class="nav-icon"></span> Estacion Temporal</a></li>  
                         </ul>
                 </li>
 
