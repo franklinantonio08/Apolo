@@ -71,6 +71,7 @@ Route::middleware('guest')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'Dashboard']) ->name('Dashboard');  
         Route::post('dashboard', [DashboardController::class, 'TotalMigrantes']) ->name('TotalMigrantes');  
         Route::post('dashboard/migrantes-mensual', [DashboardController::class, 'TotalMigrantesMensual']) ->name('TotalMigrantesMensual');  
+         Route::post('dashboard/migrantes-semanal', [DashboardController::class, 'TotalMigrantesSemanal']) ->name('TotalMigrantesSemanal');  
 
 
         Route::get('dist/dashboard', [DashboardController::class, 'Index']) ->name('Index');  

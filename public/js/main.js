@@ -73,50 +73,7 @@ document.body.addEventListener('themeChange', () => {
    cardChart1.update();
 });
 
-    /*  primera grafica izquierda ATENCIONES */
-
-    // const cardChartNew1 = new Chart(document.getElementById('card-chart-new1'), {
-    //     type: 'line',
-    //     data: {
-    //        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //        datasets: [{
-    //           label: 'My First dataset',
-    //           backgroundColor: `rgba(${coreui.Utils.getStyle('--cui-primary-rgb')}, .1)`,
-    //           borderColor: coreui.Utils.getStyle('--cui-primary'),
-    //           borderWidth: 3,
-    //           data: [105, 81, 80, 45, 34, 22, 40],
-    //           fill: true
-    //        }]
-    //     },
-    //     options: {
-    //        plugins: {
-    //           legend: {
-    //              display: false
-    //           }
-    //        },
-    //        maintainAspectRatio: false,
-    //        scales: {
-    //           x: {
-    //              display: false
-    //           },
-    //           y: {
-    //              beginAtZero: true,
-    //              display: false
-    //           }
-    //        },
-    //        elements: {
-    //           line: {
-    //              borderWidth: 2,
-    //              tension: 0.4
-    //           },
-    //           point: {
-    //              radius: 0,
-    //              hitRadius: 10,
-    //              hoverRadius: 4
-    //           }
-    //        }
-    //     }
-    //  });
+   
 
 
          /* primera grafica derecha TRAFICO MENSUAL */
@@ -183,224 +140,149 @@ document.body.addEventListener('themeChange', () => {
             .catch(error => console.error('Error:', error));
         });
         
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         
-
-// const mainBarChart = new Chart(document.getElementById('main-bar-chart'), {
-//    type: 'bar',
-//    data: {
-//       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-//       datasets: [{
-//          label: 'Users',
-//          backgroundColor: coreui.Utils.getStyle('--cui-primary'),
-//          borderRadius: 6,
-//          borderSkipped: false,
-//          data: [100, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
-//          barPercentage: 0.6,
-//          categoryPercentage: 0.5
-//       }, {
-//          label: 'New users',
-//          backgroundColor: coreui.Utils.getStyle('--cui-gray-100'),
-//          borderRadius: 6,
-//          borderSkipped: false,
-//          data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
-//          barPercentage: 0.6,
-//          categoryPercentage: 0.5
-//       }]
-//    },
-//    options: {
-//       maintainAspectRatio: false,
-//       plugins: {
-//          legend: {
-//             display: false
-//          }
-//       },
-//       scales: {
-//          x: {
-//             grid: {
-//                display: false,
-//                drawBorder: false,
-//                drawTicks: false
-//             },
-//             ticks: {
-//                color: coreui.Utils.getStyle('--cui-text-disabled'),
-//                font: {
-//                   size: 14
-//                },
-//                padding: 16
-//             }
-//          },
-//          y: {
-//             grid: {
-//                drawBorder: false,
-//                borderDash: [2, 4]
-//             },
-//             gridLines: {
-//                borderDash: [8, 4],
-//                color: '#348632'
-//             },
-//             ticks: {
-//                beginAtZero: true,
-//                color: coreui.Utils.getStyle('--cui-text-disabled'),
-//                font: {
-//                   size: 14
-//                },
-//                maxTicksLimit: 5,
-//                padding: 16,
-//                stepSize: Math.ceil(100 / 4)
-//             }
-//          }
-//       }
-//    }
-// });
-
-
-
-
-
-
-/* segunda grafica a la derecha*/
-
-const cardChart1 = new Chart(document.getElementById('card-chart1'), {
-   type: 'line',
-   data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-         label: 'My First dataset',
-         backgroundColor: 'transparent',
-         borderColor: 'rgba(255,255,255,.55)',
-         pointBackgroundColor: coreui.Utils.getStyle('--cui-primary'),
-         data: [80, 59, 84, 84, 51, 55, 40]
-      }]
-   },
-   options: {
-      plugins: {
-         legend: {
-            display: false
-         }
-      },
-      maintainAspectRatio: false,
-      scales: {
-         x: {
-            grid: {
-               display: false,
-               drawBorder: false
-            },
-            ticks: {
-               display: false
+            fetch('/dashboard/migrantes-semanal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalLastWeek').textContent = data.totals.totalLastWeek;
+                document.getElementById('totalCurrentWeek').textContent = data.totals.totalCurrentWeek;
+                document.getElementById('totalYearly').textContent = data.totals.totalYearly;
+                document.getElementById('totalMonthly').textContent = data.totals.totalMonthly;
+        
+                document.getElementById('totalMasculino').textContent = data.gender.totalMasculino;
+                document.getElementById('totalFemenino').textContent = data.gender.totalFemenino;
+        
+                const porcentajeMasculino = data.gender.porcentajeMasculino.toFixed(1);
+                const porcentajeFemenino = data.gender.porcentajeFemenino.toFixed(1);
+        
+                document.getElementById('porcentajeMasculino').innerHTML = `
+                    (${porcentajeMasculino}% 
+                    )`;
+        
+                document.getElementById('porcentajeFemenino').innerHTML = `
+                    (${porcentajeFemenino}% 
+                    )`;
+        
+                // Procesar datos de grupos de edad
+                const ageGroupLabels = {
+                    '0-6': '0 - 6 años (Menores de edad)',
+                    '7-17': '7 - 17 años (Menores de edad)',
+                    '18-27': '18 - 27 años (Adultos)',
+                    '28-37': '28 - 37 años (Adultos)',
+                    '38-47': '38 - 47 años (Adultos)',
+                    '48-57': '48 - 57 años (Adultos)',
+                    '58-84': '58 - 84 años (Adultos)',
+                    '85+': '85 años y más (Adultos)'
+                };
+        
+                let htmlContent = '';
+        
+                data.ageGroups.forEach(item => {
+                    const label = ageGroupLabels[item.age_group];
+                    const percentage = (item.total_migrants / data.totals.totalYearly * 100).toFixed(1);
+        
+                    htmlContent += `
+                        <div class="progress-group">
+                            <div class="progress-group-header">
+                                <div>${label}</div>
+                                <div class="ms-auto fw-semibold me-2">${item.total_migrants}</div>
+                                <div class="text-disabled small">(${percentage}%)</div>
+                            </div>
+                            <div class="progress-group-bars">
+                                <div class="progress progress-thin">
+                                    <div class="progress-bar bg-success-gradient " role="progressbar" style="width: ${percentage}%" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+        
+                document.getElementById('migrantes-edad').innerHTML = htmlContent;
+        
+                // Procesar datos semanales
+                const daysOfWeek = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
+                const yearlyData = {};
+                const weeklyData = {};
+        
+                data.yearly.forEach(item => {
+                    yearlyData[item.day_of_week] = item.total_migrants;
+                });
+        
+                data.weekly.forEach(item => {
+                    weeklyData[item.day_of_week] = item.total_migrants;
+                });
+        
+                htmlContent = ''; // Reset HTML content for weekly data
+        
+                daysOfWeek.forEach((day, index) => {
+                    const dayOfWeek = index + 1;
+                    const yearlyTotal = yearlyData[dayOfWeek] || 0;
+                    const weeklyTotal = weeklyData[dayOfWeek] || 0;
+        
+                    htmlContent += `
+                        <div class="progress-group mb-4">
+                            <div class="progress-group-prepend"><span class="text-disabled small">${day}</span></div>
+                            <div class="progress-group-bars">
+                                <div class="progress progress-thin">
+                                    <div class="progress-bar bg-info-gradient" role="progressbar" style="width: ${yearlyTotal}%"
+                                        aria-valuenow="${yearlyTotal}" aria-valuemin="0" aria-valuemax="100"
+                                        onmouseover="showTooltip(event, '${day}', ${yearlyTotal}, ${weeklyTotal})"
+                                        onmouseout="hideTooltip()"></div>
+                                </div>
+                                <div class="progress progress-thin">
+                                    <div class="progress-bar bg-danger-gradient" role="progressbar" style="width: ${weeklyTotal}%"
+                                        aria-valuenow="${weeklyTotal}" aria-valuemin="0" aria-valuemax="100"
+                                        onmouseover="showTooltip(event, '${day}', ${yearlyTotal}, ${weeklyTotal})"
+                                        onmouseout="hideTooltip()"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+        
+                document.getElementById('migrantes-semanal-weekly').innerHTML = htmlContent;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        
+        function showTooltip(event, day, yearlyTotal, weeklyTotal) {
+            let tooltip = document.getElementById('tooltip');
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.id = 'tooltip';
+                tooltip.style.position = 'absolute';
+                tooltip.style.background = '#333';
+                tooltip.style.color = '#fff';
+                tooltip.style.padding = '5px 10px';
+                tooltip.style.borderRadius = '5px';
+                tooltip.style.zIndex = '1000';
+                document.body.appendChild(tooltip);
             }
-         },
-         y: {
-            min: 30,
-            max: 89,
-            display: false,
-            grid: {
-               display: false
-            },
-            ticks: {
-               display: false
+        
+            tooltip.innerHTML = `
+                <strong>${day}</strong><br>
+                <span class="bg-info-gradient" style="display: inline-block; width: 20px; height: 10px;"></span> Total Anual: ${yearlyTotal}<br>
+                <span class="bg-danger-gradient" style="display: inline-block; width: 20px; height: 10px;"></span> Semana Actual: ${weeklyTotal}
+            `;
+            tooltip.style.left = event.pageX + 10 + 'px';
+            tooltip.style.top = event.pageY + 10 + 'px';
+            tooltip.style.display = 'block';
+        }
+        
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            if (tooltip) {
+                tooltip.style.display = 'none';
             }
-         }
-      },
-      elements: {
-         line: {
-            borderWidth: 1,
-            tension: 0.4
-         },
-         point: {
-            radius: 4,
-            hitRadius: 10,
-            hoverRadius: 4
-         }
-      }
-   }
-});
-
-/* tercera grafica a la derecha*/
-
-const cardChart3 = new Chart(document.getElementById('card-chart3'), {
-   type: 'line',
-   data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-         label: 'My First dataset',
-         backgroundColor: 'rgba(255,255,255,.2)',
-         borderColor: 'rgba(255,255,255,.55)',
-         data: [81, 81, 80, 45, 34, 12, 40],
-         fill: true
-      }]
-   },
-   options: {
-      plugins: {
-         legend: {
-            display: false
-         }
-      },
-      maintainAspectRatio: false,
-      scales: {
-         x: {
-            display: false
-         },
-         y: {
-            display: false
-         }
-      },
-      elements: {
-         line: {
-            borderWidth: 2,
-            tension: 0.4
-         },
-         point: {
-            radius: 0,
-            hitRadius: 10,
-            hoverRadius: 4
-         }
-      }
-   }
-});
-
-/* cuarta grafica a la derecha*/
-
-const cardChart4 = new Chart(document.getElementById('card-chart4'), {
-   type: 'bar',
-   data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
-      datasets: [{
-         label: 'My First dataset',
-         backgroundColor: 'rgba(255,255,255,.2)',
-         borderColor: 'rgba(255,255,255,.55)',
-         data: [90, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
-         barPercentage: 0.6
-      }]
-   },
-   options: {
-      maintainAspectRatio: false,
-      plugins: {
-         legend: {
-            display: false
-         }
-      },
-      scales: {
-         x: {
-            grid: {
-               display: false,
-               drawTicks: false
-            },
-            ticks: {
-               display: false
-            }
-         },
-         y: {
-            grid: {
-               display: false,
-               drawBorder: false,
-               drawTicks: false
-            },
-            ticks: {
-               display: false
-            }
-         }
-      }
-   }
-});
-
-
+        }
+        

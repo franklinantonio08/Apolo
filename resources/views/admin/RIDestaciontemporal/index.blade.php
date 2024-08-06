@@ -23,7 +23,7 @@
 			<div class="card-body p-4">
 			<div class="row">
 				<div class="col">
-				<div class="card-title fs-4 fw-semibold">Lista de Estaciones Temporales</div>
+				<div class="card-title fs-4 fw-semibold">Lista de Comunidades Receptoras / Estaciones Temporales</div>
 				<!--<div class="card-subtitle text-disabled mb-4">1.232.150 registered users</div> -->
 				</div>
 				

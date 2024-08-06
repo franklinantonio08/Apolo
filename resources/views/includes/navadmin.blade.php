@@ -120,7 +120,7 @@
                                 <li class="nav-item"><a class="nav-link" href="/admin/RIDmigrantes"><span class="nav-icon"></span> Migrantes</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/RIDafinidad"><span class="nav-icon"></span> Afinidad</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/admin/RIDpuestocontrol"><span class="nav-icon"></span> Punto de Control</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/admin/RIDestaciontemporal"><span class="nav-icon"></span> Estacion Temporal</a></li>  
+                                <li class="nav-item"><a class="nav-link" href="/admin/RIDestaciontemporal"><span class="nav-icon"></span>Com. Recep. / Est. Temp.</a></li>  
                         </ul>
                 </li>
 

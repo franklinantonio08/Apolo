@@ -31,7 +31,7 @@
             <div class="card-body p-4">
                 <div class="row">
                     <div class="col">
-                        <div class="card-title fs-4 fw-semibold">Estacion Temporal</div>
+                        <div class="card-title fs-4 fw-semibold">Comunidades Receptoras / Estaciones Temporales</div>
                     </div>
                 </div>
 			</div>

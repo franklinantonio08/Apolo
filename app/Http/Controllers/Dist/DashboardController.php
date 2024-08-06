@@ -224,6 +224,111 @@ public function TotalMigrantesMensual()
     return response()->json($data);
 }
 
+public function TotalMigrantesSemanal()
+{
+    $currentYear = date('Y');
+    $currentMonth = date('m');
+    $currentWeekStart = date('Y-m-d H:i:s', strtotime('monday this week'));
+    $currentWeekEnd = date('Y-m-d H:i:s', strtotime('sunday this week 23:59:59'));
+    $lastWeekStart = date('Y-m-d H:i:s', strtotime('monday last week'));
+    $lastWeekEnd = date('Y-m-d H:i:s', strtotime('sunday last week 23:59:59'));
+
+    // Total de migrantes del último año por día de la semana
+    $yearlyResults = DB::table('rid_migrante')
+        ->select(
+            DB::raw('DAYOFWEEK(created_at) as day_of_week'),
+            DB::raw('DAYNAME(created_at) as day_name'),
+            DB::raw('COUNT(*) as total_migrants')
+        )
+        ->whereYear('created_at', $currentYear)
+        ->groupBy(DB::raw('DAYOFWEEK(created_at)'), DB::raw('DAYNAME(created_at)'))
+        ->get();
+
+    // Total de migrantes de la semana pasada por día de la semana
+    $weeklyResults = DB::table('rid_migrante')
+        ->select(
+            DB::raw('DAYOFWEEK(created_at) as day_of_week'),
+            DB::raw('DAYNAME(created_at) as day_name'),
+            DB::raw('COUNT(*) as total_migrants')
+        )
+        ->whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])
+        ->groupBy(DB::raw('DAYOFWEEK(created_at)'), DB::raw('DAYNAME(created_at)'))
+        ->get();
+
+    // Totales adicionales
+    $totalYearly = DB::table('rid_migrante')
+        ->whereYear('created_at', $currentYear)
+        ->count();
+
+    $totalMonthly = DB::table('rid_migrante')
+        ->whereYear('created_at', $currentYear)
+        ->whereMonth('created_at', $currentMonth)
+        ->count();
+
+    $totalLastWeek = DB::table('rid_migrante')
+        ->whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])
+        ->count();
+
+    $totalCurrentWeek = DB::table('rid_migrante')
+        ->whereBetween('created_at', [$currentWeekStart, $currentWeekEnd])
+        ->count();
+
+    // Total por género
+    $genderTotals = DB::table('rid_migrante')
+        ->select('genero', DB::raw('COUNT(*) as total'))
+        ->whereYear('created_at', $currentYear)
+        ->groupBy('genero')
+        ->get();
+
+    $totalMasculino = $genderTotals->where('genero', 'Masculino')->first()->total ?? 0;
+    $totalFemenino = $genderTotals->where('genero', 'Femenino')->first()->total ?? 0;
+    $totalMigrantes = $totalMasculino + $totalFemenino;
+
+    $porcentajeMasculino = $totalMigrantes ? ($totalMasculino / $totalMigrantes) * 100 : 0;
+    $porcentajeFemenino = $totalMigrantes ? ($totalFemenino / $totalMigrantes) * 100 : 0;
+
+     // Calcular grupos de edad
     
+    $ageGroups = DB::table('rid_migrante')
+    ->select(DB::raw("
+        CASE
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 0 AND 6 THEN '0-6'
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 7 AND 17 THEN '7-17'
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 18 AND 27 THEN '18-27'
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 28 AND 37 THEN '28-37'
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 38 AND 47 THEN '38-47'
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 48 AND 57 THEN '48-57'
+            WHEN TIMESTAMPDIFF(YEAR, fechaNacimiento, CURDATE()) BETWEEN 58 AND 84 THEN '58-84'
+            ELSE '85+'
+        END as age_group,
+        COUNT(*) as total_migrants
+    "))
+    ->whereYear('created_at', $currentYear)
+    ->groupBy('age_group')
+    ->orderByRaw("
+        FIELD(age_group, '0-6', '7-17', '18-27', '28-37', '38-47', '48-57', '58-84', '85+')
+    ")
+    ->get();
+
+    return response()->json([
+        'yearly' => $yearlyResults,
+        'weekly' => $weeklyResults,
+        'totals' => [
+            'totalYearly' => $totalYearly,
+            'totalMonthly' => $totalMonthly,
+            'totalLastWeek' => $totalLastWeek,
+            'totalCurrentWeek' => $totalCurrentWeek,
+        ],
+        'gender' => [
+            'totalMasculino' => $totalMasculino,
+            'totalFemenino' => $totalFemenino,
+            'porcentajeMasculino' => $porcentajeMasculino,
+            'porcentajeFemenino' => $porcentajeFemenino,
+        ],
+        'ageGroups' => $ageGroups,
+    ]);
+}
+
+
     
 }
